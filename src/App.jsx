@@ -3,9 +3,10 @@ import { useState } from "react"
 import LoginPage from "./components/LoginPage"
 import SignupPage from "./components/SignupPage"
 import "./index.css"
+import GetStartedPage from "./components/GetStartedPage"
 
 function App() {
-  const [navigationStack, setNavigationStack] = useState([{ page: "login" }])
+  const [navigationStack, setNavigationStack] = useState([{ page: "get-started" }])
   const currentPage = navigationStack[navigationStack.length - 1]
   const navigateTo = (page, data = {}) => {
     setNavigationStack((prev) => [...prev, { page, ...data }])
@@ -27,12 +28,14 @@ function App() {
   }
   const renderPage = () => {
     switch (currentPage.page) {
+      case "get-started":
+        return <GetStartedPage {...navigationProps} />
       case "login":
         return <LoginPage {...navigationProps} />
       case "signup":
         return <SignupPage {...navigationProps} pageData={currentPage} />
       default:
-        return <LoginPage {...navigationProps} />
+        return <GetStartedPage {...navigationProps} />
     }
   }
   return <div className="App">{renderPage()}</div>
