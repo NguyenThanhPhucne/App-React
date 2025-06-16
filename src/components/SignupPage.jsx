@@ -77,7 +77,7 @@ function SignupPage({ navigateTo, navigateBack, navigateReplace, canGoBack, page
 
             <div className="terms-text">
               By creating an account, you agree to accept our <a href="#">Terms of Service</a> and{" "}
-              <a href="#">Privacy Policy</a> at ZIM
+              <a href="#">Privacy Policy</a> at My Application
             </div>
 
             <div className="auth-link">
