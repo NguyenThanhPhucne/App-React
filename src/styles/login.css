@@ -1,0 +1,10 @@
+/* Login Page Specific Styles */
+
+.login-social-bottom {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.login-social-bottom .social-button {
+  flex: 1;
+}
