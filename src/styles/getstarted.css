@@ -260,7 +260,33 @@
   }
 }
 
-/* Responsive Design for Enhanced GetStartedPage */
+/* Enhanced Responsive Design cho GetStarted page */
+@media (max-width: 1200px) {
+  .enhanced-title {
+    font-size: 4rem;
+  }
+
+  .enhanced-subtitle {
+    font-size: 1.125rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .enhanced-title {
+    font-size: 3.5rem;
+  }
+
+  .enhanced-subtitle {
+    font-size: 1.125rem;
+    max-width: 500px;
+  }
+
+  .enhanced-cta-button {
+    padding: 1.125rem 2.75rem;
+    font-size: 1.0625rem;
+  }
+}
+
 @media (max-width: 768px) {
   .enhanced-top-nav {
     padding: 1.5rem;
@@ -273,11 +299,13 @@
 
   .enhanced-title {
     font-size: 3rem;
+    margin-bottom: 1.25rem;
   }
 
   .enhanced-subtitle {
     font-size: 1.125rem;
     margin-bottom: 2rem;
+    max-width: 450px;
   }
 
   .enhanced-cta-button {
@@ -300,16 +328,55 @@
     padding: 1rem;
   }
 
+  .enhanced-signin-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+  }
+
   .enhanced-title {
     font-size: 2.5rem;
+    margin-bottom: 1rem;
   }
 
   .enhanced-subtitle {
     font-size: 1rem;
+    margin-bottom: 1.5rem;
+    max-width: 350px;
   }
 
   .enhanced-cta-button {
     padding: 0.875rem 2rem;
     font-size: 0.9375rem;
+  }
+
+  .shape-1,
+  .shape-2,
+  .shape-3,
+  .shape-4,
+  .shape-5 {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* Landscape orientation for mobile */
+@media (max-height: 600px) and (orientation: landscape) {
+  .enhanced-content {
+    padding: 1rem;
+  }
+
+  .enhanced-title {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .enhanced-subtitle {
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+  }
+
+  .enhanced-cta-button {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
   }
 }
