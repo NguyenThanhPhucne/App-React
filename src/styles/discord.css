@@ -186,9 +186,18 @@
   border-radius: 50%;
 }
 
-.add-server-btn {
-  width: 32px;
-  height: 32px;
+.header__controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 200px;
+  justify-content: flex-end;
+}
+
+/* Updated Add Server Button - moved to controls */
+.header__controls .add-server-btn {
+  width: 36px;
+  height: 36px;
   background: transparent;
   border: 2px dashed var(--text-muted);
   border-radius: 50%;
@@ -200,19 +209,11 @@
   transition: all 0.2s ease;
 }
 
-.add-server-btn:hover {
+.header__controls .add-server-btn:hover {
   border-radius: 10px;
   border-color: var(--accent);
   color: var(--accent);
   transform: scale(1.05);
-}
-
-.header__controls {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-width: 120px;
-  justify-content: flex-end;
 }
 
 .theme-toggle {
@@ -297,9 +298,11 @@
   line-height: 1.2;
 }
 
+/* User Actions Enhanced */
 .user-actions {
   display: flex;
   gap: 4px;
+  align-items: center;
 }
 
 .action-btn {
@@ -497,6 +500,13 @@
 .dropdown-item--danger:hover {
   background: var(--danger);
   color: white;
+}
+
+/* Leave Server Button Enhanced Hover */
+.dropdown-item--leave:hover {
+  background: var(--danger) !important;
+  color: white !important;
+  transform: translateX(2px);
 }
 
 .sidebar__content {
@@ -865,16 +875,31 @@
 .mobile-notification-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   padding: 16px 20px;
   border-bottom: 1px solid var(--border);
   background: var(--bg-secondary);
+  position: relative;
+}
+
+.mobile-notification-header-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .mobile-notification-title {
   font-size: 18px;
   font-weight: 600;
   color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.mobile-notification-subtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-weight: 500;
 }
 
 .mobile-notification-close {
@@ -1093,7 +1118,7 @@
 .mobile-mute-option {
   display: block;
   width: 100%;
-  padding: 16px 20px;
+  padding: 16px 24px 16px 32px;
   background: transparent;
   border: none;
   color: var(--text-primary);
@@ -1584,6 +1609,82 @@
   color: var(--text-muted);
 }
 
+/* Mobile Search Container */
+.mobile-search-container {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-primary);
+}
+
+.mobile-search-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-secondary);
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.mobile-search-input-field {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  font-size: 16px;
+}
+
+.mobile-search-input-field::placeholder {
+  color: var(--text-muted);
+}
+
+.mobile-search-clear {
+  width: 20px;
+  height: 20px;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.mobile-search-clear:hover {
+  background: var(--hover);
+  color: var(--text-primary);
+}
+
+/* No Search Results */
+.no-search-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.no-results-icon {
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.no-results-text {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.no-results-subtext {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
 /* Mobile Overlay */
 .mobile-overlay {
   position: fixed;
@@ -1782,6 +1883,73 @@
   justify-content: center;
   color: white;
   flex-shrink: 0;
+}
+
+.mobile-mute-options-container {
+  padding: 24px;
+  background: var(--bg-primary);
+  margin: 0;
+  border-radius: 0;
+}
+
+.mobile-mute-options-container .mobile-mute-option {
+  display: block;
+  width: 100%;
+  padding: 18px 24px 18px 24px;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 17px;
+  font-weight: 500;
+  text-align: left;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.mobile-mute-options-container .mobile-mute-option:last-child {
+  border-bottom: none;
+}
+
+.mobile-mute-options-container .mobile-mute-option:active {
+  background: var(--hover);
+  margin: 0 -24px;
+  padding-left: 24px;
+  padding-right: 24px;
+  transform: scale(0.98);
+}
+
+.mobile-notification-settings-section {
+  padding: 20px;
+}
+
+.mobile-notification-settings-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 16px;
+  background: var(--bg-secondary);
+  border: none;
+  border-radius: 8px;
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: left;
+  transition: all 0.2s ease;
+  margin-bottom: 12px;
+}
+
+.mobile-notification-settings-btn:active {
+  background: var(--hover);
+}
+
+.mobile-notification-description {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.4;
 }
 
 /* Scrollbar */
@@ -2064,4 +2232,103 @@
   .member-item {
     min-height: 48px;
   }
+}
+
+/* Fix member status indicator */
+.member-status {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--bg-secondary);
+  border-radius: 50%;
+}
+
+.member-status--online {
+  background: var(--online);
+}
+
+.member-status--offline {
+  background: var(--text-muted);
+}
+
+/* Remove member tabs completely on mobile */
+@media (max-width: 767px) {
+  .mobile-member-tabs {
+    display: none;
+  }
+}
+
+/* Tooltip Container */
+.tooltip-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Action Tooltip - consistent with notification tooltip */
+.action-tooltip {
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--tooltip-bg);
+  color: var(--tooltip-text);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.15s ease;
+  z-index: 1000;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.24);
+  pointer-events: none;
+}
+
+.action-tooltip::before {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 8px;
+  height: 8px;
+  background: var(--tooltip-bg);
+}
+
+.tooltip-container:hover .action-tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Logout Button Hover Effect */
+.logout-btn:hover {
+  background: var(--danger) !important;
+  color: white !important;
+}
+
+/* Mobile Responsive Tooltips */
+@media (max-width: 767px) {
+  .action-tooltip {
+    display: none;
+  }
+
+  .tooltip-container:hover .action-tooltip {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* Settings Button Styling */
+.action-btn:has(svg[data-lucide="settings"]) {
+  transition: all 0.2s ease;
+}
+
+.action-btn:has(svg[data-lucide="settings"]):hover {
+  background: var(--hover);
+  color: var(--accent);
+  transform: scale(1.05);
 }

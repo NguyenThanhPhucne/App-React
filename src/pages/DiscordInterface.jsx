@@ -45,6 +45,7 @@ const DiscordInterface = () => {
   const dropdownRef = useRef(null)
   const notificationRef = useRef(null)
 
+  // Update state to include member search
   const [state, setState] = useState({
     isDarkTheme: true,
     activeChannel: "chung",
@@ -59,7 +60,8 @@ const DiscordInterface = () => {
     showMobileMembersPanel: false,
     showMobileNotificationModal: false,
     showMobileMuteModal: false,
-    activeMemberTab: "Members",
+    showMobileNotificationSettings: false, // New state for notification settings flow
+    memberSearchQuery: "", // New state for member search
     isMuted: false,
     isDeafened: false,
     notificationSettings: {
@@ -69,6 +71,13 @@ const DiscordInterface = () => {
       onlyMentions: false,
       nothing: false,
     },
+    showMobileSearchInput: false,
+    showSettingsTooltip: false,
+    showAddServerTooltip: false,
+    showMicTooltip: false,
+    showHeadphoneTooltip: false,
+    showLogoutTooltip: false,
+    showThemeTooltip: false,
   })
 
   const updateState = (updates) => setState((prev) => ({ ...prev, ...updates }))
@@ -93,7 +102,7 @@ const DiscordInterface = () => {
 
   const members = {
     online: [
-      { id: 1, name: "nokm", initials: "NK", status: "online", color: "#99aab5", isOwner: true },
+      { id: 1, name: "Owner", initials: "OW", status: "online", color: "#99aab5", isOwner: true },
       { id: 2, name: "Thành Phúc", initials: "TP", status: "online", color: "#5865f2" },
     ],
     offline: [],
@@ -124,6 +133,7 @@ const DiscordInterface = () => {
     "Until I turn it back on",
   ]
 
+  // Add new handlers for member search and notification flow
   const handlers = {
     toggleTheme: () => updateState({ isDarkTheme: !state.isDarkTheme }),
     toggleMute: () =>
@@ -228,9 +238,44 @@ const DiscordInterface = () => {
         showMobileMembersPanel: false,
         showMobileNotificationModal: false,
         showMobileMuteModal: false,
+        showMobileNotificationSettings: false,
         showNotificationDropdown: false,
       })
     },
+    handleMemberSearch: (query) => {
+      updateState({ memberSearchQuery: query })
+    },
+    showNotificationSettings: () => {
+      updateState({
+        showMobileNotificationSettings: true,
+        showMobileNotificationModal: false,
+      })
+    },
+    showMuteOptions: () => {
+      updateState({
+        showMobileMuteModal: true,
+        showMobileNotificationSettings: false,
+      })
+    },
+    handleMobileSearch: (query) => {
+      updateState({ memberSearchQuery: query })
+    },
+    toggleMobileSearchInput: () => {
+      updateState({
+        showMobileSearchInput: !state.showMobileSearchInput,
+        memberSearchQuery: state.showMobileSearchInput ? "" : state.memberSearchQuery,
+      })
+    },
+  }
+
+  // Filter members based on search query
+  const filteredMembers = {
+    online: members.online.filter((member) =>
+      member.name.toLowerCase().includes(state.memberSearchQuery.toLowerCase()),
+    ),
+    offline: members.offline.filter((member) =>
+      member.name.toLowerCase().includes(state.memberSearchQuery.toLowerCase()),
+    ),
   }
 
   useEffect(() => {
@@ -349,64 +394,31 @@ const DiscordInterface = () => {
       >
         <div className="mobile-notification-content">
           <div className="mobile-notification-header">
-            <h2 className="mobile-notification-title">Notification Settings</h2>
-            <button className="mobile-notification-close" onClick={handlers.closeMobilePanels}>
-              <X size={20} />
+            <button className="mobile-back-btn" onClick={handlers.closeMobilePanels}>
+              <ArrowLeft size={20} />
             </button>
+            <div className="mobile-notification-header-content">
+              <h2 className="mobile-notification-title">Mute this channel</h2>
+              <div className="mobile-notification-subtitle">#{state.activeChannel}</div>
+            </div>
           </div>
 
           <div className="mobile-notification-body">
-            <div className="mobile-mute-section">
-              <button className="mobile-mute-item" onClick={handlers.showMobileMuteOptions}>
-                <span>Mute #{state.activeChannel}</span>
-                <ChevronRight size={16} />
-              </button>
-              <div className="mobile-mute-description">
-                You won't receive notifications from muted channels, and they will appear grayed out in your channel
-                list. This setting applies across all your devices.
-              </div>
+            <div className="mobile-mute-options-container">
+              {muteOptions.map((option) => (
+                <button key={option} className="mobile-mute-option" onClick={() => handlers.handleMuteOption(option)}>
+                  {option}
+                </button>
+              ))}
             </div>
 
-            <div className="mobile-settings-section">
-              <div className="mobile-settings-title">Notification Settings</div>
-
-              <div
-                className="mobile-notification-option"
-                onClick={() => handlers.handleNotificationSetting("allMessages")}
-              >
-                <div className="mobile-notification-label">
-                  <div className="mobile-notification-label-main">All Messages</div>
-                </div>
-                <button
-                  className={`mobile-notification-radio ${
-                    state.notificationSettings.allMessages ? "mobile-notification-radio--active" : ""
-                  }`}
-                />
-              </div>
-
-              <div
-                className="mobile-notification-option"
-                onClick={() => handlers.handleNotificationSetting("onlyMentions")}
-              >
-                <div className="mobile-notification-label">
-                  <div className="mobile-notification-label-main">Only @mentions</div>
-                </div>
-                <button
-                  className={`mobile-notification-radio ${
-                    state.notificationSettings.onlyMentions ? "mobile-notification-radio--active" : ""
-                  }`}
-                />
-              </div>
-
-              <div className="mobile-notification-option" onClick={() => handlers.handleNotificationSetting("nothing")}>
-                <div className="mobile-notification-label">
-                  <div className="mobile-notification-label-main">Nothing</div>
-                </div>
-                <button
-                  className={`mobile-notification-radio ${
-                    state.notificationSettings.nothing ? "mobile-notification-radio--active" : ""
-                  }`}
-                />
+            <div className="mobile-notification-settings-section">
+              <button className="mobile-notification-settings-btn" onClick={handlers.showNotificationSettings}>
+                <span>Notification Settings</span>
+                <ChevronRight size={16} />
+              </button>
+              <div className="mobile-notification-description">
+                You are receiving notifications from all messages in this server, but you can override it here
               </div>
             </div>
           </div>
@@ -476,10 +488,6 @@ const DiscordInterface = () => {
               <ChevronRight size={16} />
             </button>
           )}
-
-          <button className="add-server-btn">
-            <Plus size={20} />
-          </button>
         </div>
 
         <div className="header__controls">
@@ -487,9 +495,21 @@ const DiscordInterface = () => {
             <Search size={20} />
           </button>
 
-          <button className="theme-toggle" onClick={handlers.toggleTheme}>
-            {state.isDarkTheme ? <Sun size={20} /> : <Moon size={20} />}
-          </button>
+          {/* Add Server Button - moved to right side */}
+          <div className="tooltip-container">
+            <button className="add-server-btn">
+              <Plus size={20} />
+            </button>
+            <div className="action-tooltip">Add a Server</div>
+          </div>
+
+          {/* Theme Toggle with tooltip */}
+          <div className="tooltip-container">
+            <button className="theme-toggle" onClick={handlers.toggleTheme}>
+              {state.isDarkTheme ? <Sun size={20} /> : <Moon size={20} />}
+            </button>
+            <div className="action-tooltip">{state.isDarkTheme ? "Switch to Light Mode" : "Switch to Dark Mode"}</div>
+          </div>
 
           <div className="user-panel">
             <div className="user-info">
@@ -503,24 +523,44 @@ const DiscordInterface = () => {
               </div>
             </div>
             <div className="user-actions">
-              <button
-                className={`action-btn ${state.isMuted ? "action-btn--muted" : ""}`}
-                onClick={handlers.toggleMute}
-                title={state.isMuted ? "Unmute" : "Mute"}
-              >
-                {state.isMuted ? <MicOff size={16} /> : <Mic size={16} />}
-              </button>
-              <button
-                className={`action-btn ${state.isDeafened ? "action-btn--deafened" : ""}`}
-                onClick={handlers.toggleDeafen}
-                title={state.isDeafened ? "Undeafen" : "Deafen"}
-              >
-                <Headphones size={16} />
-                {state.isDeafened && <div className="deafen-indicator" />}
-              </button>
-              <button className="action-btn" title="Logout" onClick={() => navigate("/")}>
-                <LogOut size={16} />
-              </button>
+              {/* Mic button with tooltip */}
+              <div className="tooltip-container">
+                <button
+                  className={`action-btn ${state.isMuted ? "action-btn--muted" : ""}`}
+                  onClick={handlers.toggleMute}
+                >
+                  {state.isMuted ? <MicOff size={16} /> : <Mic size={16} />}
+                </button>
+                <div className="action-tooltip">{state.isMuted ? "Unmute" : "Mute"}</div>
+              </div>
+
+              {/* Headphone button with tooltip */}
+              <div className="tooltip-container">
+                <button
+                  className={`action-btn ${state.isDeafened ? "action-btn--deafened" : ""}`}
+                  onClick={handlers.toggleDeafen}
+                >
+                  <Headphones size={16} />
+                  {state.isDeafened && <div className="deafen-indicator" />}
+                </button>
+                <div className="action-tooltip">{state.isDeafened ? "Undeafen" : "Deafen"}</div>
+              </div>
+
+              {/* Settings button - newly added */}
+              <div className="tooltip-container">
+                <button className="action-btn" onClick={() => console.log("Settings clicked")}>
+                  <Settings size={16} />
+                </button>
+                <div className="action-tooltip">User Settings</div>
+              </div>
+
+              {/* Logout button with tooltip */}
+              <div className="tooltip-container">
+                <button className="action-btn logout-btn" onClick={() => navigate("/")}>
+                  <LogOut size={16} />
+                </button>
+                <div className="action-tooltip">Logout</div>
+              </div>
             </div>
           </div>
         </div>
@@ -553,7 +593,7 @@ const DiscordInterface = () => {
                     return (
                       <button
                         key={item.id}
-                        className={`dropdown-item ${item.color === "danger" ? "dropdown-item--danger" : ""}`}
+                        className={`dropdown-item ${item.color === "danger" ? "dropdown-item--danger" : ""} ${item.id === "leave" ? "dropdown-item--leave" : ""}`}
                         onClick={() => handlers.handleServerMenuClick(item.id)}
                       >
                         <ItemIcon size={16} />
@@ -763,48 +803,155 @@ const DiscordInterface = () => {
             </div>
           </div>
           <div className="mobile-header-actions">
-            <button className="mobile-action-btn">
+            <button
+              className="mobile-action-btn"
+              onClick={() => updateState({ showMobileSearch: !state.showMobileSearch })}
+            >
               <Search size={20} />
             </button>
-            <button className="mobile-action-btn">
+            <button className="mobile-action-btn" onClick={handlers.toggleNotificationDropdown}>
               <Bell size={20} />
-            </button>
-            <button className="mobile-action-btn">
-              <Settings size={20} />
             </button>
           </div>
         </div>
 
-        <div className="mobile-member-tabs">
-          {memberTabs.map((tab) => {
-            const TabIcon = tab.icon
-            return (
-              <button
-                key={tab.id}
-                className={`mobile-member-tab ${state.activeMemberTab === tab.id ? "mobile-member-tab--active" : ""}`}
-                onClick={() => handlers.setActiveMemberTab(tab.id)}
-              >
-                {tab.label}
-              </button>
-            )
-          })}
-        </div>
-
         <div className="mobile-members-panel__content">
-          {state.activeMemberTab === "Members" && (
-            <>
-              <div className="mobile-invite-section">
-                <button className="mobile-invite-btn">
-                  <div className="mobile-invite-icon">
-                    <UserPlus size={20} />
-                  </div>
-                  <span>Invite Members</span>
-                  <ChevronRight size={16} />
-                </button>
+          {/* Search Input */}
+          {state.showMobileSearchInput && (
+            <div className="mobile-search-container">
+              <div className="mobile-search-input-wrapper">
+                <Search size={16} />
+                <input
+                  type="text"
+                  placeholder="Search members..."
+                  value={state.memberSearchQuery}
+                  onChange={(e) => handlers.handleMemberSearch(e.target.value)}
+                  className="mobile-search-input-field"
+                  autoFocus
+                />
+                {state.memberSearchQuery && (
+                  <button className="mobile-search-clear" onClick={() => handlers.handleMemberSearch("")}>
+                    <X size={16} />
+                  </button>
+                )}
               </div>
+            </div>
+          )}
+
+          <div className="mobile-invite-section">
+            <button className="mobile-invite-btn">
+              <div className="mobile-invite-icon">
+                <UserPlus size={20} />
+              </div>
+              <span>Invite Members</span>
+              <ChevronRight size={16} />
+            </button>
+          </div>
+
+          {/* Show search results or all members */}
+          {state.memberSearchQuery ? (
+            <>
+              {filteredMembers.online.length > 0 && renderMemberCategory("Online", filteredMembers.online)}
+              {filteredMembers.offline.length > 0 && renderMemberCategory("Offline", filteredMembers.offline)}
+              {filteredMembers.online.length === 0 && filteredMembers.offline.length === 0 && (
+                <div className="no-search-results">
+                  <div className="no-results-icon">
+                    <Search size={48} />
+                  </div>
+                  <div className="no-results-text">No members found</div>
+                  <div className="no-results-subtext">Try searching for something else</div>
+                </div>
+              )}
+            </>
+          ) : (
+            <>
               {renderMemberCategory("Online", members.online)}
+              {members.offline.length > 0 && renderMemberCategory("Offline", members.offline)}
             </>
           )}
+        </div>
+      </div>
+
+      {/* Enhanced Mobile Notification Settings Modal */}
+      <div
+        className={`mobile-notification-modal ${
+          state.showMobileNotificationSettings ? "mobile-notification-modal--open" : ""
+        }`}
+        onClick={(e) => {
+          if (e.target === e.currentTarget) handlers.closeMobilePanels()
+        }}
+      >
+        <div className="mobile-notification-content">
+          <div className="mobile-notification-header">
+            <button
+              className="mobile-back-btn"
+              onClick={() =>
+                updateState({
+                  showMobileNotificationSettings: false,
+                  showMobileNotificationModal: true,
+                })
+              }
+            >
+              <ArrowLeft size={20} />
+            </button>
+            <h2 className="mobile-notification-title">Notification Settings</h2>
+          </div>
+
+          <div className="mobile-notification-body">
+            <div className="mobile-mute-section">
+              <button className="mobile-mute-item" onClick={handlers.showMuteOptions}>
+                <span>Mute #{state.activeChannel}</span>
+                <ChevronRight size={16} />
+              </button>
+              <div className="mobile-mute-description">
+                You won't receive notifications from muted channels, and they will appear grayed out in your channel
+                list. This setting applies across all your devices.
+              </div>
+            </div>
+
+            <div className="mobile-settings-section">
+              <div className="mobile-settings-title">Notification Settings</div>
+
+              <div
+                className="mobile-notification-option"
+                onClick={() => handlers.handleNotificationSetting("allMessages")}
+              >
+                <div className="mobile-notification-label">
+                  <div className="mobile-notification-label-main">All Messages</div>
+                </div>
+                <button
+                  className={`mobile-notification-radio ${
+                    state.notificationSettings.allMessages ? "mobile-notification-radio--active" : ""
+                  }`}
+                />
+              </div>
+
+              <div
+                className="mobile-notification-option"
+                onClick={() => handlers.handleNotificationSetting("onlyMentions")}
+              >
+                <div className="mobile-notification-label">
+                  <div className="mobile-notification-label-main">Only @mentions</div>
+                </div>
+                <button
+                  className={`mobile-notification-radio ${
+                    state.notificationSettings.onlyMentions ? "mobile-notification-radio--active" : ""
+                  }`}
+                />
+              </div>
+
+              <div className="mobile-notification-option" onClick={() => handlers.handleNotificationSetting("nothing")}>
+                <div className="mobile-notification-label">
+                  <div className="mobile-notification-label-main">Nothing</div>
+                </div>
+                <button
+                  className={`mobile-notification-radio ${
+                    state.notificationSettings.nothing ? "mobile-notification-radio--active" : ""
+                  }`}
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
