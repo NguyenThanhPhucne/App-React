@@ -2,6 +2,8 @@
 
 import { useState, useRef, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+import { useSelector, useDispatch } from "react-redux"
+import { apiService } from "../services/apiServices"
 import {
   Home,
   Hash,
@@ -39,11 +41,14 @@ import {
   Crown,
 } from "lucide-react"
 import "../styles/discord.css"
+import { selectUser, signOut } from "../features/userSlice"
 
 const DiscordInterface = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const dropdownRef = useRef(null)
   const notificationRef = useRef(null)
+  const user = useSelector(selectUser);
 
   // Update state to include member search
   const [state, setState] = useState({
@@ -358,6 +363,22 @@ const DiscordInterface = () => {
       ))}
     </div>
   )
+  const handleLogout = async () => {
+    try {
+      await apiService.logout();
+      dispatch(signOut());
+      // Clear any local storage items
+      localStorage.removeItem("accessToken");
+      // Navigate to login page
+      navigate("/login");
+    } catch (error) {
+      console.error("Logout error:", error);
+      // Even if the API call fails, we should still clear local state and redirect
+      dispatch(signOut());
+      localStorage.removeItem("accessToken");
+      navigate("/login");
+    }
+  };
 
   return (
     <div className={`app ${state.isDarkTheme ? "theme-dark" : "theme-light"}`}>
@@ -518,7 +539,7 @@ const DiscordInterface = () => {
                 <div className="status-dot" />
               </div>
               <div className="user-details">
-                <span className="username">User</span>
+                <span className="username">{user.username}</span>
                 <span className="status">Online</span>
               </div>
             </div>
@@ -556,7 +577,7 @@ const DiscordInterface = () => {
 
               {/* Logout button with tooltip */}
               <div className="tooltip-container">
-                <button className="action-btn logout-btn" onClick={() => navigate("/")}>
+                <button className="action-btn logout-btn" onClick={handleLogout}>
                   <LogOut size={16} />
                 </button>
                 <div className="action-tooltip">Logout</div>

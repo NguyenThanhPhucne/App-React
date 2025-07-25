@@ -1,21 +1,11 @@
-"use client"
-
-// src/components/ProtectedRoute.jsx
 import { Navigate } from "react-router-dom"
-import { useAuth } from "../context/AuthContext"
+import { useSelector } from "react-redux"
+import { selectUser } from "../features/userSlice"
 
 function ProtectedRoute({ children }) {
-  const { isAuthenticated, isLoading } = useAuth()
+  const user = useSelector(selectUser)
 
-  if (isLoading) {
-    return (
-      <div className="loading-container">
-        <div className="loading-spinner">Loading...</div>
-      </div>
-    )
-  }
-
-  if (!isAuthenticated) {
+  if (!user) {
     return <Navigate to="/login" replace />
   }
 

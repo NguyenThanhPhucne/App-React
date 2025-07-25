@@ -1,7 +1,4 @@
-"use client"
-
 import { useNavigate } from "react-router-dom"
-import "../styles/getstarted.css"
 
 const GetStartedPage = () => {
   const navigate = useNavigate()

@@ -1,0 +1,22 @@
+.signin {
+    display: grid;
+    place-items: center;
+    height: 100vh;
+    width: 100%;
+}
+
+.signin__button {
+    width: 300px;
+    color: var(--white-color);
+    font-weight: bold;
+}
+
+.signin__button:hover {
+    transform:translateY(-5px);
+    background-color: var(--green-color);
+}
+
+.signin__logo img {
+    object-fit: contain;
+    height: 200px;
+}
