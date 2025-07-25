@@ -1,13 +1,15 @@
-"use client"
-
 import { useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
 import { MdArrowBack } from "react-icons/md"
 import { SiGoogle, SiFacebook } from "react-icons/si"
 import { MdEmail } from "react-icons/md"
 import { useForm } from "../hooks/useForm"
+import { apiService } from "../services/apiServices"
+import { signIn } from "../features/userSlice"
 
 const LoginPage = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const { values, handleChange, handleSubmit, isValid } = useForm({
     account: "",
@@ -15,8 +17,14 @@ const LoginPage = () => {
   })
 
   const onSubmit = async (data) => {
-    console.log("Login data:", data)
-    navigate("/app")
+    try {
+      const userData = await apiService.login(data.account, data.password)
+      dispatch(signIn(userData))
+      navigate("/app")
+    } catch (error) {
+      console.error("Login failed:", error)
+      // You might want to show an error message to the user here
+    }
   }
 
   const handleSocialLogin = (provider) => {

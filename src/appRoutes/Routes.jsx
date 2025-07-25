@@ -6,6 +6,7 @@ import SignupPage from "../pages/SignupPage"
 import ForgotPasswordPage from "../pages/ForgotPasswordPage"
 import ResetPasswordPage from "../pages/ResetPasswordPage"
 import DiscordInterface from "../pages/DiscordInterface"
+import ProtectedRoute from "../pages/ProtectedRoute"
 
 function AppRoutes() {
   return (
@@ -17,8 +18,15 @@ function AppRoutes() {
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       <Route path="/reset-password" element={<ResetPasswordPage />} />
 
-      {/* Discord Interface */}
-      <Route path="/app" element={<DiscordInterface />} />
+      {/* Protected Routes */}
+      <Route
+        path="/app"
+        element={
+          <ProtectedRoute>
+            <DiscordInterface />
+          </ProtectedRoute>
+        }
+      />
 
       {/* Redirect any unknown routes to home */}
       <Route path="*" element={<GetStartedPage />} />
