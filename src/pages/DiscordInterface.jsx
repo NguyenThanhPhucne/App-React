@@ -1,6 +1,3 @@
-"use client"
-
-import { useState, useRef, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import { apiService } from "../services/apiServices"
@@ -41,7 +38,6 @@ import {
   Crown,
 } from "lucide-react"
 import "../styles/discord.css"
-import { selectUser, signOut } from "../features/userSlice"
 
 const DiscordInterface = () => {
   const navigate = useNavigate()
