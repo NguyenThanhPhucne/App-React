@@ -3,33 +3,15 @@ import { useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import { selectUser, signOut } from "../features/userSlice"
 import { apiService } from "../services/apiServices"
-import { useEffect, useState } from "react"
-import {
-  Hash,
-  Search,
-  Bell,
-  Users,
-  Menu,
-  X,
-  ChevronDown,
-  ChevronRight,
-  ChevronLeft,
-  Plus,
-  LogOut,
-  Settings,
-  Mic,
-  Home,
-  MessageSquare
-} from "lucide-react"
+import { useEffect } from "react"
+import { Hash, Users, Menu, LogOut } from "lucide-react"
 
 // Import data and hooks
-import { servers, channels, members, serverMenuItems, muteOptions } from "../data/discordData"
+import { servers, channels, members } from "../data/discordData"
 import { useDiscordState } from "../hooks/useDiscordState"
 
 // Styles
 import "../styles/discord.css"
-import "../styles/Chat.css"
-import "../styles/Sidebar.css"
 
 const DiscordInterface = () => {
   const navigate = useNavigate()
@@ -52,24 +34,22 @@ const DiscordInterface = () => {
     }
   }
 
-  const handleServerMenuClick = (itemId) => {
-    console.log(`Clicked: ${itemId}`)
-    if (itemId === "leave") navigate("/")
-    handlers.updateState({ showServerDropdown: false })
-  }
-
   // Add auth check
   useEffect(() => {
     if (!user) {
-      navigate("/login");
+      navigate("/login")
     }
-  }, [user, navigate]);
+  }, [user, navigate])
+
+  if (!user) {
+    return null
+  }
 
   return (
-    <div className={`discord-container ${state.isDarkTheme ? "dark-theme" : "light-theme"}`}>
+    <div className={`discord-container ${state.isDarkTheme ? "theme-dark" : "theme-light"}`}>
       {/* Overlay for mobile */}
-      {(state.showMobileSidebar || state.showMobileMembersPanel) && (
-        <div className="mobile-overlay" onClick={handlers.closeMobilePanels} />
+      {state.showMobileSidebar && (
+        <div className="mobile-overlay mobile-overlay--visible" onClick={handlers.closeMobilePanels} />
       )}
 
       {/* Header */}
@@ -83,7 +63,10 @@ const DiscordInterface = () => {
         </div>
 
         <div className="header-right">
-          <button className="header-btn" onClick={() => handlers.updateState({ showMemberList: !state.showMemberList })}>
+          <button
+            className="header-btn"
+            onClick={() => handlers.updateState({ showMemberList: !state.showMemberList })}
+          >
             <Users size={20} />
           </button>
           <button className="header-btn" onClick={handleLogout}>
