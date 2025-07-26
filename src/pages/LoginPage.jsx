@@ -1,3 +1,5 @@
+"use client"
+
 import { useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { MdArrowBack } from "react-icons/md"
