@@ -5,13 +5,38 @@
   box-sizing: border-box;
 }
 
-/* Reset CSS */
+/* Root variables */
 :root {
   width: 100%;
   height: 100%;
+
+  /* Discord-like color variables */
+  --grey-color: #36393f;
+  --dark-grey-color: #2f3136;
+  --light-grey-color: #8e9297;
+  --white-color: #ffffff;
+  --green-color: #43b581;
+  --blue-color: #7289da;
+  --red-color: #f04747;
+
+  /* Modern CSS variables for consistency */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f2f3f5;
+  --bg-tertiary: #e3e5e8;
+  --text-primary: #2e3338;
+  --text-secondary: #4e5058;
+  --text-muted: #6a6f77;
+  --accent: #5865f2;
+  --border: #e3e5e8;
+  --hover: #f2f3f5;
+  --active: #e3e5e8;
+  --online: #23a559;
+  --danger: #ed4245;
 }
 
-html, body, #root {
+html,
+body,
+#root {
   margin: 0;
   padding: 0;
   width: 100%;
@@ -19,32 +44,18 @@ html, body, #root {
   overflow-x: hidden;
 }
 
-.App {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.App {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Basic Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
   line-height: 1.6;
   color: #333;
   background: #f8fafc;
+}
+
+.App {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Additional Button Variants */
@@ -74,4 +85,33 @@ body {
   color: #ef4444;
   font-size: 0.75rem;
   margin-top: 0.25rem;
+}
+
+/* Loading styles */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: var(--bg-primary);
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid var(--border);
+  border-top: 4px solid var(--accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

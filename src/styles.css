@@ -1,9 +1,9 @@
-/* Global styles */
-@import './index.css';
+/* Global styles - import index.css first */
+@import "./index.css";
 
 /* Component styles */
-@import './styles/auth.css';
-@import './styles/getstarted.css';
-@import './styles/discord.css';
-@import './styles/password-reset.css';
-@import './styles/login.css';
+@import "./styles/auth.css";
+@import "./styles/getstarted.css";
+@import "./styles/discord.css";
+@import "./styles/password-reset.css";
+@import "./styles/login.css";
