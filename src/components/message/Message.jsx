@@ -1,6 +1,5 @@
-import React from "react";
-import "./Message.css";
-import { Avatar } from "../../icons/Icon";
+import "./Message.css"
+import { Avatar } from "../../icons/Icon"
 
 function Message() {
   return (
@@ -14,7 +13,7 @@ function Message() {
         <p>this is message block</p>
       </div>
     </div>
-  );
+  )
 }
 
-export default Message;
+export default Message

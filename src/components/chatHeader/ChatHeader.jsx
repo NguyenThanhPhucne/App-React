@@ -1,6 +1,5 @@
-import React from "react";
-import "./ChatHeader.css";
-import Icons from "../../icons/Icon";
+import "./ChatHeader.css"
+import Icons from "../../icons/Icon"
 
 function ChatHeader() {
   return (
@@ -16,15 +15,15 @@ function ChatHeader() {
         <Icons.Notifications className="chatHeader__right-icon" />
         <Icons.EditLocation className="chatHeader__right-icon" />
         <Icons.People className="chatHeader__right-icon" />
-      <div className="chatHeader__search">
-        <input type="text" name="" id="" placeholder="Search" className="chatHeader__searchbar"/>
-        <Icons.Search className="chatHeader__search-icon"/>
-      </div>
+        <div className="chatHeader__search">
+          <input type="text" name="" id="" placeholder="Search" className="chatHeader__searchbar" />
+          <Icons.Search className="chatHeader__search-icon" />
+        </div>
 
-      <Icons.Help className="chatHeader__right-icon" />
+        <Icons.Help className="chatHeader__right-icon" />
       </div>
     </div>
-  );
+  )
 }
 
-export default ChatHeader;
+export default ChatHeader
