@@ -1,6 +1,6 @@
 "use client"
 
-import { Mic, MicOff, Headphones, Settings, LogOut } from "lucide-react"
+import { Mic, MicOff, Headphones, Settings, LogOut, Plus, Sun, Moon, Search } from "lucide-react"
 import { useSelector } from "react-redux"
 import { selectUser } from "../../../features/userSlice"
 import Tooltip from "../../ui/Tooltip"
@@ -10,6 +10,28 @@ const UserPanel = ({ state, handlers }) => {
 
   return (
     <div className="user-panel">
+      {/* Mobile Search Button */}
+      <button className="mobile-search-btn" onClick={handlers.toggleMobileSearch}>
+        <Search size={20} />
+      </button>
+
+      {/* Controls sát bên user */}
+      <div className="user-panel__controls">
+        {/* Add Server Button */}
+        <Tooltip content="Add a Server">
+          <button className="add-server-btn">
+            <Plus size={20} />
+          </button>
+        </Tooltip>
+
+        {/* Theme Toggle */}
+        <Tooltip content={state.isDarkTheme ? "Switch to Light Mode" : "Switch to Dark Mode"}>
+          <button className="theme-toggle" onClick={handlers.toggleTheme}>
+            {state.isDarkTheme ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
+        </Tooltip>
+      </div>
+
       <div className="user-info">
         <div className="user-avatar">
           <span>U</span>
@@ -20,6 +42,7 @@ const UserPanel = ({ state, handlers }) => {
           <span className="status">Online</span>
         </div>
       </div>
+
       <div className="user-actions">
         {/* Mic button with tooltip */}
         <Tooltip content={state.isMuted ? "Unmute" : "Mute"}>

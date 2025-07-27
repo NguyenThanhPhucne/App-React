@@ -1,3 +1,17 @@
+/* Discord Interface Main CSS File */
+
+/* Import all modules */
+@import "./discord/variables.css";
+@import "./discord/base.css";
+@import "./discord/header.css";
+@import "./discord/sidebar.css";
+@import "./discord/content.css";
+@import "./discord/member-list.css";
+@import "./discord/notifications.css";
+@import "./discord/components.css";
+@import "./discord/mobile.css";
+@import "./discord/responsive.css";
+
 /* Discord Interface Styles */
 
 .app * {
@@ -89,36 +103,98 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-shrink: 0;
 }
 
-.home-btn {
-  width: 32px;
-  height: 32px;
-  background: var(--accent);
-  border: none;
-  border-radius: 50%;
-  color: white;
-  cursor: pointer;
+.header__center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
-  font-weight: 600;
-  font-size: 16px;
-}
-
-.home-btn:hover {
-  border-radius: 10px;
-  transform: scale(1.05);
+  z-index: 1;
 }
 
 .header__servers {
   display: flex;
   align-items: center;
   gap: 8px;
-  flex: 1;
-  justify-content: center;
   max-width: 400px;
+}
+
+/* User Panel Enhanced */
+.user-panel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+  min-width: 200px;
+  justify-content: flex-end;
+  flex-shrink: 0;
+  z-index: 2;
+  position: relative;
+}
+
+.user-panel:hover {
+  background: var(--hover);
+}
+
+.user-panel__controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 8px;
+}
+
+/* Add Server Button - moved to user panel */
+.user-panel__controls .add-server-btn {
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: 2px dashed var(--text-muted);
+  border-radius: 50%;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.user-panel__controls .add-server-btn:hover {
+  border-radius: 10px;
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: scale(1.05);
+}
+
+/* Theme Toggle - moved to user panel */
+.user-panel__controls .theme-toggle {
+  width: 36px;
+  height: 36px;
+  background: var(--bg-secondary);
+  border: none;
+  border-radius: 8px;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.user-panel__controls .theme-toggle:hover {
+  background: var(--hover);
+  color: var(--text-primary);
+  transform: scale(1.05);
+}
+
+/* Remove old header controls */
+.header__controls {
+  display: none;
 }
 
 .scroll-btn {
@@ -186,70 +262,7 @@
   border-radius: 50%;
 }
 
-.header__controls {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-width: 200px;
-  justify-content: flex-end;
-}
-
-/* Updated Add Server Button - moved to controls */
-.header__controls .add-server-btn {
-  width: 36px;
-  height: 36px;
-  background: transparent;
-  border: 2px dashed var(--text-muted);
-  border-radius: 50%;
-  color: var(--text-muted);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-}
-
-.header__controls .add-server-btn:hover {
-  border-radius: 10px;
-  border-color: var(--accent);
-  color: var(--accent);
-  transform: scale(1.05);
-}
-
-.theme-toggle {
-  width: 36px;
-  height: 36px;
-  background: var(--bg-secondary);
-  border: none;
-  border-radius: 8px;
-  color: var(--text-muted);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-}
-
-.theme-toggle:hover {
-  background: var(--hover);
-  color: var(--text-primary);
-  transform: scale(1.05);
-}
-
 /* User Panel */
-.user-panel {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 4px 8px;
-  border-radius: 8px;
-  transition: background 0.2s ease;
-}
-
-.user-panel:hover {
-  background: var(--hover);
-}
-
 .user-info {
   display: flex;
   align-items: center;
@@ -2045,18 +2058,34 @@
     min-width: 60px;
   }
 
-  .header__servers {
+  .header__center {
     display: none;
   }
 
-  .header__controls {
-    min-width: 60px;
-    gap: 8px;
+  .user-panel__controls {
+    display: none;
   }
 
-  .mobile-menu-btn,
   .mobile-search-btn {
     display: flex;
+  }
+
+  .user-details {
+    display: none;
+  }
+
+  .user-actions {
+    gap: 4px;
+  }
+
+  .action-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .user-panel {
+    min-width: 60px;
+    gap: 8px;
   }
 
   .search {
