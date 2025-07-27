@@ -1,0 +1,264 @@
+/* Responsive Design */
+
+/* Desktop and Large Screens */
+@media (min-width: 1024px) {
+  .sidebar {
+    position: relative;
+    width: 240px;
+  }
+
+  .mobile-menu-btn,
+  .mobile-search-btn {
+    display: none;
+  }
+
+  .mobile-members-panel,
+  .mobile-notification-modal,
+  .mobile-mute-modal {
+    display: none;
+  }
+
+  .mobile-bottom-nav {
+    display: none;
+  }
+}
+
+/* Tablet */
+@media (max-width: 1023px) and (min-width: 768px) {
+  .sidebar {
+    position: relative;
+    width: 200px;
+  }
+
+  .mobile-menu-btn,
+  .mobile-search-btn {
+    display: none;
+  }
+
+  .header__servers {
+    max-width: 300px;
+  }
+
+  .search {
+    min-width: 150px;
+  }
+
+  .mobile-members-panel,
+  .mobile-notification-modal,
+  .mobile-mute-modal {
+    display: none;
+  }
+
+  .member-list {
+    width: 200px;
+  }
+
+  .member-list--visible {
+    width: 200px;
+  }
+
+  .mobile-bottom-nav {
+    display: none;
+  }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .header {
+    padding: 0 12px;
+    height: 56px;
+  }
+
+  .header__home {
+    min-width: 60px;
+  }
+
+  .header__center {
+    display: none;
+  }
+
+  .user-panel__controls {
+    display: none;
+  }
+
+  .mobile-search-btn {
+    display: flex;
+  }
+
+  .user-details {
+    display: none;
+  }
+
+  .user-actions {
+    gap: 4px;
+  }
+
+  .action-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .user-panel {
+    min-width: 60px;
+    gap: 8px;
+  }
+
+  .search {
+    display: none;
+  }
+
+  .sidebar {
+    position: fixed;
+    left: -240px;
+    top: 56px;
+    height: calc(100vh - 56px);
+    width: 240px;
+    z-index: 1000;
+    transition: left 0.3s ease;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .sidebar--open {
+    left: 0;
+  }
+
+  .server-dropdown {
+    left: 4px;
+    right: 4px;
+  }
+
+  .content__header {
+    height: 56px;
+    padding: 0 12px;
+  }
+
+  .channel-info {
+    gap: 6px;
+  }
+
+  .channel-name {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .channel-desc {
+    font-size: 14px;
+    color: var(--online);
+    font-weight: 500;
+  }
+
+  .header-actions {
+    gap: 12px;
+  }
+
+  .content__body {
+    padding: 16px 12px;
+  }
+
+  .content__footer {
+    padding: 12px;
+  }
+
+  .message-input {
+    padding: 12px 16px;
+    gap: 12px;
+    border-radius: 24px;
+  }
+
+  .message-input input {
+    font-size: 16px;
+  }
+
+  .member-list {
+    display: none;
+  }
+
+  .mobile-members-panel,
+  .mobile-notification-modal,
+  .mobile-mute-modal {
+    display: block;
+  }
+
+  .mobile-bottom-nav {
+    display: flex;
+  }
+
+  /* Hide desktop notification dropdown on mobile */
+  .notification-dropdown {
+    display: none;
+  }
+
+  /* Mobile tooltip adjustments */
+  .notification-tooltip,
+  .member-list-tooltip,
+  .action-tooltip {
+    display: none;
+  }
+
+  .tooltip-container:hover .action-tooltip {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .header {
+    padding: 0 8px;
+  }
+
+  .user-actions {
+    gap: 2px;
+  }
+
+  .action-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .mobile-members-panel {
+    max-height: 100vh;
+  }
+
+  .content__footer {
+    padding: 8px;
+  }
+
+  .message-input {
+    padding: 10px 14px;
+  }
+}
+
+/* Landscape orientation for mobile */
+@media (max-height: 600px) and (orientation: landscape) {
+  .mobile-members-panel {
+    max-height: 100vh;
+  }
+}
+
+/* Touch improvements for mobile */
+@media (hover: none) and (pointer: coarse) {
+  .action-btn,
+  .notification-btn,
+  .mobile-menu-btn,
+  .mobile-search-btn {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .mobile-notification-option,
+  .mobile-mute-option {
+    min-height: 56px;
+  }
+
+  .member-item {
+    min-height: 48px;
+  }
+}
+
+/* Remove member tabs completely on mobile */
+@media (max-width: 767px) {
+  .mobile-member-tabs {
+    display: none;
+  }
+}

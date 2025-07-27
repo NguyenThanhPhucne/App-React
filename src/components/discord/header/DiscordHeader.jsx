@@ -2,7 +2,6 @@
 
 import { Home, Menu } from "lucide-react"
 import ServerList from "./ServerList"
-import HeaderControls from "./HeaderControls"
 import UserPanel from "./UserPanel"
 
 const DiscordHeader = ({ servers, state, updateState, handlers }) => {
@@ -17,9 +16,9 @@ const DiscordHeader = ({ servers, state, updateState, handlers }) => {
         </button>
       </div>
 
-      <ServerList servers={servers} state={state} updateState={updateState} handlers={handlers} />
-
-      <HeaderControls state={state} handlers={handlers} />
+      <div className="header__center">
+        <ServerList servers={servers} state={state} updateState={updateState} handlers={handlers} />
+      </div>
 
       <UserPanel state={state} handlers={handlers} />
     </header>
