@@ -11,6 +11,7 @@
 @import "./discord/components.css";
 @import "./discord/mobile.css";
 @import "./discord/responsive.css";
+@import "./discord/modals.css";
 
 /* Discord Interface Styles */
 
@@ -2068,19 +2069,6 @@
 
   .mobile-search-btn {
     display: flex;
-  }
-
-  .user-details {
-    display: none;
-  }
-
-  .user-actions {
-    gap: 4px;
-  }
-
-  .action-btn {
-    width: 36px;
-    height: 36px;
   }
 
   .user-panel {

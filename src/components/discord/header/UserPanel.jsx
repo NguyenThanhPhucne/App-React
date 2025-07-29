@@ -19,7 +19,7 @@ const UserPanel = ({ state, handlers }) => {
       <div className="user-panel__controls">
         {/* Add Server Button */}
         <Tooltip content="Add a Server">
-          <button className="add-server-btn">
+          <button className="add-server-btn" onClick={handlers.toggleCreateServerModal}>
             <Plus size={20} />
           </button>
         </Tooltip>

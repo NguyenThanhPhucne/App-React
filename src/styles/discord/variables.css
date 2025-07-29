@@ -22,6 +22,8 @@
   --modal-overlay: rgba(0, 0, 0, 0.5);
   --mention-bg: #5865f2;
   --mention-text: #ffffff;
+  --accent-hover: #4752c4;
+  --success: #23a559;
 }
 
 .theme-dark {
@@ -47,4 +49,6 @@
   --modal-overlay: rgba(0, 0, 0, 0.7);
   --mention-bg: #5865f2;
   --mention-text: #ffffff;
+  --accent-hover: #4752c4;
+  --success: #23a559;
 }
