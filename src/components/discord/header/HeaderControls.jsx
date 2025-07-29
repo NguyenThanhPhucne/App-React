@@ -12,7 +12,7 @@ const HeaderControls = ({ state, handlers }) => {
 
       {/* Add Server Button */}
       <Tooltip content="Add a Server">
-        <button className="add-server-btn">
+        <button className="add-server-btn" onClick={handlers.toggleCreateServerModal}>
           <Plus size={20} />
         </button>
       </Tooltip>

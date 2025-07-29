@@ -133,6 +133,18 @@ export const useDiscordHandlers = (state, updateState) => {
       })
     },
 
+    toggleCreateServerModal: () => {
+      updateState({ showCreateServerModal: !state.showCreateServerModal })
+    },
+
+    handleServerCreated: async (newServer) => {
+      console.log("New server created:", newServer)
+      // Here you would typically add the server to your servers list
+      // For now, we'll just log it and simulate a delay
+      await new Promise(resolve => setTimeout(resolve, 1000)) // Simulate API call
+      // You can implement the actual server creation logic here
+    },
+
     handleMemberSearch: (query) => {
       updateState({ memberSearchQuery: query })
     },
@@ -175,8 +187,6 @@ export const useDiscordHandlers = (state, updateState) => {
         navigate("/login")
       }
     },
-
-    // Thêm updateState để các component con có thể sử dụng
     updateState,
   }
 

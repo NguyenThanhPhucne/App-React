@@ -14,6 +14,7 @@ import MobileNotificationModal from "../components/discord/mobile/MobileNotifica
 import MobileMembersPanel from "../components/discord/mobile/MobileMembersPanel"
 import MobileMuteModal from "../components/discord/mobile/MobileMuteModal"
 import MobileNotificationSettingsModal from "../components/discord/mobile/MobileNotificationSettingsModal"
+import CreateServerModal from "../components/discord/modals/CreateServerModal"
 import "../styles/discord.css"
 
 const DiscordInterface = () => {
@@ -71,6 +72,13 @@ const DiscordInterface = () => {
 
       {/* Mobile Notification Settings Modal */}
       <MobileNotificationSettingsModal state={state} handlers={handlers} />
+
+      {/* Create Server Modal */}
+      <CreateServerModal 
+        isOpen={state.showCreateServerModal} 
+        onClose={() => handlers.toggleCreateServerModal()}
+        onServerCreated={handlers.handleServerCreated}
+      />
 
       {/* Header */}
       <DiscordHeader servers={servers} state={state} updateState={updateState} handlers={handlers} />

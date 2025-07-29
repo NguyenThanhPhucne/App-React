@@ -21,6 +21,7 @@ export const useDiscordState = () => {
     showMobileNotificationModal: false,
     showMobileMuteModal: false,
     showMobileNotificationSettings: false,
+    showCreateServerModal: false,
     memberSearchQuery: "",
     isMuted: false,
     isDeafened: false,
