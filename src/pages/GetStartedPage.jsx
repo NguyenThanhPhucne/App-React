@@ -11,15 +11,6 @@ const GetStartedPage = () => {
     <div className="enhanced-fullscreen-container">
       <div className="floating-shapes">{shapes}</div>
 
-      <div className="enhanced-top-nav">
-        <div className="nav-left" />
-        <div className="nav-right">
-          <button className="enhanced-signin-button" onClick={() => navigate("/login")}>
-            Sign In
-          </button>
-        </div>
-      </div>
-
       <div className="enhanced-content">
         <div className="content-wrapper">
           <h1 className="enhanced-title">

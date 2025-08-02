@@ -1,43 +1,47 @@
-"use client"
+"use client";
 
-import { useNavigate } from "react-router-dom"
-import { useDispatch } from "react-redux"
-import { MdArrowBack } from "react-icons/md"
-import { SiGoogle, SiFacebook } from "react-icons/si"
-import { MdEmail } from "react-icons/md"
-import { useForm } from "../hooks/useForm"
-import { apiService } from "../services/apiServices"
-import { signIn } from "../features/userSlice"
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { MdArrowBack } from "react-icons/md";
+import { SiGoogle } from "react-icons/si";
+import { MdEmail } from "react-icons/md";
+import { useForm } from "../hooks/useForm";
+import apiService from "../app/services/apiServices";
+import { signIn } from "../features/userSlice";
 
 const LoginPage = () => {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const { values, handleChange, handleSubmit, isValid } = useForm({
     account: "",
     password: "",
-  })
+  }, {
+    account: { required: true },
+    password: { required: true, minLength: 6 },
+  });
 
   const onSubmit = async (data) => {
     try {
-      const userData = await apiService.login(data.account, data.password)
-      dispatch(signIn(userData))
-      navigate("/app")
+      const userData = await apiService.login(data.account, data.password);
+      dispatch(signIn(userData));
     } catch (error) {
-      console.error("Login failed:", error)
+      console.error("Login failed:", error);
       // You might want to show an error message to the user here
     }
-  }
+  };
 
   const handleSocialLogin = (provider) => {
-    console.log(`Login with ${provider}`)
-    navigate("/app")
-  }
+    console.log(`Login with ${provider}`);
+    navigate("/app");
+  };
 
   return (
     <div className="auth-container">
       <div className="form-section">
-        <button className="back-button" onClick={() => navigate("/")} type="button">
+        <button className="back-button" type="button">
+          {" "}
+          {/* This button should navigate back to the previous page */}
           <MdArrowBack size={20} />
         </button>
 
@@ -47,8 +51,8 @@ const LoginPage = () => {
           <form
             className="auth-form"
             onSubmit={(e) => {
-              e.preventDefault()
-              handleSubmit(onSubmit)
+              e.preventDefault();
+              handleSubmit(onSubmit);
             }}
           >
             <div className="input-group">
@@ -59,7 +63,7 @@ const LoginPage = () => {
                 placeholder="Enter..."
                 value={values.account}
                 onChange={handleChange}
-                required
+                autoComplete="username"
               />
             </div>
 
@@ -72,7 +76,7 @@ const LoginPage = () => {
                 placeholder="Enter..."
                 value={values.password}
                 onChange={handleChange}
-                required
+                autoComplete="current-password"
               />
             </div>
 
@@ -80,15 +84,19 @@ const LoginPage = () => {
               <a
                 href="#"
                 onClick={(e) => {
-                  e.preventDefault()
-                  navigate("/forgot-password")
+                  e.preventDefault();
+                  navigate("/forgot-password");
                 }}
               >
                 Forgot password?
               </a>
             </div>
 
-            <button type="submit" className={`submit-button ${isValid ? "active" : ""}`} disabled={!isValid}>
+            <button
+              type="submit"
+              className={`submit-button ${isValid ? "active" : ""}`}
+              disabled={!isValid}
+            >
               Sign In
             </button>
           </form>
@@ -96,21 +104,21 @@ const LoginPage = () => {
           <div className="divider">Or</div>
 
           <div className="social-buttons">
-            <button className="social-button email" onClick={() => navigate("/signup")}>
+            <button
+              className="social-button email"
+              onClick={() => navigate("/signup")}
+            >
               <MdEmail size={20} />
               Sign in with Email & Phone
             </button>
 
-            <div className="login-social-bottom">
-              <button className="social-button google" onClick={() => handleSocialLogin("google")}>
-                <SiGoogle size={18} />
-                Google
-              </button>
-              <button className="social-button facebook" onClick={() => handleSocialLogin("facebook")}>
-                <SiFacebook size={18} />
-                Facebook
-              </button>
-            </div>
+            <button
+              className="social-button google"
+              onClick={() => handleSocialLogin("google")}
+            >
+              <SiGoogle size={18} />
+              Google
+            </button>
           </div>
 
           <div className="auth-link">
@@ -118,8 +126,8 @@ const LoginPage = () => {
             <a
               href="#"
               onClick={(e) => {
-                e.preventDefault()
-                navigate("/signup")
+                e.preventDefault();
+                navigate("/signup");
               }}
             >
               Sign Up
@@ -135,7 +143,7 @@ const LoginPage = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LoginPage
+export default LoginPage;

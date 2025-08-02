@@ -1,0 +1,136 @@
+/* Add these styles at the end of your existing modals.css file */
+
+/* Channel Creation Specific Styles */
+.channel-type-display {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  margin-bottom: 24px;
+  border: 2px solid var(--border);
+}
+
+.channel-type-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: var(--accent);
+  color: white;
+  border-radius: 8px;
+}
+
+.channel-type-text {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 16px;
+}
+
+.channel-name-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.channel-name-prefix {
+  position: absolute;
+  left: 16px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  z-index: 1;
+}
+
+.server-name-field {
+  width: 100%;
+  padding: 12px 16px 12px 40px;
+  background: var(--bg-tertiary);
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.server-name-field:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--bg-secondary);
+}
+
+.channel-name-help {
+  display: block;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--text-muted, #72767d);
+  font-style: italic;
+}
+
+.validation-error {
+  display: block;
+  margin-top: 8px;
+  color: var(--danger, #ed4245);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.required-asterisk {
+  color: var(--danger, #ed4245);
+  font-weight: 600;
+  margin-left: 2px;
+}
+
+.optional-text {
+  color: var(--text-muted, #72767d);
+  font-weight: 400;
+  font-size: 12px;
+  text-transform: lowercase;
+  margin-left: 4px;
+}
+
+.channel-description-field {
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--bg-tertiary, #40444b);
+  border: 2px solid var(--border, #36393f);
+  border-radius: 8px;
+  color: var(--text-primary, #dcddde);
+  font-size: 16px;
+  font-weight: 400;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 80px;
+  max-height: 120px;
+  transition: all 0.2s ease;
+}
+
+.channel-description-field:focus {
+  outline: none;
+  border-color: var(--accent, #5865f2);
+  background: var(--bg-secondary, #36393f);
+}
+
+.channel-description-field::placeholder {
+  color: var(--text-muted, #72767d);
+  font-style: italic;
+}
+
+.character-count {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--text-muted, #72767d);
+}
+
+.character-count--warning {
+  color: var(--warning, #faa61a) !important;
+}
+
+.server-name-input + .server-name-input {
+  margin-top: 24px;
+}
