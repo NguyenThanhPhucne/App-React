@@ -193,6 +193,8 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  touch-action: none;
+  -webkit-overflow-scrolling: touch;
 }
 
 .mobile-notification-modal--open {
@@ -411,6 +413,8 @@
   margin: 0 -12px;
   position: relative;
   overflow: hidden;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .mobile-notification-option::before {
@@ -661,6 +665,8 @@
   flex-shrink: 0;
   position: relative;
   overflow: hidden;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .mobile-back-btn::before {
@@ -742,6 +748,8 @@
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .mobile-action-btn::before {
@@ -763,6 +771,7 @@
 .mobile-action-btn:hover {
   color: var(--text-primary);
   transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .mobile-action-btn:active {
@@ -772,6 +781,11 @@
 .mobile-action-btn svg {
   position: relative;
   z-index: 1;
+  transition: transform 0.2s ease;
+}
+
+.mobile-action-btn:hover svg {
+  transform: scale(1.1);
 }
 
 .mobile-members-panel__content {
@@ -1003,6 +1017,17 @@
   100% {
     transform: scale(1);
   }
+}
+
+/* Enhanced notification bell animation */
+.mobile-action-btn:hover svg[data-lucide="bell"] {
+  animation: bellRing 0.3s ease-in-out;
+}
+
+@keyframes bellRing {
+  0%, 100% { transform: rotate(0deg) scale(1.1); }
+  25% { transform: rotate(15deg) scale(1.1); }
+  75% { transform: rotate(-15deg) scale(1.1); }
 }
 
 /* Dark mode specific enhancements */

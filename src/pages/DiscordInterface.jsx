@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useDiscordState } from "../hooks/useDiscordState";
 import { useDiscordHandlers } from "../hooks/useDiscordHandlers";
+import { members } from "../app/data/discordData";
 
 import DiscordHeader from "../app/components/discord/header/DiscordHeader";
 import CreateServerModal from "../app/components/discord/modals/CreateServerModal";
@@ -63,12 +64,12 @@ const DiscordInterface = () => {
 
   return (
     <div className={`app ${state.isDarkTheme ? "theme-dark" : "theme-light"}`}>
-      {/* Mobile Components 
+      {/* Mobile Components */}
       <MobileDiscordInterface
         state={state}
         handlers={handlers}
         members={members}
-      />*/}
+      />
 
       {/* Create Server Modal */}
       <CreateServerModal
@@ -100,6 +101,7 @@ const DiscordInterface = () => {
         handlers={handlers}
         dropdownRef={dropdownRef}
         notificationRef={notificationRef}
+        members={members}
       />
     </div>
   );
