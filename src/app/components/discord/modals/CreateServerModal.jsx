@@ -108,7 +108,7 @@ const CreateServerModal = ({ isOpen, onClose, onServerCreated }) => {
                 <ChevronRight size={16} />
               </button>
 
-              <div className="template-section">
+              {/* <div className="template-section">
                 <h3 className="template-title">START FROM A TEMPLATE</h3>
                 <div className="template-options">
                   <button className="template-option" onClick={() => handleTemplateClick("Gaming")}>
@@ -143,7 +143,7 @@ const CreateServerModal = ({ isOpen, onClose, onServerCreated }) => {
                     <ChevronRight size={16} />
                   </button>
                 </div>
-              </div>
+              </div> */}
 
               <div className="join-section">
                 <p className="join-question">Have an invite already?</p>
@@ -253,18 +253,18 @@ const CreateServerModal = ({ isOpen, onClose, onServerCreated }) => {
               <input
                 type="text"
                 id="invite-link"
-                placeholder="https://discord.gg/hTKzmak"
+                placeholder="Please put your link here"
                 className="invite-link-field"
               />
 
-              <div className="invite-examples">
+              {/* <div className="invite-examples">
                 <h4>Invites Should Look Like</h4>
                 <div className="example-links">
                   <span>hTKzmak</span>
                   <span>https://discord.gg/hTKzmak</span>
                   <span>https://discord.gg/wumpus-friends</span>
                 </div>
-              </div>
+              </div> */}
 
               <div className="discovery-section">
                 <div className="discovery-icon">
@@ -310,4 +310,4 @@ const CreateServerModal = ({ isOpen, onClose, onServerCreated }) => {
   )
 }
 
-export default CreateServerModal 
+export default CreateServerModal;

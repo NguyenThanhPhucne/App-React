@@ -97,19 +97,12 @@ const CreateChannelModal = ({
               CHANNEL NAME <span className="required-asterisk">*</span>
             </label>
             <div className="channel-name-wrapper">
-              <div className="channel-name-prefix">
-                {channelType === "text" ? (
-                  <Hash size={16} />
-                ) : (
-                  <Volume2 size={16} />
-                )}
-              </div>
               <input
                 type="text"
                 id="channel-name"
                 value={channelName}
                 onChange={handleNameChange}
-                placeholder={channelType === "text" ? "new-channel" : "General"}
+                placeholder={channelType === "text" ? "New-channel" : "General"}
                 className="server-name-field"
                 maxLength={100}
                 autoFocus
@@ -137,7 +130,7 @@ const CreateChannelModal = ({
               id="channel-description"
               value={description}
               onChange={handleDescriptionChange}
-              placeholder="What's this channel about?"
+              placeholder="  What's this channel about?"
               className="channel-description-field"
               maxLength={1024}
               rows={3}
