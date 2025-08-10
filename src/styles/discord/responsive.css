@@ -738,6 +738,26 @@
   .show-mobile {
     display: block !important;
   }
+
+  /* Show mobile menu button */
+  .mobile-menu-btn,
+  .mobile-search-btn {
+    display: flex !important;
+  }
+
+  /* Hide desktop sidebar */
+  .sidebar {
+    display: none;
+  }
+
+  /* Adjust header layout for mobile */
+  .header__home {
+    gap: 8px;
+  }
+
+  .header__servers {
+    max-width: 50%;
+  }
 }
 
 .hide-tablet {

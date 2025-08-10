@@ -210,17 +210,31 @@
     font-size: 0.9rem;
   }
 
-  .server-name-field {
-    padding: 10px 14px 10px 36px;
+  .channel-name-prefix {
+    width: 40px;
   }
 
-  .channel-name-prefix {
-    left: 14px;
+  .server-name-field {
+    padding: 10px 14px 10px 52px;
+    font-size: 1rem;
   }
 
   .channel-description-field {
     padding: 10px 14px;
     min-height: 70px;
+    font-size: 1rem;
+  }
+
+  /* Better touch targets */
+  .channel-name-help,
+  .validation-error,
+  .character-count {
+    font-size: 0.8rem;
+  }
+
+  /* Improved spacing */
+  .server-name-input {
+    margin-bottom: 18px;
   }
 }
 

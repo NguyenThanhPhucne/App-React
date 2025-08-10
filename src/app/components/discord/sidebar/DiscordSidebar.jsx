@@ -6,7 +6,6 @@ import { selectCurrentServer } from "../../../../features/appSlice";
 // Components
 import ServerDropdown from "./ServerDropdown";
 import ChannelCategory from "./ChannelCategory";
-import MobileBottomNav from "./MobileBottomNav";
 
 const DiscordSidebar = ({
   state,
@@ -22,6 +21,12 @@ const DiscordSidebar = ({
     channels?.filter((channel) => channel.type === "voice") || [];
 
   return (
+    <>
+      {/* Mobile Overlay */}
+      <div
+        className={`mobile-overlay ${state.showMobileSidebar ? "mobile-overlay--visible" : ""}`}
+        onClick={() => handlers.updateState({ showMobileSidebar: false })}
+      />
     <aside
       className={`sidebar ${state.showMobileSidebar ? "sidebar--open" : ""}`}
     >
@@ -48,9 +53,8 @@ const DiscordSidebar = ({
           handlers={handlers}
         />
       </div>
-
-      <MobileBottomNav />
     </aside>
+    </>
   );
 };
 

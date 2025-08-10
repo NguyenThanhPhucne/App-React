@@ -1,25 +1,19 @@
-"use client";
+"use client"
 
-import { useEffect, useCallback } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { clearTextChannel } from "../../../../features/channelSlice";
-import apiService from "../../../services/apiServices";
-import {
-  selectServers,
-  selectCurrentServer ,
-  setCurrentServer,
-} from "../../../../features/appSlice";
+import { useEffect, useCallback } from "react"
+import { useSelector, useDispatch } from "react-redux"
+import { clearTextChannel } from "../../../../features/channelSlice"
+import apiService from "../../../services/apiServices"
+import { selectServers, selectCurrentServer, setCurrentServer } from "../../../../features/appSlice"
 
-import { Home, Menu } from "lucide-react";
-import ServerList from "./ServerList";
-import UserPanel from "./UserPanel";
+import { Home, Menu } from "lucide-react"
+import ServerList from "./ServerList"
+import UserPanel from "./UserPanel"
 
-const DiscordHeader = ({ state, updateState, handlers }) => {
-  
-  const dispatch = useDispatch();
-  const servers = useSelector(selectServers);
-  const currentServer = useSelector(selectCurrentServer);
-
+const DiscordHeader = ({ state, handlers }) => {
+  const dispatch = useDispatch()
+  const servers = useSelector(selectServers)
+  const currentServer = useSelector(selectCurrentServer)
 
   // Function to fetch a specific server by ID
   const fetchServerById = useCallback(
@@ -27,86 +21,91 @@ const DiscordHeader = ({ state, updateState, handlers }) => {
       try {
         // Add validation before making API call
         if (!serverId || typeof serverId !== "string") {
-          console.error("Invalid server ID:", serverId);
-          return;
+          console.error("Invalid server ID:", serverId)
+          return
         }
 
-        const serverData = await apiService.getServerById(serverId);
+        const serverData = await apiService.getServerById(serverId)
 
         // Set as current server
-        dispatch(setCurrentServer(serverData));
-        dispatch(clearTextChannel());
+        dispatch(setCurrentServer(serverData))
+        dispatch(clearTextChannel())
       } catch (error) {
-        console.error("Error fetching server:", error);
+        console.error("Error fetching server:", error)
         // Add more detailed error logging
-        console.error("Failed server ID:", serverId);
-        console.error("Error details:", error.message);
+        console.error("Failed server ID:", serverId)
+        console.error("Error details:", error.message)
       }
     },
-    [dispatch]
-  );
+    [dispatch],
+  )
 
   // Handle server selection
   const handleServerSelect = useCallback(
     async (serverId) => {
       // Validate serverId
       if (!serverId) {
-        console.error("No server ID provided");
-        return;
+        console.error("No server ID provided")
+        return
       }
 
       // Don't refetch if this server is already selected
       if (currentServer?._id === serverId) {
-        return;
+        return
       }
 
       // Fetch the server data
-      await fetchServerById(serverId);
+      await fetchServerById(serverId)
     },
-    [currentServer?._id, fetchServerById]
-  );
+    [currentServer?._id, fetchServerById],
+  )
 
   // Auto-select first server when servers are loaded and no current server is set
   useEffect(() => {
     if (servers.length > 0 && !currentServer) {
       // Use _id instead of id, and check if servers array has the correct structure
-      const firstServer = servers[0];
-      const firstServerId = firstServer._id || firstServer.id;
+      const firstServer = servers[0]
+      const firstServerId = firstServer._id || firstServer.id
 
       if (firstServerId) {
-        handleServerSelect(firstServerId);
+        handleServerSelect(firstServerId)
       } else {
-        console.error("No valid server ID found in first server:", firstServer);
+        console.error("No valid server ID found in first server:", firstServer)
       }
     }
-  }, [servers, currentServer, handleServerSelect]);
+  }, [servers, currentServer, handleServerSelect])
 
   return (
     <header className="header">
       <div className="header__home">
+        {/* Mobile Hamburger Menu */}
         <button
-          className="mobile-menu-btn"
-          onClick={handlers.toggleMobileSidebar}
+          className="mobile-menu-btn show-mobile"
+          onClick={() => handlers.updateState({ showMobileSidebar: true })}
+          aria-label="Open navigation menu"
         >
           <Menu size={20} />
         </button>
+
+        {/* Home Button */}
         <button className="home-btn">
           <Home size={20} />
         </button>
+
+        {/* Mobile Server Name Display */}
+        <div className="mobile-server-name show-mobile">
+          <span>{currentServer?.name || "Select Server"}</span>
+        </div>
       </div>
 
-      <div className="header__center">
-        <ServerList
-          servers={servers}
-          state={state}
-          updateState={handleServerSelect}
-          handlers={handlers}
-        />
+      {/* Desktop Server List */}
+      <div className="header__center hide-mobile">
+        <ServerList servers={servers} state={state} updateState={handleServerSelect} handlers={handlers} />
       </div>
 
       <UserPanel state={state} handlers={handlers} />
     </header>
-  );
-};
+  )
+}
 
-export default DiscordHeader;
+export default DiscordHeader

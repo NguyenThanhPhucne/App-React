@@ -494,6 +494,8 @@
   .create-server-modal {
     width: 95%;
     margin: 20px;
+    max-height: 90vh;
+    overflow-y: auto;
   }
 
   .modal-content {
@@ -515,6 +517,13 @@
   .modal-title {
     font-size: 1.25rem;
   }
+
+  /* Improve modal overlay for mobile */
+  .modal-overlay {
+    padding: 10px;
+    align-items: flex-start;
+    padding-top: 20px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -522,6 +531,7 @@
     width: 100%;
     margin: 10px;
     border-radius: 8px;
+    max-height: 95vh;
   }
 
   .modal-content {
@@ -556,6 +566,18 @@
   .icon-upload-area {
     width: 80px;
     height: 80px;
+  }
+
+  /* Better touch targets for mobile */
+  .server-option,
+  .purpose-option {
+    padding: 18px 20px;
+    font-size: 1rem;
+  }
+
+  .modal-overlay {
+    padding: 5px;
+    padding-top: 10px;
   }
 }
 
