@@ -10,6 +10,7 @@
 @import "./discord/notifications.css";
 @import "./discord/components.css";
 @import "./discord/mobile.css";
+@import "./discord/mobile-sidebar.css";
 @import "./discord/responsive.css";
 @import "./discord/modals.css";
 
