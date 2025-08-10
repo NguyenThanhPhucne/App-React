@@ -29,9 +29,10 @@
   color: #fff;
   padding: 20px 24px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   border-bottom: 1px solid #202225;
+  position: relative;
 }
 
 .modal-title {
@@ -40,6 +41,7 @@
   margin: 0;
   color: #ffffff;
   letter-spacing: -0.01em;
+  text-align: center;
 }
 
 .modal-close-btn {
@@ -54,6 +56,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .modal-close-btn:hover {
@@ -498,6 +504,10 @@
     padding: 16px 20px;
   }
 
+  .modal-close-btn {
+    right: 20px;
+  }
+
   .modal-footer {
     padding: 14px 20px;
   }
@@ -520,6 +530,12 @@
 
   .modal-header {
     padding: 14px 16px;
+  }
+
+  .modal-close-btn {
+    right: 16px;
+    width: 32px;
+    height: 32px;
   }
 
   .modal-footer {
