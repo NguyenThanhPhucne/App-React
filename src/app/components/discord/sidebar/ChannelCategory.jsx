@@ -3,6 +3,8 @@
 import React from "react";
 import { ChevronDown, ChevronRight, Plus, Hash, Volume2 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
+import { useVoiceRoom } from "../../../../hooks/useVoiceRoom";
+import { selectUser } from "../../../../features/userSlice";
 import {
   setTextChannel,
   setVoiceChannel,
@@ -10,17 +12,27 @@ import {
 } from "../../../../features/channelSlice";
 import socketService from "../../../services/socketService";
 
-const ChannelCategory = ({
-  type,
-  title,
-  channels,
-  state,
-  handlers,
-}) => {
+const ChannelCategory = ({ type, title, channels, state, handlers }) => {
   const previousChannel = useSelector(selectTextChannelId);
   const dispatch = useDispatch();
   const isCollapsed = state.collapsedCategories?.[type];
   const ChannelIcon = type === "text" ? Hash : Volume2;
+
+  const user = useSelector(selectUser);
+  const voiceChannelId = useSelector((state) => state.channel.voiceChannelId);
+  const {
+    participants,
+    connected,
+    muted,
+    connecting,
+    error,
+    joinVoiceChannel,
+    leaveVoiceChannel,
+    toggleMute,
+  } = useVoiceRoom({
+    channelId: voiceChannelId,
+    user,
+  });
 
   const handleChannelSelect = async (channel) => {
     const channelData = {
@@ -38,8 +50,21 @@ const ChannelCategory = ({
       } catch (error) {
         console.error("Error joining channel:", error);
       }
-    } else {
+    } else if (type === "voice") {
+      // Handle voice channel selection
+      if (connected && voiceChannelId === channelData.id) {
+        // Already in this channel, do nothing or show voice panel
+        return;
+      }
+
+      if (connected) {
+        // Leave current voice channel first
+        leaveVoiceChannel();
+      }
+
+      // Join new voice channel
       dispatch(setVoiceChannel(channelData));
+      // The useVoiceRoom hook will automatically join when channelId changes
     }
   };
 

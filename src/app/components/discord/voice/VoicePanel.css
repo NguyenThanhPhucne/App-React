@@ -1,0 +1,168 @@
+/* d:\Coming\frontend\src\app\components\discord\voice\VoicePanel.css */
+.voice-panel {
+  background: #2f3136;
+  border-radius: 8px;
+  margin: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.voice-panel__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: #36393f;
+  border-bottom: 1px solid #40444b;
+  color: #dcddde;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.voice-panel__participants {
+  padding: 8px 0;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.voice-participant {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  color: #dcddde;
+  transition: background-color 0.15s ease;
+}
+
+.voice-participant:hover {
+  background: #36393f;
+}
+
+.voice-participant.speaking {
+  background: rgba(67, 181, 129, 0.1);
+  border-left: 3px solid #43b581;
+}
+
+.voice-participant__avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #5865f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: white;
+  font-size: 14px;
+}
+
+.voice-participant__name {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.voice-participant__status {
+  display: flex;
+  align-items: center;
+}
+
+.voice-participant__status .muted {
+  color: #ed4245;
+}
+
+.voice-panel__controls {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px;
+  background: #36393f;
+  border-top: 1px solid #40444b;
+}
+
+.voice-control {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  background: #4f545c;
+  color: #dcddde;
+}
+
+.voice-control:hover {
+  background: #5865f2;
+}
+
+.voice-control.muted {
+  background: #ed4245;
+}
+
+.voice-control.muted:hover {
+  background: #c23e41;
+}
+
+.voice-control.disconnect {
+  background: #ed4245;
+}
+
+.voice-control.disconnect:hover {
+  background: #c23e41;
+}
+
+.voice-control:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.voice-panel__error {
+  padding: 8px 16px;
+  background: #fed7d7;
+  color: #c53030;
+  font-size: 12px;
+  text-align: center;
+}
+
+.spinning {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .voice-panel {
+    margin: 4px;
+  }
+  
+  .voice-panel__header {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+  
+  .voice-participant {
+    padding: 6px 12px;
+  }
+  
+  .voice-participant__avatar {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+  
+  .voice-panel__controls {
+    padding: 12px;
+  }
+  
+  .voice-control {
+    width: 36px;
+    height: 36px;
+  }
+}

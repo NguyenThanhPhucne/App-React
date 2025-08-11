@@ -9,6 +9,7 @@ import CreateServerModal from "../app/components/discord/modals/CreateServerModa
 import CreateChannelModal from "../app/components/discord/modals/CreateChannelModal";
 import MobileDiscordInterface from "../app/components/discord/mobile/MobileDiscordInterface";
 import DesktopDiscordInterface from "../app/components/discord/desktop/DesktopDiscordInterface";
+import VoiceManager from "../app/components/discord/voice/VoiceManager";
 import "../styles/discord.css";
 
 const DiscordInterface = () => {
@@ -79,20 +80,17 @@ const DiscordInterface = () => {
 
       {/* Create Channel Modal */}
       <CreateChannelModal
-          isOpen={state.showCreateChannelModal}
-          onClose={() => {
-            handlers.toggleCreateChannelModal();
-            handlers.updateState({ channelTypeToCreate: null });
-          }}
-          onChannelCreated={handlers.handleChannelCreated}
-          channelType={state.channelTypeToCreate}
-        />
+        isOpen={state.showCreateChannelModal}
+        onClose={() => {
+          handlers.toggleCreateChannelModal();
+          handlers.updateState({ channelTypeToCreate: null });
+        }}
+        onChannelCreated={handlers.handleChannelCreated}
+        channelType={state.channelTypeToCreate}
+      />
 
       {/* Header */}
-      <DiscordHeader
-        state={state}
-        handlers={handlers}
-      />
+      <DiscordHeader state={state} handlers={handlers} />
 
       {/* Desktop Components */}
       <DesktopDiscordInterface
@@ -101,6 +99,9 @@ const DiscordInterface = () => {
         dropdownRef={dropdownRef}
         notificationRef={notificationRef}
       />
+
+      {/* Voice Manager */}
+      <VoiceManager />
     </div>
   );
 };
