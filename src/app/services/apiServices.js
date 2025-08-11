@@ -272,6 +272,75 @@ class ApiService {
       throw error;
     }
   }
+
+  async getUserServers() {
+    try {
+      const accessToken = localStorage.getItem("accessToken");
+      
+      if (!accessToken) {
+        throw new Error("No access token found");
+      }
+
+      const response = await fetch(`${API_BASE_URL}/server`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          // Token expired, try to refresh
+          await this.refreshAccessToken();
+          return this.getUserServers(); // Retry with new token
+        }
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to fetch servers");
+      }
+
+      return response.json();
+    } catch (error) {
+      console.error("Error fetching user servers:", error);
+      throw error;
+    }
+  }
+
+  async createServer(serverData) {
+    try {
+      const accessToken = localStorage.getItem("accessToken");
+      
+      if (!accessToken) {
+        throw new Error("No access token found");
+      }
+
+      const response = await fetch(`${API_BASE_URL}/server`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        credentials: "include",
+        body: JSON.stringify(serverData),
+      });
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          // Token expired, try to refresh
+          await this.refreshAccessToken();
+          return this.createServer(serverData); // Retry with new token
+        }
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to create server");
+      }
+
+      return response.json();
+    } catch (error) {
+      console.error("Error creating server:", error);
+      throw error;
+    }
+  }
 }
 
 const apiService = new ApiService();

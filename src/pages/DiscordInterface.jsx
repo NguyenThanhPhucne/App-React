@@ -1,9 +1,13 @@
 "use client"
 
 import { useEffect } from "react"
+import { useSelector, useDispatch } from "react-redux"
+import { useNavigate } from "react-router-dom"
+import { selectSelectedServerId, selectServers, setServers } from "../features/appSlice"
 import { useDiscordState } from "../hooks/useDiscordState"
 import { useDiscordHandlers } from "../hooks/useDiscordHandlers"
 import { members } from "../app/data/discordData"
+import apiService from "../app/services/apiServices"
 
 import DiscordHeader from "../app/components/discord/header/DiscordHeader"
 import CreateServerModal from "../app/components/discord/modals/CreateServerModal"
@@ -13,8 +17,38 @@ import DesktopDiscordInterface from "../app/components/discord/desktop/DesktopDi
 import "../styles/discord.css"
 
 const DiscordInterface = () => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const selectedServerId = useSelector(selectSelectedServerId)
+  const servers = useSelector(selectServers)
   const { state, updateState, dropdownRef, notificationRef } = useDiscordState()
   const handlers = useDiscordHandlers(state, updateState)
+
+  // Load servers if not already loaded
+  useEffect(() => {
+    const loadServers = async () => {
+      if (servers.length === 0) {
+        try {
+          console.log("Loading servers in DiscordInterface...")
+          const serverList = await apiService.getUserServers()
+          dispatch(setServers(serverList))
+          console.log("Servers loaded:", serverList)
+        } catch (error) {
+          console.error("Error loading servers:", error)
+        }
+      }
+    }
+
+    loadServers()
+  }, [servers.length, dispatch])
+
+  useEffect(() => {
+    // Redirect to server selection if no server is selected
+    if (!selectedServerId) {
+      navigate("/servers", { replace: true })
+      return
+    }
+  }, [selectedServerId, navigate])
 
   useEffect(() => {
     const handleClickOutside = (event) => {

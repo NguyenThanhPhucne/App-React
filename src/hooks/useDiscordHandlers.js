@@ -3,7 +3,7 @@
 import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { signOut } from "../features/userSlice"
-import { clearServers, updateServerInList, selectCurrentServer } from "../features/appSlice"
+import { clearServers, updateServerInList, selectCurrentServer, setSelectedServer, setCurrentServer } from "../features/appSlice"
 import apiService from "../app/services/apiServices"
 
 export const useDiscordHandlers = (state, updateState) => {
@@ -241,6 +241,25 @@ export const useDiscordHandlers = (state, updateState) => {
 
         // Clear both token and user data in error case too
         localStorage.removeItem("accessToken")
+      }
+    },
+
+    handleBackToServerSelection: () => {
+      navigate("/servers")
+    },
+
+    handleServerSwitch: async (serverId) => {
+      try {
+        // Update selected server in Redux
+        dispatch(setSelectedServer(serverId))
+        
+        // Fetch and set current server data
+        const serverData = await apiService.getServerById(serverId)
+        dispatch(setCurrentServer(serverData))
+        
+        console.log("Server switched to:", serverData.name)
+      } catch (error) {
+        console.error("Error switching server:", error)
       }
     },
 

@@ -14,6 +14,7 @@ import {
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../../features/userSlice";
 import Tooltip from "../../ui/Tooltip";
+import ServerSwitcher from "./ServerSwitcher";
 
 const UserPanel = ({ state, handlers }) => {
   const user = useSelector(selectUser);
@@ -30,6 +31,9 @@ const UserPanel = ({ state, handlers }) => {
 
       {/* Controls sát bên user */}
       <div className="user-panel__controls">
+        {/* Simple Server Switcher */}
+        <ServerSwitcher handlers={handlers} />
+
         {/* Add Server Button */}
         <Tooltip content="Add a Server">
           <button

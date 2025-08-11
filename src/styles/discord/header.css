@@ -112,6 +112,29 @@
   box-shadow: 0 0 0 2px var(--accent);
 }
 
+.server-btn--loading {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.server-btn--loading:hover {
+  transform: none;
+  border-radius: 50%;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .server-btn--active::after {
   content: "";
   position: absolute;
@@ -148,6 +171,14 @@
   align-items: center;
   gap: 8px;
   margin-right: 8px;
+}
+
+.chevron {
+  transition: transform 0.2s ease;
+}
+
+.chevron--rotated {
+  transform: rotate(180deg);
 }
 
 /* Add Server Button */
