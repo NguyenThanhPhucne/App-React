@@ -1,43 +1,57 @@
-"use client"
+"use client";
 
-import { ChevronDown, X } from "lucide-react"
+import { ChevronDown, X, Settings } from "lucide-react";
 
 const ServerDropdown = ({ server, state, handlers, dropdownRef }) => {
   return (
     <div className="sidebar__header" ref={dropdownRef}>
-      <button className="server-dropdown-btn" onClick={handlers.toggleServerDropdown}>
+      <button
+        className="server-dropdown-btn"
+        onClick={handlers.toggleServerDropdown}
+      >
         <h3>{server?.name || "No Server"}</h3>
-        <ChevronDown size={16} className={`dropdown-arrow ${state.showServerDropdown ? "dropdown-arrow--open" : ""}`} />
+        <ChevronDown
+          size={16}
+          className={`dropdown-arrow ${
+            state.showServerDropdown ? "dropdown-arrow--open" : ""
+          }`}
+        />
       </button>
 
       {state.showServerDropdown && (
         <div className="server-dropdown">
           <div className="server-dropdown__header">
             <span>{server?.name || "No Server"}</span>
-            <button className="close-btn" onClick={() => handlers.updateState({ showServerDropdown: false })}>
+            <button
+              className="close-btn"
+              onClick={() =>
+                handlers.updateState({ showServerDropdown: false })
+              }
+            >
               <X size={16} />
             </button>
           </div>
 
-          {/*<div className="server-dropdown__content">
-            {serverMenuItems.map((item) => {
-              const ItemIcon = item.icon
-              return (
-                <button
-                  key={item.id}
-                  className={`dropdown-item ${item.color === "danger" ? "dropdown-item--danger" : ""} ${item.id === "leave" ? "dropdown-item--leave" : ""}`}
-                  onClick={() => handlers.handleServerMenuClick(item.id)}
-                >
-                  <ItemIcon size={16} />
-                  <span>{item.label}</span>
-                </button>
-              )
-            })}
-          </div> */}
+          <div className="server-dropdown__content">
+            {/* fix ui of description */}
+            <div className="dropdown-description">
+              <p>{server?.description || "No description"}</p>
+            </div>
+            <button
+              className="dropdown-item"
+              onClick={() => {
+                handlers.handleServerSettings();
+                handlers.updateState({ showServerDropdown: false });
+              }}
+            >
+              <Settings size={16} />
+              <span>Server Settings</span>
+            </button>
+          </div>
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default ServerDropdown
+export default ServerDropdown;

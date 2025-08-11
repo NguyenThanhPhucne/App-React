@@ -124,6 +124,36 @@
   border-radius: 50%;
 }
 
+.server-btn .server-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.server-btn .server-initial {
+  position: relative;
+  z-index: 1;
+  font-weight: 600;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+/* Ensure proper positioning for both avatar and initial */
+.server-btn {
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+}
+
+.server-btn:has(.server-avatar) {
+  background: transparent;
+}
+
 /* User Panel */
 .user-panel {
   display: flex;
@@ -211,6 +241,51 @@
   color: white;
   font-size: 16px;
   font-weight: 600;
+  overflow: hidden;
+}
+
+.user-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+.user-avatar:has(img) {
+  background: transparent;
+}
+
+.user-avatar img:not([src]),
+.user-avatar img[src=""],
+.user-avatar img[src*="null"] {
+  display: none;
+}
+
+.user-avatar:not(:has(img[src]:not([src=""]):not([src*="null"]))) {
+  background: var(--accent);
+}
+
+.user-avatar .avatar-fallback {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent);
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.user-avatar img {
+  position: relative;
+  z-index: 2;
 }
 
 .status-dot {
@@ -317,4 +392,25 @@
   background: var(--hover);
   color: var(--accent);
   transform: scale(1.05);
+}
+
+/* Invite Button */
+.invite-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: var(--bg-secondary);
+  border: none;
+  border-radius: 8px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-left: 8px;
+}
+
+.invite-btn:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
 }

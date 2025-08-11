@@ -1,39 +1,79 @@
 .message {
-    display: flex;
-    align-items: flex-start; /* Align to top instead of center */
-    padding: 10px 0; /* Reduce padding */
-    color: var(--white-color);
-    word-wrap: break-word; /* Handle long messages */
+  display: flex;
+  align-items: flex-start;
+  padding: 10px 0;
+  color: var(--white-color);
+  word-wrap: break-word;
+  position: relative; /* For absolute positioning of delete button */
+}
+
+.message:hover {
+  background-color: rgba(255, 255, 255, 0.02); /* Subtle hover effect */
 }
 
 .message__info {
-    margin-left: 15px;
-    flex: 1; /* Take remaining space */
-    min-width: 0; /* Allow shrinking */
+  margin-left: 15px;
+  flex: 1;
+  min-width: 0;
 }
 
 .message__info p:first-child {
-    margin: 0 0 5px 0; /* Space between username and message */
+  margin: 0 0 5px 0;
 }
 
 .message__info p:last-child {
-    margin: 0;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+  margin: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .message__info-timestamp {
-    color: var(--light-grey-color);
-    margin-left: 10px;
-    font-size: 12px;
-    font-weight: normal;
+  color: var(--light-grey-color);
+  margin-left: 10px;
+  font-size: 12px;
+  font-weight: normal;
 }
 
 /* Avatar styles */
 .message__avatar {
-    width: 40px !important;
-    height: 40px !important;
-    border-radius: 50% !important;
-    object-fit: cover !important;
-    flex-shrink: 0; /* Prevent avatar from shrinking */
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+  flex-shrink: 0;
+}
+
+/* Delete button styles */
+.message__actions {
+  position: absolute;
+  top: 8px;
+  right: 15px;
+  display: flex;
+  gap: 5px;
+  background-color: var(--dark-bg-color, #2f3136);
+  border-radius: 4px;
+  padding: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.message__delete-btn {
+  background: none;
+  border: none;
+  color: #ed4245;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.message__delete-btn:hover {
+  background-color: #ed4245;
+  color: white;
+}
+
+.message__delete-btn:active {
+  transform: scale(0.95);
 }

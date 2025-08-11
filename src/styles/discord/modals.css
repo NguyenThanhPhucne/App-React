@@ -1058,3 +1058,11 @@
     border: 2px solid var(--text-primary);
   }
 }
+
+/* Hung */
+.file-info {
+  font-size: 12px;
+  color: #999;
+  margin-top: 8px;
+  text-align: center;
+}

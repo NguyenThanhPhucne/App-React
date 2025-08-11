@@ -11,12 +11,24 @@ import {
   Moon,
   Search,
 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../../features/userSlice";
 import Tooltip from "../../ui/Tooltip";
 
 const UserPanel = ({ state, handlers }) => {
   const user = useSelector(selectUser);
+  const [userIcon, setUserIcon] = useState(null);
+
+  // Get the base URL for serving uploaded images
+  const API_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL;
+
+  useEffect(() => {
+    if (user) {
+      // Set current user avatar
+      setUserIcon(`${API_BASE_URL}${user.avatar}`);
+    }
+  }, [user, API_BASE_URL]);
 
   return (
     <div className="user-panel">
@@ -54,11 +66,11 @@ const UserPanel = ({ state, handlers }) => {
 
       <div className="user-info">
         <div className="user-avatar">
-          <span>{user?.avatar}</span>
+          <img src={userIcon} alt="avatar" />
           <div className="status-dot" />
         </div>
         <div className="user-details">
-          <span className="username">{user?.username}</span>
+          <span className="username">{user?.displayName || user?.username}</span>
           <span className="status">Online</span>
         </div>
       </div>
@@ -91,7 +103,7 @@ const UserPanel = ({ state, handlers }) => {
         <Tooltip content="User Settings">
           <button
             className="action-btn"
-            onClick={() => console.log("Settings clicked")}
+            onClick={handlers.toggleUserSettingsModal}
           >
             <Settings size={16} />
           </button>

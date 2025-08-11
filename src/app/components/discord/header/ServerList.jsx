@@ -13,6 +13,30 @@ const ServerList = ({ servers, state, updateState, handlers }) => {
     updateState(_id);
   };
 
+  const API_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL;
+
+  const renderServerIcon = (server) => {
+      return (
+        <>
+          <img
+            src={`${API_BASE_URL}${server.serverAvatar}`}
+            alt={server.name}
+            className="server-avatar"
+            onError={(e) => {
+              e.target.style.display = "none";
+              const fallback = e.target.nextElementSibling;
+              if (fallback) {
+                fallback.style.display = "block";
+              }
+            }}
+          />
+          <span className="server-initial" style={{ display: "none" }}>
+            {server.name?.charAt(0)?.toUpperCase()}
+          </span>
+        </>
+      );
+    };
+
   return (
     <div className="header__servers">
       {(state.serverScrollIndex || 0) > 0 && (
@@ -36,10 +60,7 @@ const ServerList = ({ servers, state, updateState, handlers }) => {
               style={{ "--server-color": server.color || "#5865f2" }}
               title={server.name}
             >
-              {/* Use a default icon since server.icon doesn't exist in your data */}
-              {/*<Hash size={20} />*/}
-              {/* Or display first letter of server name */}
-              <span>{server.name?.charAt(0)?.toUpperCase()}</span>
+              {renderServerIcon(server)}
             </button>
           );
         })}

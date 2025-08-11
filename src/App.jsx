@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Provider, useSelector, useDispatch } from "react-redux";
-import { store } from "./app/store";
+import { store } from "./features/store";
 import { selectUser, signIn, signOut } from "./features/userSlice";
 import { selectServers, setServers, clearServers } from "./features/appSlice";
 import apiService from "./app/services/apiServices";

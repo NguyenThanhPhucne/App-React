@@ -5,11 +5,14 @@ import { useDiscordState } from "../hooks/useDiscordState";
 import { useDiscordHandlers } from "../hooks/useDiscordHandlers";
 
 import DiscordHeader from "../app/components/discord/header/DiscordHeader";
+import ServerSettingsModal from "../app/components/discord/modals/ServerSettingsModal";
 import CreateServerModal from "../app/components/discord/modals/CreateServerModal";
+import ChannelSettingsModal from "../app/components/discord/modals/ChannelSettingsModal";
 import CreateChannelModal from "../app/components/discord/modals/CreateChannelModal";
 import MobileDiscordInterface from "../app/components/discord/mobile/MobileDiscordInterface";
 import DesktopDiscordInterface from "../app/components/discord/desktop/DesktopDiscordInterface";
-import VoiceManager from "../app/components/discord/voice/VoiceManager";
+import UserSettingsModal from "../app/components/discord/modals/UserSettingsModal";
+
 import "../styles/discord.css";
 
 const DiscordInterface = () => {
@@ -71,11 +74,23 @@ const DiscordInterface = () => {
         members={members}
       />*/}
 
+      {/* User Settings Modal */}
+      <UserSettingsModal
+        isOpen={state.showUserSettingsModal}
+        onClose={() => handlers.toggleUserSettingsModal()}
+      />
+
       {/* Create Server Modal */}
       <CreateServerModal
         isOpen={state.showCreateServerModal}
         onClose={() => handlers.toggleCreateServerModal()}
         onServerCreated={handlers.handleServerCreated}
+      />
+
+      {/* Channel Settings Modal */}
+      <ServerSettingsModal
+        isOpen={state.showServerSettingsModal}
+        onClose={() => handlers.toggleServerSettingsModal()}
       />
 
       {/* Create Channel Modal */}
@@ -89,6 +104,15 @@ const DiscordInterface = () => {
         channelType={state.channelTypeToCreate}
       />
 
+      {/* Channel Settings Modal */}
+      <ChannelSettingsModal
+        isOpen={state.showChannelSettingsModal}
+        onClose={() => handlers.toggleChannelSettingsModal()}
+        channel={state.selectedChannelForSettings}
+        onChannelUpdated={handlers.handleChannelUpdated}
+        onChannelDeleted={handlers.handleChannelDeleted}
+      />
+
       {/* Header */}
       <DiscordHeader state={state} handlers={handlers} />
 
@@ -99,9 +123,6 @@ const DiscordInterface = () => {
         dropdownRef={dropdownRef}
         notificationRef={notificationRef}
       />
-
-      {/* Voice Manager */}
-      <VoiceManager />
     </div>
   );
 };

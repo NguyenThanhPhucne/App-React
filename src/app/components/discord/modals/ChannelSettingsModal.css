@@ -1,0 +1,81 @@
+.delete-section {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-color);
+}
+
+.delete-section h3 {
+  color: var(--text-danger);
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.delete-channel-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--danger-bg);
+  color: var(--text-danger);
+  border: 1px solid var(--danger-border);
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.delete-channel-btn:hover {
+  background: var(--danger-bg-hover);
+}
+
+.delete-warning {
+  padding: 16px;
+  background: var(--warning-bg);
+  border: 1px solid var(--warning-border);
+  border-radius: 8px;
+  margin: 16px 0;
+}
+
+.modal-delete-btn {
+  background: var(--danger-color);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 3px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.modal-delete-btn:hover:not(:disabled) {
+  background: var(--danger-color-hover);
+}
+
+.modal-delete-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.channel-settings-btn {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.channel-settings-btn:hover {
+  color: var(--text-normal);
+  background: var(--background-modifier-hover);
+}
+
+.channel:hover .channel-settings-btn {
+  opacity: 1;
+}

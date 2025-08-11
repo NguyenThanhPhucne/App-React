@@ -1,10 +1,15 @@
 "use client";
 
 import React from "react";
-import { ChevronDown, ChevronRight, Plus, Hash, Volume2 } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronRight,
+  Plus,
+  Hash,
+  Volume2,
+  Settings,
+} from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
-import { useVoiceRoom } from "../../../../hooks/useVoiceRoom";
-import { selectUser } from "../../../../features/userSlice";
 import {
   setTextChannel,
   setVoiceChannel,
@@ -17,22 +22,6 @@ const ChannelCategory = ({ type, title, channels, state, handlers }) => {
   const dispatch = useDispatch();
   const isCollapsed = state.collapsedCategories?.[type];
   const ChannelIcon = type === "text" ? Hash : Volume2;
-
-  const user = useSelector(selectUser);
-  const voiceChannelId = useSelector((state) => state.channel.voiceChannelId);
-  const {
-    participants,
-    connected,
-    muted,
-    connecting,
-    error,
-    joinVoiceChannel,
-    leaveVoiceChannel,
-    toggleMute,
-  } = useVoiceRoom({
-    channelId: voiceChannelId,
-    user,
-  });
 
   const handleChannelSelect = async (channel) => {
     const channelData = {
@@ -50,27 +39,19 @@ const ChannelCategory = ({ type, title, channels, state, handlers }) => {
       } catch (error) {
         console.error("Error joining channel:", error);
       }
-    } else if (type === "voice") {
-      // Handle voice channel selection
-      if (connected && voiceChannelId === channelData.id) {
-        // Already in this channel, do nothing or show voice panel
-        return;
-      }
-
-      if (connected) {
-        // Leave current voice channel first
-        leaveVoiceChannel();
-      }
-
-      // Join new voice channel
+    } else {
       dispatch(setVoiceChannel(channelData));
-      // The useVoiceRoom hook will automatically join when channelId changes
     }
   };
 
   const handleCreateChannel = () => {
     handlers.toggleCreateChannelModal();
     handlers.updateState({ channelTypeToCreate: type });
+  };
+
+  const handleChannelSettings = (e, channel) => {
+    e.stopPropagation();
+    handlers.handleChannelSettings(channel);
   };
 
   return (
@@ -101,8 +82,15 @@ const ChannelCategory = ({ type, title, channels, state, handlers }) => {
             }`}
             onClick={() => handleChannelSelect(channel)}
           >
-            <ChannelIcon size={16} />
-            <span>{channel.name}</span>
+            <span><ChannelIcon size={16} />
+               {channel.name}</span>
+            <span
+              className="channel-settings-btn"
+              onClick={(e) => handleChannelSettings(e, channel)}
+              title="Channel Settings"
+            >
+              <Settings size={14} />
+            </span>
           </button>
         ))}
       </div>

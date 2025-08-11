@@ -22,8 +22,11 @@ export const useDiscordState = () => {
     showMobileMuteModal: false,
     showMobileNotificationSettings: false,
     showCreateServerModal: false,
+    showServerSettingsModal: false,
     showCreateChannelModal: false,
+    showChannelSettingsModal: false,
     channelTypeToCreate: null,
+    selectedChannelForSettings: null,
     memberSearchQuery: "",
     isMuted: false,
     isDeafened: false,
@@ -36,6 +39,7 @@ export const useDiscordState = () => {
     },
     showMobileSearchInput: false,
     activeMemberTab: "Members",
+    showUserSettingsModal: false,
   })
 
   const updateState = (updates) => setState((prev) => ({ ...prev, ...updates }))
