@@ -20,7 +20,6 @@ const ContentBody = ({ channel, socketService }) => {
         return;
       }
       if (channelId) {
-
         // Join new channel
         socketService.joinChannel(channelId);
 
@@ -65,7 +64,6 @@ const ContentBody = ({ channel, socketService }) => {
 
   // Auto-scroll to bottom when messages change
   useEffect(() => {
-    // Small delay to ensure DOM is updated
     const timer = setTimeout(() => {
       // Only force scroll for initial load, otherwise respect user scroll position
       const isInitialLoad = messages.length > 0 && !messagesContainerRef.current?.scrollTop;
@@ -75,7 +73,12 @@ const ContentBody = ({ channel, socketService }) => {
     return () => clearTimeout(timer);
   }, [messages]);
 
-  // Listen for new messages
+  // Handle delete message
+  const handleDeleteMessage = (messageId, userId, channelId) => {
+    socketService.deleteMessage(messageId, userId, channelId);
+  };
+
+  // Listen for socket events
   useEffect(() => {
     const handleNewMessage = (messageData) => {
       setMessages((prev) => [...prev, messageData]);
@@ -108,14 +111,30 @@ const ContentBody = ({ channel, socketService }) => {
       console.error("Message failed to save:", data.error);
     };
 
+    const handleMessageDeleted = (data) => {
+      setMessages((prev) =>
+        prev.filter((msg) => (msg.id || msg._id) !== data.messageId)
+      );
+    };
+
+    const handleDeleteError = (data) => {
+      console.error("Failed to delete message:", data.error);
+      alert(data.error); // You can replace this with a toast notification
+    };
+
+    // Add event listeners
     socketService.onNewMessage(handleNewMessage);
     socketService.onUserTyping(handleUserTyping);
     socketService.onUserStopTyping(handleUserStopTyping);
     socketService.onMessageSaved(handleMessageSaved);
     socketService.onMessageError(handleMessageError);
+    socketService.onMessageDeleted(handleMessageDeleted);
+    socketService.onDeleteError(handleDeleteError);
 
     return () => {
       socketService.offNewMessage();
+      socketService.offMessageDeleted();
+      socketService.offDeleteError();
     };
   }, [socketService]);
 
@@ -141,9 +160,12 @@ const ContentBody = ({ channel, socketService }) => {
         messages.map((message) => (
           <Message
             key={message.id || message._id}
+            messageId={message.id || message._id}
             message={message.message}
             user={message.user}
             timestamp={message.timestamp}
+            channelId={channelId}
+            onDeleteMessage={handleDeleteMessage}
           />
         ))
       )}

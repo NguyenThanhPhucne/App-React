@@ -11,6 +11,7 @@ import {
   Moon,
   Search,
 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../../features/userSlice";
 import { getUserAvatarSrc, handleAvatarError } from "../../../utils/avatarUtils";
@@ -18,6 +19,17 @@ import Tooltip from "../../ui/Tooltip";
 
 const UserPanel = ({ state, handlers }) => {
   const user = useSelector(selectUser);
+  const [userIcon, setUserIcon] = useState(null);
+
+  // Get the base URL for serving uploaded images
+  const API_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL;
+
+  useEffect(() => {
+    if (user) {
+      // Set current user avatar
+      setUserIcon(`${API_BASE_URL}${user.avatar}`);
+    }
+  }, [user, API_BASE_URL]);
 
   return (
     <div className="user-panel">
@@ -55,20 +67,11 @@ const UserPanel = ({ state, handlers }) => {
 
       <div className="user-info">
         <div className="user-avatar">
-          {user?.avatar ? (
-            <img 
-              src={getUserAvatarSrc(user)} 
-              alt={user.username} 
-              onError={handleAvatarError}
-              style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }}
-            />
-          ) : (
-            <span>{user?.username?.charAt(0).toUpperCase() || "U"}</span>
-          )}
+          <img src={userIcon} alt="avatar" />
           <div className="status-dot" />
         </div>
         <div className="user-details">
-          <span className="username">{user?.username}</span>
+          <span className="username">{user?.displayName || user?.username}</span>
           <span className="status">Online</span>
         </div>
       </div>
@@ -101,7 +104,7 @@ const UserPanel = ({ state, handlers }) => {
         <Tooltip content="User Settings">
           <button
             className="action-btn"
-            onClick={() => console.log("Settings clicked")}
+            onClick={handlers.toggleUserSettingsModal}
           >
             <Settings size={16} />
           </button>

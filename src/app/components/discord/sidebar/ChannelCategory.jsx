@@ -1,7 +1,14 @@
 "use client";
 
 import React from "react";
-import { ChevronDown, ChevronRight, Plus, Hash, Volume2 } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronRight,
+  Plus,
+  Hash,
+  Volume2,
+  Settings,
+} from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setTextChannel,
@@ -10,13 +17,7 @@ import {
 } from "../../../../features/channelSlice";
 import socketService from "../../../services/socketService";
 
-const ChannelCategory = ({
-  type,
-  title,
-  channels,
-  state,
-  handlers,
-}) => {
+const ChannelCategory = ({ type, title, channels, state, handlers }) => {
   const previousChannel = useSelector(selectTextChannelId);
   const dispatch = useDispatch();
   const isCollapsed = state.collapsedCategories?.[type];
@@ -50,13 +51,9 @@ const ChannelCategory = ({
     handlers.updateState({ channelTypeToCreate: type });
   };
 
-  const handleKeyDown = (e) => {
-    // Handle keyboard navigation
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.stopPropagation();
-      e.preventDefault();
-      handleCreateChannel(e);
-    }
+  const handleChannelSettings = (e, channel) => {
+    e.stopPropagation();
+    handlers.handleChannelSettings(channel);
   };
 
   return (
@@ -68,8 +65,16 @@ const ChannelCategory = ({
           aria-expanded={!isCollapsed}
           aria-controls={`category-${type}-content`}
         >
-          <span className={`category__arrow ${!isCollapsed ? 'category__arrow--expanded' : ''}`}>
-            {isCollapsed ? <ChevronRight size={12} /> : <ChevronDown size={12} />}
+          <span
+            className={`category__arrow ${
+              !isCollapsed ? "category__arrow--expanded" : ""
+            }`}
+          >
+            {isCollapsed ? (
+              <ChevronRight size={12} />
+            ) : (
+              <ChevronDown size={12} />
+            )}
           </span>
           <span>{title}</span>
         </button>
@@ -101,8 +106,17 @@ const ChannelCategory = ({
             onClick={() => handleChannelSelect(channel)}
             aria-pressed={state.activeChannel === channel._id}
           >
-            <ChannelIcon size={16} />
-            <span>{channel.name}</span>
+            <span>
+              <ChannelIcon size={16} />
+              {channel.name}
+            </span>
+            <span
+              className="channel-settings-btn"
+              onClick={(e) => handleChannelSettings(e, channel)}
+              title="Channel Settings"
+            >
+              <Settings size={14} />
+            </span>
           </button>
         ))}
       </div>

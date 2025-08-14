@@ -1,0 +1,248 @@
+.user-settings-modal {
+  background: var(--background-primary);
+  border-radius: 8px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+}
+
+.user-settings-modal .modal-content {
+  padding: 24px;
+  flex: 1;
+}
+
+.user-settings-modal .modal-description {
+  color: var(--text-muted);
+  margin-bottom: 32px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* Avatar Section */
+.avatar-section {
+  margin-bottom: 32px;
+}
+
+.section-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-bottom: 8px;
+}
+
+.avatar-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.avatar-upload-area {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px dashed var(--background-modifier-accent);
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+}
+
+.avatar-upload-area:hover {
+  border-color: var(--brand);
+}
+
+.user-avatar-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.default-avatar {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--background-secondary);
+  color: var(--text-muted);
+  border-radius: 50%;
+}
+
+.avatar-upload-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  border-radius: 50%;
+  color: white;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.avatar-upload-area:hover .avatar-upload-overlay {
+  opacity: 1;
+}
+
+.avatar-upload-overlay span {
+  margin-top: 4px;
+  text-align: center;
+}
+
+/* Input Sections */
+.input-section {
+  margin-bottom: 24px;
+}
+
+.input-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--header-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-bottom: 8px;
+}
+
+.required-asterisk {
+  color: var(--status-danger);
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--channeltextarea-background);
+  border: 1px solid var(--background-tertiary);
+  border-radius: 4px;
+  color: var(--text-normal);
+  font-size: 16px;
+  transition: border-color 0.15s ease-in-out;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: var(--brand);
+}
+
+.input-field--error {
+  border-color: var(--status-danger);
+}
+
+.input-help {
+  display: block;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 8px;
+  line-height: 1.3;
+}
+
+/* Error Messages */
+.error-message {
+  color: var(--status-danger);
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+}
+
+.general-error {
+  background: rgba(237, 66, 69, 0.1);
+  border: 1px solid var(--status-danger);
+  border-radius: 4px;
+  padding: 12px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+/* Modal Footer */
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 24px;
+  background: var(--background-secondary);
+  border-top: 1px solid var(--background-modifier-accent);
+}
+
+.cancel-btn {
+  padding: 8px 16px;
+  background: transparent;
+  border: none;
+  color: var(--text-normal);
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.17s ease;
+}
+
+.cancel-btn:hover:not(:disabled) {
+  background: var(--background-modifier-hover);
+}
+
+.cancel-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.save-btn {
+  padding: 8px 16px;
+  background: var(--brand);
+  border: none;
+  color: white;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.17s ease;
+  min-width: 96px;
+}
+
+.save-btn:hover:not(:disabled) {
+  background: var(--brand-560);
+}
+
+.save-btn--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.save-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Mobile Responsive */
+@media (max-width: 767px) {
+  .user-settings-modal {
+    width: 95%;
+    max-height: 90vh;
+  }
+
+  .user-settings-modal .modal-content {
+    padding: 16px;
+  }
+
+  .avatar-upload-area {
+    width: 60px;
+    height: 60px;
+  }
+
+  .modal-footer {
+    padding: 12px 16px;
+  }
+}

@@ -9,12 +9,16 @@ import { useDiscordHandlers } from "../hooks/useDiscordHandlers"
 import { members } from "../app/data/discordData"
 import apiService from "../app/services/apiServices"
 
-import DiscordHeader from "../app/components/discord/header/DiscordHeader"
-import CreateServerModal from "../app/components/discord/modals/CreateServerModal"
-import CreateChannelModal from "../app/components/discord/modals/CreateChannelModal"
-import MobileDiscordInterface from "../app/components/discord/mobile/MobileDiscordInterface"
-import DesktopDiscordInterface from "../app/components/discord/desktop/DesktopDiscordInterface"
-import "../styles/discord.css"
+import DiscordHeader from "../app/components/discord/header/DiscordHeader";
+import ServerSettingsModal from "../app/components/discord/modals/ServerSettingsModal";
+import CreateServerModal from "../app/components/discord/modals/CreateServerModal";
+import ChannelSettingsModal from "../app/components/discord/modals/ChannelSettingsModal";
+import CreateChannelModal from "../app/components/discord/modals/CreateChannelModal";
+import MobileDiscordInterface from "../app/components/discord/mobile/MobileDiscordInterface";
+import DesktopDiscordInterface from "../app/components/discord/desktop/DesktopDiscordInterface";
+import UserSettingsModal from "../app/components/discord/modals/UserSettingsModal";
+
+import "../styles/discord.css";
 
 const DiscordInterface = () => {
   const navigate = useNavigate()
@@ -101,8 +105,18 @@ const DiscordInterface = () => {
 
   return (
     <div className={`app ${state.isDarkTheme ? "theme-dark" : "theme-light"}`}>
-      {/* Mobile Components */}
-      <MobileDiscordInterface state={state} handlers={handlers} members={members} />
+      {/* Mobile Components 
+      <MobileDiscordInterface
+        state={state}
+        handlers={handlers}
+        members={members}
+      />*/}
+
+      {/* User Settings Modal */}
+      <UserSettingsModal
+        isOpen={state.showUserSettingsModal}
+        onClose={() => handlers.toggleUserSettingsModal()}
+      />
 
       {/* Create Server Modal */}
       <CreateServerModal
@@ -111,15 +125,30 @@ const DiscordInterface = () => {
         onServerCreated={handlers.handleServerCreated}
       />
 
+      {/* Channel Settings Modal */}
+      <ServerSettingsModal
+        isOpen={state.showServerSettingsModal}
+        onClose={() => handlers.toggleServerSettingsModal()}
+      />
+
       {/* Create Channel Modal */}
       <CreateChannelModal
         isOpen={state.showCreateChannelModal}
         onClose={() => {
-          handlers.toggleCreateChannelModal()
-          handlers.updateState({ channelTypeToCreate: null })
+          handlers.toggleCreateChannelModal();
+          handlers.updateState({ channelTypeToCreate: null });
         }}
         onChannelCreated={handlers.handleChannelCreated}
         channelType={state.channelTypeToCreate}
+      />
+
+      {/* Channel Settings Modal */}
+      <ChannelSettingsModal
+        isOpen={state.showChannelSettingsModal}
+        onClose={() => handlers.toggleChannelSettingsModal()}
+        channel={state.selectedChannelForSettings}
+        onChannelUpdated={handlers.handleChannelUpdated}
+        onChannelDeleted={handlers.handleChannelDeleted}
       />
 
       {/* Header */}

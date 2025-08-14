@@ -1,20 +1,25 @@
 "use client"
 
-import { useEffect, useCallback } from "react"
-import { useSelector, useDispatch } from "react-redux"
-import { clearTextChannel } from "../../../../features/channelSlice"
-import apiService from "../../../services/apiServices"
-import { selectServers, selectCurrentServer, selectSelectedServerId, setCurrentServer, setSelectedServer } from "../../../../features/appSlice"
+import { useEffect, useCallback, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { clearTextChannel } from "../../../../features/channelSlice";
+import apiService from "../../../services/apiServices";
+import {
+  selectServers,
+  selectCurrentServer,
+  setCurrentServer,
+} from "../../../../features/appSlice";
 
-import { Home, Menu } from "lucide-react"
-import ServerList from "./ServerList"
-import UserPanel from "./UserPanel"
+import { Home, Menu, UserPlus } from "lucide-react";
+import ServerList from "./ServerList";
+import UserPanel from "./UserPanel";
+import InviteServerPopup from "./InviteServerPopup";
 
-const DiscordHeader = ({ state, handlers }) => {
-  const dispatch = useDispatch()
-  const servers = useSelector(selectServers)
-  const currentServer = useSelector(selectCurrentServer)
-  const selectedServerId = useSelector(selectSelectedServerId)
+const DiscordHeader = ({ state, updateState, handlers }) => {
+  const dispatch = useDispatch();
+  const servers = useSelector(selectServers);
+  const currentServer = useSelector(selectCurrentServer);
+  const [isInvitePopupOpen, setIsInvitePopupOpen] = useState(false);
 
   // Function to fetch a specific server by ID
   const fetchServerById = useCallback(
@@ -107,36 +112,45 @@ const DiscordHeader = ({ state, handlers }) => {
   }, [servers, currentServer, selectedServerId, handleServerSelect])
 
   return (
-    <header className="header">
-      <div className="header__home">
-        {/* Mobile Hamburger Menu */}
-        <button
-          className="mobile-menu-btn show-mobile"
-          onClick={() => handlers.updateState({ showMobileSidebar: true })}
-          aria-label="Open navigation menu"
-        >
-          <Menu size={20} />
-        </button>
-
-        {/* Home Button */}
-        <button className="home-btn">
-          <Home size={20} />
-        </button>
-
-        {/* Mobile Server Name Display */}
-        <div className="mobile-server-name show-mobile">
-          <span>{currentServer?.name || "Select Server"}</span>
+    <>
+      <header className="header">
+        <div className="header__home">
+          <button
+            className="mobile-menu-btn"
+            onClick={handlers.toggleMobileSidebar}
+          >
+            <Menu size={20} />
+          </button>
+          <button className="home-btn">
+            <Home size={20} />
+          </button>
+          <button
+            className="invite-btn"
+            onClick={() => setIsInvitePopupOpen(true)}
+            title="Join Server"
+          >
+            <UserPlus size={20} />
+          </button>
         </div>
-      </div>
 
-      {/* Desktop Server List */}
-      <div className="header__center hide-mobile">
-        <ServerList servers={servers} state={state} updateState={handleServerSelect} handlers={handlers} />
-      </div>
+        <div className="header__center">
+          <ServerList
+            servers={servers}
+            state={state}
+            updateState={handleServerSelect}
+            handlers={handlers}
+          />
+        </div>
 
-      <UserPanel state={state} handlers={handlers} />
-    </header>
-  )
-}
+        <UserPanel state={state} handlers={handlers} />
+      </header>
+
+      <InviteServerPopup
+        isOpen={isInvitePopupOpen}
+        onClose={() => setIsInvitePopupOpen(false)}
+      />
+    </>
+  );
+};
 
 export default DiscordHeader

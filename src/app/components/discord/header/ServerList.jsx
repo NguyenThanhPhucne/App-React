@@ -15,21 +15,33 @@ const ServerList = ({ servers, state, updateState, handlers }) => {
       (state.serverScrollIndex || 0) + 3
     ) || [];
 
-  const handleServerClick = async (serverId) => {
-    console.log("Server clicked:", serverId);
-    if (serverId && typeof updateState === "function") {
-      try {
-        setLoadingServerId(serverId);
-        await updateState(serverId);
-      } catch (error) {
-        console.error("Error switching server:", error);
-      } finally {
-        setLoadingServerId(null);
-      }
-    } else {
-      console.error("Invalid serverId or updateState function:", { serverId, updateState });
-    }
+  const handleServerClick = (_id) => {
+    updateState(_id);
   };
+
+  const API_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL;
+
+  const renderServerIcon = (server) => {
+      return (
+        <>
+          <img
+            src={`${API_BASE_URL}${server.serverAvatar}`}
+            alt={server.name}
+            className="server-avatar"
+            onError={(e) => {
+              e.target.style.display = "none";
+              const fallback = e.target.nextElementSibling;
+              if (fallback) {
+                fallback.style.display = "block";
+              }
+            }}
+          />
+          <span className="server-initial" style={{ display: "none" }}>
+            {server.name?.charAt(0)?.toUpperCase()}
+          </span>
+        </>
+      );
+    };
 
   return (
     <div className="header__servers">
@@ -55,11 +67,7 @@ const ServerList = ({ servers, state, updateState, handlers }) => {
               title={server.name}
               disabled={loadingServerId === server._id}
             >
-              {loadingServerId === server._id ? (
-                <Loader2 size={16} className="animate-spin" />
-              ) : (
-                <span>{server.name?.charAt(0)?.toUpperCase()}</span>
-              )}
+              {renderServerIcon(server)}
             </button>
           );
         })}

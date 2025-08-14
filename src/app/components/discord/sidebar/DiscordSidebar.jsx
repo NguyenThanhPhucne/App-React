@@ -7,11 +7,7 @@ import { selectCurrentServer } from "../../../../features/appSlice";
 import ServerDropdown from "./ServerDropdown";
 import ChannelCategory from "./ChannelCategory";
 
-const DiscordSidebar = ({
-  state,
-  handlers,
-  dropdownRef,
-}) => {
+const DiscordSidebar = ({ state, handlers, dropdownRef }) => {
   const server = useSelector(selectCurrentServer);
   const channels = server?.channels || [];
 
@@ -40,18 +36,18 @@ const DiscordSidebar = ({
       <div className="sidebar__content">
         <ChannelCategory
           type="text"
-          title="Kênh Chat"
+          title="Text Channels"
           channels={textChannels}
           state={state}
           handlers={handlers}
         />
-        <ChannelCategory
+        {/*<ChannelCategory
           type="voice"
           title="Kênh Thoại"
           channels={voiceChannels}
           state={state}
           handlers={handlers}
-        />
+        />*/}
       </div>
     </aside>
     </>

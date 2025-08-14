@@ -1,10 +1,18 @@
 "use client"
 
-import { useNavigate } from "react-router-dom"
-import { useDispatch, useSelector } from "react-redux"
-import { signOut } from "../features/userSlice"
-import { clearServers, updateServerInList, selectCurrentServer, setSelectedServer, setCurrentServer } from "../features/appSlice"
-import apiService from "../app/services/apiServices"
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { signOut } from "../features/userSlice";
+import {
+  clearServers,
+  updateServerInList,
+  selectCurrentServer,
+  addServer,
+  updateChannelInCurrentServer,
+  removeChannelFromCurrentServer,
+} from "../features/appSlice";
+import { clearTextChannel, clearVoiceChannel } from "../features/channelSlice";
+import apiService from "../app/services/apiServices";
 
 export const useDiscordHandlers = (state, updateState) => {
   const navigate = useNavigate()
@@ -141,48 +149,68 @@ export const useDiscordHandlers = (state, updateState) => {
     },
 
     handleServerCreated: async (newServer) => {
-      console.log("New server created:", newServer)
-      // Here you would typically add the server to your servers list
-      // For now, we'll just log it and simulate a delay
-      await new Promise((resolve) => setTimeout(resolve, 1000)) // Simulate API call
-      // You can implement the actual server creation logic here
+      dispatch(addServer(newServer));
+      console.log("New server created:");
     },
 
     toggleCreateChannelModal: () => {
       updateState({ showCreateChannelModal: !state.showCreateChannelModal })
     },
 
-    handleChannelCreated: async (serverId, newChannel) => {
-      console.log("New channel created:", newChannel)
-      console.log("Server ID:", serverId)
+    handleChannelCreated: async (serverId, createdChannel) => {
+      console.log("New channel created:", createdChannel);
+      console.log("Server ID:", serverId);
 
       try {
-        // Call the API to create the channel
-        const result = await apiService.createChannel(serverId, newChannel)
-        if (result) {
-          console.log("Channel created successfully:", result.channel)
+        // Update the current server's channels array in Redux
+        if (currentServer && currentServer._id === serverId) {
+          const updatedServer = {
+            ...currentServer,
+            channels: [...(currentServer.channels || []), createdChannel],
+          };
 
-          // Update the current server's channels array in Redux
-          if (currentServer && currentServer._id === serverId) {
-            const updatedServer = {
-              ...currentServer,
-              channels: [...(currentServer.channels || []), result.channel],
-            }
+          // Update the server in the Redux store
+          dispatch(updateServerInList(updatedServer));
 
-            // Update the server in the Redux store
-            dispatch(updateServerInList(updatedServer))
-
-            console.log("Server channels updated in Redux")
-          }
-
-          // Optionally, you can also fetch the updated server data
-          // await refreshServerData(serverId);
-        } else {
-          console.error("Channel creation failed:", result)
+          console.log("Server channels updated in Redux");
         }
       } catch (error) {
-        console.error("Error creating channel:", error)
-        // You might want to show an error message to the user here
+        console.error("Error updating channel in Redux:", error);
+      }
+    },
+
+    toggleChannelSettingsModal: (channel = null) => {
+      updateState({
+        showChannelSettingsModal: !state.showChannelSettingsModal,
+        selectedChannelForSettings: channel,
+      });
+    },
+
+    handleChannelSettings: (channel) => {
+      updateState({
+        showChannelSettingsModal: true,
+        selectedChannelForSettings: channel,
+      });
+    },
+
+    handleChannelUpdated: async (updatedChannel) => {
+      console.log("Channel updated:", updatedChannel);
+      try {
+        dispatch(updateChannelInCurrentServer(updatedChannel));
+        console.log("Channel updated in Redux store");
+      } catch (error) {
+        console.error("Error updating channel in Redux:", error);
+      }
+    },
+
+    handleChannelDeleted: async (channelId) => {
+      console.log("Channel deleted:", channelId);
+      try {
+        dispatch(removeChannelFromCurrentServer(channelId));
+        dispatch(clearTextChannel());
+        console.log("Channel removed from Redux store");
+      } catch (error) {
+        console.error("Error removing channel from Redux:", error);
       }
     },
 
@@ -228,9 +256,11 @@ export const useDiscordHandlers = (state, updateState) => {
 
     handleLogout: async () => {
       try {
-        await apiService.logout()
-        dispatch(signOut())
-        dispatch(clearServers())
+        await apiService.logout();
+        dispatch(signOut());
+        dispatch(clearServers());
+        dispatch(clearTextChannel());
+        dispatch(clearVoiceChannel);
 
         // Clear both token and user data
         localStorage.removeItem("accessToken")
@@ -243,33 +273,19 @@ export const useDiscordHandlers = (state, updateState) => {
         localStorage.removeItem("accessToken")
       }
     },
-
-    handleBackToServerSelection: () => {
-      navigate("/servers")
+    toggleServerSettingsModal: () => {
+      updateState({ showServerSettingsModal: !state.showServerSettingsModal });
     },
 
-    handleServerSwitch: async (serverId) => {
-      try {
-        // Update selected server in Redux
-        dispatch(setSelectedServer(serverId))
-        
-        // Fetch and set current server data
-        const serverData = await apiService.getServerById(serverId)
-        dispatch(setCurrentServer(serverData))
-        
-        console.log("Server switched to:", serverData.name)
-      } catch (error) {
-        console.error("Error switching server:", error)
-      }
+    handleServerSettings: () => {
+      updateState({ showServerSettingsModal: true });
     },
-
-    handleChannelSelect: async (channelId) => {
-      // Logic để chọn channel sẽ được xử lý trong component
-      console.log("Channel selected:", channelId)
-    },
-
     updateState,
-  }
+
+    toggleUserSettingsModal: () => {
+      updateState({ showUserSettingsModal: !state.showUserSettingsModal });
+    },
+  };
 
   return handlers
 }

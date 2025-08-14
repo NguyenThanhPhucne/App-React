@@ -13,7 +13,6 @@ const DesktopDiscordInterface = ({
   setTypeOfChannel,
   members,
 }) => {
-  //const members = server?.members || [];
 
   return (
     <div className="main">
@@ -34,7 +33,7 @@ const DesktopDiscordInterface = ({
       />
 
       {/* Member List */}
-      <MemberList state={state} handlers={handlers} members={members} />
+      <MemberList state={state} handlers={handlers} />
     </div>
   );
 };

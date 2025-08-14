@@ -207,7 +207,7 @@
 }
 
 .category__add-btn::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -301,21 +301,8 @@
   font-weight: 500;
   text-align: left;
   width: 100%;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.channel::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 0;
-  background: var(--brand, #5865f2);
-  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius: 0 4px 4px 0;
+  transition: all 0.2s ease;
+  justify-content: space-between;
 }
 
 .channel:hover {
@@ -332,15 +319,13 @@
 .channel--active {
   background: var(--active);
   color: var(--text-primary);
-  font-weight: 600;
 }
 
-.channel--active::before {
-  width: 3px;
-}
-
-.channel:active {
-  transform: translateX(2px) scale(0.98);
+.channel span:first-child {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
 }
 
 /* Mobile Bottom Navigation */
@@ -366,7 +351,7 @@
 }
 
 .ripple-effect::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -420,7 +405,7 @@
 }
 
 .channel--loading::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   right: 8px;
@@ -434,8 +419,12 @@
 }
 
 @keyframes spin {
-  0% { transform: translateY(-50%) rotate(0deg); }
-  100% { transform: translateY(-50%) rotate(360deg); }
+  0% {
+    transform: translateY(-50%) rotate(0deg);
+  }
+  100% {
+    transform: translateY(-50%) rotate(360deg);
+  }
 }
 
 /* Notification Badges */
@@ -444,7 +433,7 @@
 }
 
 .channel--notification::before {
-  content: '';
+  content: "";
   position: absolute;
   right: 8px;
   top: 50%;
@@ -478,24 +467,24 @@
     padding: 0 12px 4px 8px;
     gap: 6px;
   }
-  
+
   .category__header {
     font-size: 11px;
     gap: 6px;
   }
-  
+
   .category__add-btn {
     width: 24px;
     height: 24px;
     border-radius: 4px;
     opacity: 0.7; /* Show add button more prominently on mobile */
   }
-  
+
   .category__add-btn:active {
     transform: scale(0.95);
     background: var(--background-modifier-active, rgba(79, 84, 92, 0.32));
   }
-  
+
   .category__header-wrapper:hover .category__add-btn,
   .category__add-btn:hover {
     opacity: 1;
@@ -507,12 +496,12 @@
     padding: 0 8px 4px 8px;
     gap: 4px;
   }
-  
+
   .category__header {
     font-size: 10px;
     gap: 4px;
   }
-  
+
   .category__add-btn {
     width: 20px;
     height: 20px;
@@ -520,7 +509,7 @@
     opacity: 1; /* Always visible on small screens */
     background: var(--background-tertiary, rgba(79, 84, 92, 0.08));
   }
-  
+
   .category__add-btn:active {
     transform: scale(0.9);
     background: var(--background-modifier-active, rgba(79, 84, 92, 0.32));
