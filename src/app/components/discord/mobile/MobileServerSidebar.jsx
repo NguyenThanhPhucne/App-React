@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { selectServers, selectCurrentServer } from "../../../../features/appSlice";
+import { getUserAvatarSrc, handleAvatarError } from "../../../utils/avatarUtils";
 import { 
   Plus, 
   Hash, 
@@ -195,7 +196,11 @@ const MobileServerSidebar = ({
           <div className="mobile-user-info">
             <div className="mobile-user-avatar">
               {state.user?.avatar ? (
-                <img src={state.user.avatar} alt={state.user.username} />
+                <img 
+                  src={getUserAvatarSrc(state.user)} 
+                  alt={state.user.username} 
+                  onError={handleAvatarError}
+                />
               ) : (
                 state.user?.username?.charAt(0).toUpperCase() || "U"
               )}

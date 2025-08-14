@@ -1,5 +1,6 @@
 import React from "react";
 import "./Message.css";
+import { getUserAvatarSrc, handleAvatarError } from "../../../utils/avatarUtils";
 
 function Message({ 
   message, 
@@ -83,13 +84,6 @@ function Message({
     return classes;
   };
 
-  const getAvatarSrc = () => {
-    if (user?.avatar) {
-      return user.avatar;
-    }
-    return "/defaultAvatar.jpg";
-  };
-
   const getUsernameColor = () => {
     // Color based on user role or random color
     const colors = [
@@ -117,12 +111,10 @@ function Message({
       <div className={getMessageClasses()}>
         {isGroupStart && (
           <img 
-            src={getAvatarSrc()} 
+            src={getUserAvatarSrc(user)} 
             alt={user?.username || "User"} 
             className="message__avatar"
-            onError={(e) => {
-              e.target.src = "/defaultAvatar.jpg";
-            }}
+            onError={handleAvatarError}
           />
         )}
         

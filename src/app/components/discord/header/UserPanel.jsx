@@ -13,8 +13,8 @@ import {
 } from "lucide-react";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../../features/userSlice";
+import { getUserAvatarSrc, handleAvatarError } from "../../../utils/avatarUtils";
 import Tooltip from "../../ui/Tooltip";
-import ServerSwitcher from "./ServerSwitcher";
 
 const UserPanel = ({ state, handlers }) => {
   const user = useSelector(selectUser);
@@ -31,9 +31,6 @@ const UserPanel = ({ state, handlers }) => {
 
       {/* Controls sát bên user */}
       <div className="user-panel__controls">
-        {/* Simple Server Switcher */}
-        <ServerSwitcher handlers={handlers} />
-
         {/* Add Server Button */}
         <Tooltip content="Add a Server">
           <button
@@ -58,7 +55,16 @@ const UserPanel = ({ state, handlers }) => {
 
       <div className="user-info">
         <div className="user-avatar">
-          <span>{user?.avatar}</span>
+          {user?.avatar ? (
+            <img 
+              src={getUserAvatarSrc(user)} 
+              alt={user.username} 
+              onError={handleAvatarError}
+              style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }}
+            />
+          ) : (
+            <span>{user?.username?.charAt(0).toUpperCase() || "U"}</span>
+          )}
           <div className="status-dot" />
         </div>
         <div className="user-details">

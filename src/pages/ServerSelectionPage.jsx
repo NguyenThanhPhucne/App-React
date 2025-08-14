@@ -5,6 +5,7 @@ import { selectUser, signOut } from "../features/userSlice";
 import { setSelectedServer } from "../features/appSlice";
 import { Sun, Moon, Hash, Volume2, Users, Plus } from "lucide-react";
 import apiService from "../app/services/apiServices";
+import { getUserAvatarSrc, handleAvatarError } from "../app/utils/avatarUtils";
 import "../styles/server-selection.css";
 
 const ServerSelectionPage = () => {
@@ -120,9 +121,10 @@ const ServerSelectionPage = () => {
       <div className="server-selection-header">
         <div className="user-info">
           <img
-            src={user?.avatar || "/defaultAvatar.jpg"}
+            src={getUserAvatarSrc(user)}
             alt="User Avatar"
             className="user-avatar"
+            onError={handleAvatarError}
           />
           <div className="user-details">
             <h3>{user?.username || "User"}</h3>
