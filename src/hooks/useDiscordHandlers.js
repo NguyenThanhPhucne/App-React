@@ -263,7 +263,7 @@ export const useDiscordHandlers = (state, updateState) => {
         dispatch(signOut());
         dispatch(clearServers());
         dispatch(clearTextChannel());
-        dispatch(clearVoiceChannel);
+        dispatch(clearVoiceChannel());
 
         // Clear both token and user data
         localStorage.removeItem("accessToken");
