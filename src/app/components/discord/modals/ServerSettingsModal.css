@@ -2,10 +2,11 @@
 
 /* Specific styling for Server Settings Modal */
 .server-settings-modal {
-  max-height: 90vh;
+  max-height: 75vh; /* Reduced for consistency */
   display: flex;
   flex-direction: column;
-  width: 620px; /* Slightly wider for server settings */
+  width: 460px; /* Standardized with other modals */
+  max-width: 90%;
   animation: modalSlideIn 0.2s ease-out;
 }
 
@@ -28,27 +29,27 @@
 }
 
 /* Avatar Section */
-.server-settings-avatar-section {
+.server-settings-modal .server-settings-avatar-section {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px; /* Reduced from 20px to 16px */
   align-items: center;
-  padding: 20px;
+  padding: 16px; /* Reduced from 20px to 16px */
   background: linear-gradient(135deg, rgba(255, 165, 0, 0.1), rgba(47, 49, 54, 0.1));
   border-radius: 12px;
   border: 1px solid rgba(255, 165, 0, 0.2);
   margin: 8px 0;
 }
 
-.server-settings-avatar-preview {
+.server-settings-modal .server-settings-avatar-preview {
   display: flex;
   justify-content: center;
 }
 
-.server-settings-avatar-container {
+.server-settings-modal .server-settings-avatar-container {
   position: relative;
-  width: 140px;
-  height: 140px;
+  width: 120px; /* Reduced from 140px to 120px */
+  height: 120px;
   border-radius: 20px; /* Rounded square for server icons */
   overflow: hidden;
   cursor: pointer;
@@ -58,19 +59,19 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
-.server-settings-avatar-container:hover {
+.server-settings-modal .server-settings-avatar-container:hover {
   border-color: #ffa500;
   transform: scale(1.05);
   box-shadow: 0 12px 32px rgba(255, 165, 0, 0.4);
 }
 
-.server-settings-avatar-image {
+.server-settings-modal .server-settings-avatar-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.server-settings-avatar-placeholder {
+.server-settings-modal .server-settings-avatar-placeholder {
   width: 100%;
   height: 100%;
   display: flex;
@@ -83,14 +84,14 @@
   font-weight: 600;
 }
 
-.server-settings-avatar-placeholder span {
+.server-settings-modal .server-settings-avatar-placeholder span {
   font-size: 0.875rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
-.server-settings-avatar-overlay {
+.server-settings-modal .server-settings-avatar-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -108,11 +109,11 @@
   backdrop-filter: blur(2px);
 }
 
-.server-settings-avatar-container:hover .server-settings-avatar-overlay {
+.server-settings-modal .server-settings-avatar-container:hover .server-settings-avatar-overlay {
   opacity: 1;
 }
 
-.server-settings-avatar-overlay span {
+.server-settings-modal .server-settings-avatar-overlay span {
   font-size: 0.8rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -120,13 +121,13 @@
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.server-settings-avatar-actions {
+.server-settings-modal .server-settings-avatar-actions {
   display: flex;
   justify-content: center;
   gap: 16px;
 }
 
-.server-settings-avatar-btn {
+.server-settings-modal .server-settings-avatar-btn {
   background: linear-gradient(135deg, #ffa500, #ff8c00);
   color: #fff;
   border: none;
@@ -144,36 +145,36 @@
   justify-content: center;
 }
 
-.server-settings-avatar-btn:hover {
+.server-settings-modal .server-settings-avatar-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(255, 165, 0, 0.4);
 }
 
-.server-settings-avatar-btn:active {
+.server-settings-modal .server-settings-avatar-btn:active {
   transform: translateY(0);
 }
 
-.server-settings-avatar-btn--upload {
+.server-settings-modal .server-settings-avatar-btn--upload {
   background: linear-gradient(135deg, #ffa500, #ff8c00);
 }
 
-.server-settings-avatar-btn--remove {
+.server-settings-modal .server-settings-avatar-btn--remove {
   background: linear-gradient(135deg, #ed4245, #c23e41);
   box-shadow: 0 4px 12px rgba(237, 66, 69, 0.3);
 }
 
-.server-settings-avatar-btn--remove:hover {
+.server-settings-modal .server-settings-avatar-btn--remove:hover {
   box-shadow: 0 6px 16px rgba(237, 66, 69, 0.4);
 }
 
-.server-settings-avatar-btn:disabled {
+.server-settings-modal .server-settings-avatar-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
   transform: none;
 }
 
 /* File Info */
-.server-settings-file-info {
+.server-settings-modal .server-settings-file-info {
   color: #b9bbbe;
   font-size: 0.8rem;
   text-align: center;
@@ -184,24 +185,24 @@
 }
 
 /* Character Count */
-.server-settings-character-count {
+.server-settings-modal .server-settings-character-count {
   text-align: right;
   margin-top: 8px;
   font-size: 0.75rem;
   color: #b9bbbe;
 }
 
-.server-settings-character-count--warning {
+.server-settings-modal .server-settings-character-count--warning {
   color: #faa61a !important;
   font-weight: 600;
 }
 
 /* Invite Section */
-.server-settings-invite-section {
+.server-settings-modal .server-settings-invite-section {
   margin-bottom: 24px;
 }
 
-.server-settings-invite-display {
+.server-settings-modal .server-settings-invite-display {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -212,11 +213,11 @@
   transition: all 0.2s ease;
 }
 
-.server-settings-invite-display:hover {
+.server-settings-modal .server-settings-invite-display:hover {
   border-color: #5865f2;
 }
 
-.server-settings-invite-code {
+.server-settings-modal .server-settings-invite-code {
   flex: 1;
   background: none;
   border: none;
@@ -228,7 +229,7 @@
   letter-spacing: 1px;
 }
 
-.server-settings-copy-btn {
+.server-settings-modal .server-settings-copy-btn {
   background: linear-gradient(135deg, #5865f2, #4752c4);
   color: #fff;
   border: none;
@@ -245,17 +246,17 @@
   justify-content: center;
 }
 
-.server-settings-copy-btn:hover {
+.server-settings-modal .server-settings-copy-btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(88, 101, 242, 0.4);
 }
 
-.server-settings-copy-btn--copied {
+.server-settings-modal .server-settings-copy-btn--copied {
   background: linear-gradient(135deg, #3ba55c, #2d8f47);
 }
 
 /* Delete Section */
-.server-settings-delete-section {
+.server-settings-modal .server-settings-delete-section {
   background: linear-gradient(135deg, rgba(237, 66, 69, 0.15), rgba(237, 66, 69, 0.05));
   border: 1px solid #ed4245;
   border-radius: 12px;
@@ -265,7 +266,7 @@
   overflow: hidden;
 }
 
-.server-settings-delete-section::before {
+.server-settings-modal .server-settings-delete-section::before {
   content: '';
   position: absolute;
   top: 0;
@@ -275,7 +276,7 @@
   background: linear-gradient(90deg, #ed4245, #ff6b6b);
 }
 
-.server-settings-delete-warning {
+.server-settings-modal .server-settings-delete-warning {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -285,14 +286,14 @@
   font-size: 1.1rem;
 }
 
-.server-settings-delete-description {
+.server-settings-modal .server-settings-delete-description {
   color: #b9bbbe;
   margin-bottom: 20px;
   line-height: 1.6;
   font-size: 0.95rem;
 }
 
-.server-settings-delete-btn {
+.server-settings-modal .server-settings-delete-btn {
   background: linear-gradient(135deg, #ed4245, #c23e41);
   color: #fff;
   border: none;
@@ -308,19 +309,19 @@
   box-shadow: 0 4px 12px rgba(237, 66, 69, 0.3);
 }
 
-.server-settings-delete-btn:hover {
+.server-settings-modal .server-settings-delete-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(237, 66, 69, 0.4);
 }
 
-.server-settings-delete-btn:disabled {
+.server-settings-modal .server-settings-delete-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
   transform: none;
 }
 
 /* Delete Confirmation Modal */
-.delete-confirm-modal {
+.server-settings-modal .delete-confirm-modal {
   background: linear-gradient(135deg, #36393f, #2f3136);
   border-radius: 12px;
   padding: 24px;
@@ -330,7 +331,7 @@
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
 }
 
-.delete-confirm-title {
+.server-settings-modal .delete-confirm-title {
   color: #ed4245;
   font-size: 1.25rem;
   font-weight: 700;
@@ -340,19 +341,19 @@
   gap: 8px;
 }
 
-.delete-confirm-description {
+.server-settings-modal .delete-confirm-description {
   color: #b9bbbe;
   margin-bottom: 20px;
   line-height: 1.5;
 }
 
-.delete-confirm-actions {
+.server-settings-modal .delete-confirm-actions {
   display: flex;
   gap: 12px;
   justify-content: flex-end;
 }
 
-.delete-confirm-btn {
+.server-settings-modal .delete-confirm-btn {
   border: none;
   border-radius: 6px;
   padding: 10px 20px;
@@ -362,36 +363,36 @@
   transition: all 0.2s ease;
 }
 
-.delete-confirm-btn--cancel {
+.server-settings-modal .delete-confirm-btn--cancel {
   background: transparent;
   color: #b9bbbe;
   border: 1px solid #40444b;
 }
 
-.delete-confirm-btn--cancel:hover {
+.server-settings-modal .delete-confirm-btn--cancel:hover {
   background-color: #40444b;
   color: #fff;
   transform: translateY(-1px);
 }
 
-.delete-confirm-btn--delete {
+.server-settings-modal .delete-confirm-btn--delete {
   background: linear-gradient(135deg, #ed4245, #c23e41);
   color: #fff;
 }
 
-.delete-confirm-btn--delete:hover {
+.server-settings-modal .delete-confirm-btn--delete:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(237, 66, 69, 0.4);
 }
 
-.delete-confirm-btn--delete:disabled {
+.server-settings-modal .delete-confirm-btn--delete:disabled {
   opacity: 0.6;
   cursor: not-allowed;
   transform: none;
 }
 
 /* Help Text */
-.server-settings-help-text {
+.server-settings-modal .server-settings-help-text {
   color: #b9bbbe;
   font-size: 0.8rem;
   line-height: 1.5;
@@ -405,7 +406,7 @@
 }
 
 /* Validation */
-.server-settings-validation-error {
+.server-settings-modal .server-settings-validation-error {
   color: #ed4245;
   font-size: 0.8rem;
   margin-top: 8px;
@@ -419,7 +420,7 @@
 }
 
 /* Hidden input for file upload */
-.server-settings-avatar-input {
+.server-settings-modal .server-settings-avatar-input {
   display: none;
 }
 
@@ -446,33 +447,9 @@
 /* Responsive */
 @media (max-width: 768px) {
   .server-settings-modal {
-    width: 95%;
-    margin: 20px;
-    max-height: 90vh;
-  }
-
-  .server-settings-avatar-container {
-    width: 120px;
-    height: 120px;
-  }
-
-  .server-settings-avatar-actions {
-    flex-direction: column;
-    gap: 12px;
-    width: 100%;
-  }
-
-  .server-settings-avatar-btn {
-    width: 100%;
-  }
-}
-
-@media (max-width: 480px) {
-  .server-settings-modal {
-    width: 100%;
-    margin: 10px;
-    border-radius: 8px;
-    max-height: 95vh;
+    width: 85%;
+    margin: 15px;
+    max-height: 80vh;
   }
 
   .server-settings-avatar-container {
@@ -480,8 +457,33 @@
     height: 100px;
   }
 
+  .server-settings-avatar-actions {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .server-settings-modal .server-settings-avatar-btn {
+    width: 100%;
+    min-width: unset;
+  }
+}
+
+@media (max-width: 480px) {
+  .server-settings-modal {
+    width: 90%;
+    margin: 8px;
+    border-radius: 8px;
+    max-height: 85vh;
+  }
+
+  .server-settings-avatar-container {
+    width: 90px;
+    height: 90px;
+  }
+
   .server-settings-avatar-section {
-    padding: 16px;
+    padding: 12px;
   }
 
   .delete-confirm-actions {

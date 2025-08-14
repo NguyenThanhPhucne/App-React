@@ -1,9 +1,7 @@
 /* UserSettingsModal.css - Extends base modal styles with user-specific styling */
 
-/* Specific styling for User Settings Modal */
-.user-settings-modal {
-  max-height: 90vh;/* File Info */
-.user-settings-file-info {
+/* File Info */
+.user-settings-modal .user-settings-file-info {
   color: #b9bbbe;
   font-size: 0.8rem;
   text-align: center;
@@ -15,12 +13,14 @@
 
 /* Specific styling for User Settings Modal */
 .user-settings-modal {
-  max-height: 80vh;
+  max-height: 70vh; /* Reduced from 75vh for more compact size */
   display: flex;
   flex-direction: column;
   animation: modalSlideIn 0.2s ease-out;
-  width: 440px; /* Reduced from 520px to 440px */
-  max-width: 90%;
+  width: 380px; /* Reduced from 420px for more compact desktop experience */
+  max-width: 85%; /* Reduced from 90% for more compact experience */
+  overflow-y: auto;
+  flex: 1;
 }
 
 .user-settings-modal .modal-footer {
@@ -38,9 +38,6 @@
   flex: 1;
   min-height: 0; /* Important for flex child to scroll */
 }
-  overflow-y: auto;
-  flex: 1;
-}
 
 .user-settings-modal .modal-label {
   display: flex;
@@ -50,49 +47,49 @@
 }
 
 /* Avatar Section */
-.user-settings-avatar-section {
+.user-settings-modal .user-settings-avatar-section {
   display: flex;
   flex-direction: column;
-  gap: 16px; /* Reduced from 20px to 16px */
+  gap: 12px; /* Reduced from 16px to 12px for more compact */
   align-items: center;
-  padding: 16px; /* Reduced from 20px to 16px */
+  padding: 12px; /* Reduced from 16px to 12px for more compact */
   background: linear-gradient(135deg, rgba(88, 101, 242, 0.1), rgba(47, 49, 54, 0.1));
   border-radius: 12px;
   border: 1px solid rgba(88, 101, 242, 0.2);
-  margin: 8px 0;
+  margin: 6px 0; /* Reduced from 8px to 6px */
 }
 
-.user-settings-avatar-preview {
+.user-settings-modal .user-settings-avatar-preview {
   display: flex;
   justify-content: center;
 }
 
-.user-settings-avatar-container {
+.user-settings-modal .user-settings-avatar-container {
   position: relative;
-  width: 120px; /* Reduced from 140px to 120px */
-  height: 120px;
+  width: 100px; /* Reduced from 120px to 100px for more compact */
+  height: 100px;
   border-radius: 50%;
   overflow: hidden;
   cursor: pointer;
-  border: 4px solid #40444b;
+  border: 3px solid #40444b; /* Reduced border from 4px to 3px */
   transition: all 0.3s ease;
   background: linear-gradient(135deg, #5865f2, #7289da);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); /* Reduced shadow */
 }
 
-.user-settings-avatar-container:hover {
+.user-settings-modal .user-settings-avatar-container:hover {
   border-color: #5865f2;
   transform: scale(1.05);
   box-shadow: 0 12px 32px rgba(88, 101, 242, 0.4);
 }
 
-.user-settings-avatar-image {
+.user-settings-modal .user-settings-avatar-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.user-settings-avatar-placeholder {
+.user-settings-modal .user-settings-avatar-placeholder {
   width: 100%;
   height: 100%;
   display: flex;
@@ -105,14 +102,14 @@
   font-weight: 600;
 }
 
-.user-settings-avatar-placeholder span {
+.user-settings-modal .user-settings-avatar-placeholder span {
   font-size: 0.875rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
-.user-settings-avatar-overlay {
+.user-settings-modal .user-settings-avatar-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -130,11 +127,11 @@
   backdrop-filter: blur(2px);
 }
 
-.user-settings-avatar-container:hover .user-settings-avatar-overlay {
+.user-settings-modal .user-settings-avatar-container:hover .user-settings-avatar-overlay {
   opacity: 1;
 }
 
-.user-settings-avatar-overlay span {
+.user-settings-modal .user-settings-avatar-overlay span {
   font-size: 0.8rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -142,27 +139,27 @@
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.user-settings-avatar-actions {
+.user-settings-modal .user-settings-avatar-actions {
   display: flex;
   justify-content: center;
-  gap: 12px; /* Reduced from 16px to 12px */
+  gap: 8px; /* Reduced from 12px to 8px for more compact */
 }
 
-.user-settings-avatar-btn {
+.user-settings-modal .user-settings-avatar-btn {
   background: linear-gradient(135deg, #5865f2, #4752c4);
   color: #fff;
   border: none;
   border-radius: 6px; /* Reduced from 8px to 6px */
-  padding: 10px 16px; /* Reduced from 12px 20px to 10px 16px */
-  font-size: 0.8rem; /* Reduced from 0.875rem to 0.8rem */
+  padding: 8px 12px; /* Reduced from 10px 16px to 8px 12px */
+  font-size: 0.75rem; /* Reduced from 0.8rem to 0.75rem */
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
-  gap: 6px; /* Reduced from 8px to 6px */
-  box-shadow: 0 4px 12px rgba(88, 101, 242, 0.3);
-  min-width: 100px; /* Reduced from 120px to 100px */
+  gap: 4px; /* Reduced from 6px to 4px */
+  box-shadow: 0 3px 10px rgba(88, 101, 242, 0.3); /* Reduced shadow */
+  min-width: 80px; /* Reduced from 100px to 80px */
   justify-content: center;
 }
 
@@ -171,7 +168,7 @@
   box-shadow: 0 6px 16px rgba(88, 101, 242, 0.4);
 }
 
-.user-settings-avatar-btn:active {
+.user-settings-modal .user-settings-avatar-btn:active {
   transform: translateY(0);
 }
 
@@ -195,7 +192,7 @@
 }
 
 /* Help Text */
-.user-settings-help-text {
+.user-settings-modal .user-settings-help-text {
   color: #b9bbbe;
   font-size: 0.8rem;
   line-height: 1.5;
@@ -209,7 +206,7 @@
 }
 
 /* Validation */
-.user-settings-validation-error {
+.user-settings-modal .user-settings-validation-error {
   color: #ed4245;
   font-size: 0.8rem;
   margin-top: 8px;
@@ -222,7 +219,7 @@
   border-radius: 6px;
 }
 
-.user-settings-general-error {
+.user-settings-modal .user-settings-general-error {
   background: linear-gradient(135deg, rgba(237, 66, 69, 0.15), rgba(237, 66, 69, 0.05));
   border: 1px solid #ed4245;
   border-radius: 8px;
@@ -236,13 +233,13 @@
   font-weight: 600;
 }
 
-.user-settings-general-error::before {
+.user-settings-modal .user-settings-general-error::before {
   content: "⚠";
   font-size: 1.2rem;
 }
 
 /* Hidden input for file upload */
-.user-settings-avatar-input {
+.user-settings-modal .user-settings-avatar-input {
   display: none;
 }
 
@@ -268,19 +265,19 @@
 /* Responsive */
 @media (max-width: 768px) {
   .user-settings-modal {
-    width: 85%; /* Reduced from 90% to 85% */
+    width: 80%; /* Reduced from 85% for more compact tablet experience */
     margin: 15px;
-    max-height: 80vh;
+    max-height: 75vh; /* Reduced from 80vh */
   }
 
-  .user-settings-avatar-container {
-    width: 100px;
-    height: 100px;
+  .user-settings-modal .user-settings-avatar-container {
+    width: 80px; /* Reduced from 100px for mobile */
+    height: 80px;
   }
 
-  .user-settings-avatar-actions {
+  .user-settings-modal .user-settings-avatar-actions {
     flex-direction: column;
-    gap: 10px;
+    gap: 8px; /* Reduced from 10px */
     width: 100%;
   }
 
@@ -292,19 +289,19 @@
 
 @media (max-width: 480px) {
   .user-settings-modal {
-    width: 90%;
+    width: 85%; /* Reduced from 90% for more compact mobile experience */
     margin: 8px;
     border-radius: 8px;
-    max-height: 85vh;
+    max-height: 80vh; /* Reduced from 85vh */
   }
 
-  .user-settings-avatar-container {
-    width: 90px;
-    height: 90px;
+  .user-settings-modal .user-settings-avatar-container {
+    width: 70px; /* Reduced from 90px for small mobile */
+    height: 70px;
   }
 
-  .user-settings-avatar-section {
-    padding: 12px;
+  .user-settings-modal .user-settings-avatar-section {
+    padding: 10px; /* Reduced from 12px */
   }
 }
 

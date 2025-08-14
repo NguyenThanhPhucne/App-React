@@ -97,7 +97,7 @@ const ChannelSettingsModal = ({
 
   return (
     <div className="modal-overlay" onClick={handleClose}>
-      <div className="create-server-modal" onClick={(e) => e.stopPropagation()}>
+      <div className="create-server-modal channel-settings-modal" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div className="modal-header">
           <h2 className="modal-title">
@@ -150,9 +150,10 @@ const ChannelSettingsModal = ({
               </div>
 
               {/* Channel Name Input */}
-              <div className="settings-input-group">
-                <label htmlFor="channel-name" className="settings-label">
-                  CHANNEL NAME <span className="required-asterisk">*</span>
+              <div className="modal-input-group">
+                <label htmlFor="channel-name" className="modal-label">
+                  <Edit size={16} />
+                  Channel Name <span className="required-asterisk">*</span>
                 </label>
                 <div className="channel-name-wrapper">
                   <div className="channel-name-prefix">
@@ -162,12 +163,13 @@ const ChannelSettingsModal = ({
                       <Volume2 size={16} />
                     )}
                   </div>
-                  <input
+                                    <input
                     type="text"
                     id="channel-name"
                     value={channelName}
                     onChange={handleNameChange}
-                    className="settings-input"
+                    placeholder="new-channel"
+                    className="modal-input"
                     maxLength={100}
                     required
                   />
@@ -180,17 +182,17 @@ const ChannelSettingsModal = ({
               </div>
 
               {/* Channel Description Input */}
-              <div className="settings-input-group">
-                <label htmlFor="channel-description" className="settings-label">
-                  CHANNEL DESCRIPTION{" "}
-                  <span className="optional-text">(optional)</span>
+              <div className="modal-input-group">
+                <label htmlFor="channel-description" className="modal-label">
+                  <Hash size={16} />
+                  Channel Description <span className="optional-text">— optional</span>
                 </label>
                 <textarea
                   id="channel-description"
                   value={description}
                   onChange={handleDescriptionChange}
                   placeholder="What's this channel about?"
-                  className="settings-textarea"
+                  className="modal-textarea"
                   maxLength={1024}
                   rows={3}
                 />
