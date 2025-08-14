@@ -24,8 +24,21 @@
   --mention-text: #ffffff;
   --accent-hover: #4752c4;
   --success: #23a559;
+  --error: #ed4245;
   --channeltextarea-background: #e8e9ea;
   --channeltextarea-background-focus: #d2d3d5;
+  
+  /* Message specific variables */
+  --background-message-hover: #f9f9f9;
+  --header-primary: #2e3338;
+  --text-link: #5865f2;
+  --interactive-normal: #4e5058;
+  --interactive-hover: #2e3338;
+  --background-modifier-hover: #e3e5e8;
+  --background-modifier-accent: #e3e5e8;
+  --background-modifier-selected: #e3e5e8;
+  --elevation-low: 0 1px 0 rgba(4, 4, 5, 0.2), 0 1.5px 0 rgba(6, 6, 7, 0.05), 0 2px 0 rgba(4, 4, 5, 0.05);
+  --elevation-high: 0 8px 16px rgba(0, 0, 0, 0.24);
 }
 
 .theme-dark {
@@ -53,6 +66,19 @@
   --mention-text: #ffffff;
   --accent-hover: #4752c4;
   --success: #23a559;
+  --error: #ed4245;
   --channeltextarea-background: #383a40;
   --channeltextarea-background-focus: #32343a;
+  
+  /* Message specific variables */
+  --background-message-hover: #2a2d31;
+  --header-primary: #f2f3f5;
+  --text-link: #00aff4;
+  --interactive-normal: #b5bac1;
+  --interactive-hover: #f2f3f5;
+  --background-modifier-hover: #404249;
+  --background-modifier-accent: #4f545c;
+  --background-modifier-selected: #404249;
+  --elevation-low: 0 1px 0 rgba(4, 4, 5, 0.2), 0 1.5px 0 rgba(6, 6, 7, 0.05), 0 2px 0 rgba(4, 4, 5, 0.05);
+  --elevation-high: 0 8px 16px rgba(0, 0, 0, 0.24);
 }

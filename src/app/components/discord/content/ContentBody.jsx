@@ -138,6 +138,32 @@ const ContentBody = ({ channel, socketService }) => {
     };
   }, [socketService]);
 
+  // Helper function to determine if message should start a new group
+  const shouldStartNewGroup = (currentMessage, previousMessage) => {
+    if (!previousMessage) return true;
+    
+    // Different user
+    if (currentMessage.user?.id !== previousMessage.user?.id) return true;
+    
+    // More than 5 minutes apart
+    const currentTime = new Date(currentMessage.timestamp);
+    const previousTime = new Date(previousMessage.timestamp);
+    const timeDiff = currentTime - previousTime;
+    if (timeDiff > 5 * 60 * 1000) return true; // 5 minutes in milliseconds
+    
+    return false;
+  };
+
+  // Helper function to determine if should show date divider
+  const shouldShowDateDivider = (currentMessage, previousMessage) => {
+    if (!previousMessage) return false;
+    
+    const currentDate = new Date(currentMessage.timestamp);
+    const previousDate = new Date(previousMessage.timestamp);
+    
+    return currentDate.toDateString() !== previousDate.toDateString();
+  };
+
   if (loading) {
     return (
       <div className="content__body">
@@ -157,17 +183,26 @@ const ContentBody = ({ channel, socketService }) => {
           <p>This is the start of the #{channel.name} channel.</p>
         </div>
       ) : (
-        messages.map((message) => (
-          <Message
-            key={message.id || message._id}
-            messageId={message.id || message._id}
-            message={message.message}
-            user={message.user}
-            timestamp={message.timestamp}
-            channelId={channelId}
-            onDeleteMessage={handleDeleteMessage}
-          />
-        ))
+        messages.map((message, index) => {
+          const previousMessage = index > 0 ? messages[index - 1] : null;
+          const isGroupStart = shouldStartNewGroup(message, previousMessage);
+          const showDateDivider = shouldShowDateDivider(message, previousMessage);
+          
+          return (
+            <Message
+              key={message.id || message._id}
+              messageId={message.id || message._id}
+              message={message.message}
+              user={message.user}
+              timestamp={message.timestamp}
+              channelId={channelId}
+              onDeleteMessage={handleDeleteMessage}
+              isGroupStart={isGroupStart}
+              showDateDivider={showDateDivider}
+              previousMessage={previousMessage}
+            />
+          );
+        })
       )}
 
       {/* Typing indicator */}

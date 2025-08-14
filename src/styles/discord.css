@@ -13,6 +13,7 @@
 @import "./discord/mobile.css";
 @import "./discord/mobile-sidebar.css";
 @import "./discord/responsive.css";
+@import "./discord/simple-server-switcher.css";
 
 .member-list--hidden {
   width: 0;
