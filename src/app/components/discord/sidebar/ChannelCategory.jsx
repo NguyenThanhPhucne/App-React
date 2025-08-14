@@ -81,7 +81,6 @@ const ChannelCategory = ({ type, title, channels, state, handlers }) => {
         <button
           className="category__add-btn ripple-effect"
           onClick={handleCreateChannel}
-          onKeyDown={handleKeyDown}
           title={`Add ${type} channel`}
           aria-label={`Add new ${type} channel`}
         >

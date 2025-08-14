@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
-import userReducer from "./userSlice";
+import userReducer, { signOut } from "./userSlice";
 import channelReducer from "./channelSlice";
-import appSlice from "./appSlice";
+import appSlice, { clearServers } from "./appSlice";
 //import loadingReducer from "../features/loadingSlice";
 
 // Middleware to clear app data when user signs out

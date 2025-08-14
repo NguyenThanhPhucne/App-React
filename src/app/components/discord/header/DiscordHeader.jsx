@@ -8,6 +8,8 @@ import {
   selectServers,
   selectCurrentServer,
   setCurrentServer,
+  selectSelectedServerId,
+  setSelectedServer,
 } from "../../../../features/appSlice";
 
 import { Home, Menu, UserPlus } from "lucide-react";
@@ -19,6 +21,7 @@ const DiscordHeader = ({ state, updateState, handlers }) => {
   const dispatch = useDispatch();
   const servers = useSelector(selectServers);
   const currentServer = useSelector(selectCurrentServer);
+  const selectedServerId = useSelector(selectSelectedServerId);
   const [isInvitePopupOpen, setIsInvitePopupOpen] = useState(false);
 
   // Function to fetch a specific server by ID

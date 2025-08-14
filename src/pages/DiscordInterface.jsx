@@ -105,12 +105,12 @@ const DiscordInterface = () => {
 
   return (
     <div className={`app ${state.isDarkTheme ? "theme-dark" : "theme-light"}`}>
-      {/* Mobile Components 
+      {/* Mobile Components */}
       <MobileDiscordInterface
         state={state}
         handlers={handlers}
         members={members}
-      />*/}
+      />
 
       {/* User Settings Modal */}
       <UserSettingsModal

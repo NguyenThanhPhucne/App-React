@@ -96,6 +96,7 @@ export const appSlice = createSlice({
 export const {
   setServers,
   setCurrentServer,
+  setSelectedServer,
   updateServerInList,
   clearServers,
   addServer,

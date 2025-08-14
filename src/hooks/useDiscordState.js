@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import { useState, useRef } from "react"
+import { useState, useRef, useCallback } from "react";
 
 export const useDiscordState = () => {
-  const dropdownRef = useRef(null)
-  const notificationRef = useRef(null)
+  const dropdownRef = useRef(null);
+  const notificationRef = useRef(null);
 
   const [state, setState] = useState({
     isDarkTheme: true,
@@ -31,8 +31,8 @@ export const useDiscordState = () => {
     memberSearchQuery: "",
     isMuted: false,
     isDeafened: false,
-    hasNotifications: true, // Demo state for notification badge
-    notificationCount: 3, // Demo notification count
+    hasNotifications: true,
+    notificationCount: 3,
     notificationSettings: {
       muteChannel: false,
       useDefault: true,
@@ -43,14 +43,17 @@ export const useDiscordState = () => {
     showMobileSearchInput: false,
     activeMemberTab: "Members",
     showUserSettingsModal: false,
-  })
+  });
 
-  const updateState = (updates) => setState((prev) => ({ ...prev, ...updates }))
+  // Wrap updateState in useCallback to prevent recreation on every render
+  const updateState = useCallback((updates) => {
+    setState((prev) => ({ ...prev, ...updates }));
+  }, []);
 
   return {
     state,
     updateState,
     dropdownRef,
     notificationRef,
-  }
-}
+  };
+};
