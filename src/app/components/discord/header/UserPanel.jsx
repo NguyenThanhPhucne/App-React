@@ -14,6 +14,7 @@ import {
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../../features/userSlice";
+import { getUserAvatarSrc, handleAvatarError } from "../../../utils/avatarUtils";
 import Tooltip from "../../ui/Tooltip";
 
 const UserPanel = ({ state, handlers }) => {
@@ -66,7 +67,16 @@ const UserPanel = ({ state, handlers }) => {
 
       <div className="user-info">
         <div className="user-avatar">
-          <img src={userIcon} alt="avatar" />
+          {user?.avatar ? (
+            <img 
+              src={getUserAvatarSrc(user)} 
+              alt={user.username} 
+              onError={handleAvatarError}
+              style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }}
+            />
+          ) : (
+            <span>{user?.username?.charAt(0).toUpperCase() || "U"}</span>
+          )}
           <div className="status-dot" />
         </div>
         <div className="user-details">

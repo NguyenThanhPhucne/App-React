@@ -21,6 +21,7 @@ export const useDiscordState = () => {
     showMobileNotificationModal: false,
     showMobileMuteModal: false,
     showMobileNotificationSettings: false,
+    showMobileServerSidebar: false,
     showCreateServerModal: false,
     showServerSettingsModal: false,
     showCreateChannelModal: false,
@@ -30,6 +31,8 @@ export const useDiscordState = () => {
     memberSearchQuery: "",
     isMuted: false,
     isDeafened: false,
+    hasNotifications: true, // Demo state for notification badge
+    notificationCount: 3, // Demo notification count
     notificationSettings: {
       muteChannel: false,
       useDefault: true,
