@@ -1,19 +1,18 @@
 /* Discord Interface Main CSS File */
 
 /* Import all modules */
-@import "./discord/variables.css";
 @import "./discord/base.css";
+@import "./discord/variables.css";
+@import "./discord/components.css";
+@import "./discord/content.css";
 @import "./discord/header.css";
 @import "./discord/sidebar.css";
-@import "./discord/content.css";
 @import "./discord/member-list.css";
+@import "./discord/modals.css";
 @import "./discord/notifications.css";
-@import "./discord/components.css";
 @import "./discord/mobile.css";
 @import "./discord/mobile-sidebar.css";
 @import "./discord/responsive.css";
-@import "./discord/modals.css";
-@import "./discord/simple-server-switcher.css";
 
 .member-list--hidden {
   width: 0;
