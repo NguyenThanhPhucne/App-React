@@ -1,4 +1,19 @@
 /* Theme Variables */
+:root {
+  /* Transition properties for smooth theme switching */
+  --theme-transition: background-color 0.3s ease, 
+                     color 0.3s ease, 
+                     border-color 0.3s ease,
+                     box-shadow 0.3s ease;
+}
+
+/* Smooth transition for theme changes */
+.theme-transitioning *,
+.theme-transitioning *::before,
+.theme-transitioning *::after {
+  transition: var(--theme-transition) !important;
+}
+
 .theme-light {
   --bg-primary: #ffffff;
   --bg-secondary: #f2f3f5;
@@ -7,11 +22,14 @@
   --text-secondary: #4e5058;
   --text-muted: #6a6f77;
   --accent: #5865f2;
-  --border: #e3e5e8;
+  --accent-hover: #4752c4;
+  --border-color: #e3e5e8;
   --hover: #f2f3f5;
   --active: #e3e5e8;
   --online: #23a559;
   --danger: #ed4245;
+  --success: #23a559;
+  --warning: #faa61a;
   --muted: #ed2575;
   --deafened: #ed2575;
   --dropdown-bg: #ffffff;
@@ -22,14 +40,13 @@
   --modal-overlay: rgba(0, 0, 0, 0.5);
   --mention-bg: #5865f2;
   --mention-text: #ffffff;
-  --accent-hover: #4752c4;
-  --success: #23a559;
   --error: #ed4245;
   --channeltextarea-background: #e8e9ea;
   --channeltextarea-background-focus: #d2d3d5;
   
   /* Message specific variables */
   --background-message-hover: #f9f9f9;
+  --background-primary: #ffffff;
   --header-primary: #2e3338;
   --text-link: #5865f2;
   --interactive-normal: #4e5058;
@@ -39,6 +56,19 @@
   --background-modifier-selected: #e3e5e8;
   --elevation-low: 0 1px 0 rgba(4, 4, 5, 0.2), 0 1.5px 0 rgba(6, 6, 7, 0.05), 0 2px 0 rgba(4, 4, 5, 0.05);
   --elevation-high: 0 8px 16px rgba(0, 0, 0, 0.24);
+  
+  /* Light theme specific enhancements */
+  --sidebar-bg: #f2f3f5;
+  --sidebar-hover: #e3e5e8;
+  --sidebar-active: #d1d2d4;
+  --member-list-bg: #f9f9f9;
+  --input-bg: #ffffff;
+  --input-border: #d1d2d4;
+  --input-focus-border: #5865f2;
+  --notification-bg: #ffffff;
+  --scroll-track: #f2f3f5;
+  --scroll-thumb: #c4c9ce;
+  --scroll-thumb-hover: #a8adb3;
 }
 
 .theme-dark {
@@ -49,11 +79,14 @@
   --text-secondary: #b5bac1;
   --text-muted: #80848e;
   --accent: #5865f2;
-  --border: #3f4147;
+  --accent-hover: #4752c4;
+  --border-color: #3f4147;
   --hover: #393c43;
   --active: #404249;
   --online: #23a559;
   --danger: #ed4245;
+  --success: #23a559;
+  --warning: #faa61a;
   --muted: #ed2575;
   --deafened: #ed2575;
   --dropdown-bg: #2b2d31;
@@ -64,14 +97,13 @@
   --modal-overlay: rgba(0, 0, 0, 0.7);
   --mention-bg: #5865f2;
   --mention-text: #ffffff;
-  --accent-hover: #4752c4;
-  --success: #23a559;
   --error: #ed4245;
   --channeltextarea-background: #383a40;
   --channeltextarea-background-focus: #32343a;
   
   /* Message specific variables */
   --background-message-hover: #2a2d31;
+  --background-primary: #313338;
   --header-primary: #f2f3f5;
   --text-link: #00aff4;
   --interactive-normal: #b5bac1;
@@ -81,4 +113,17 @@
   --background-modifier-selected: #404249;
   --elevation-low: 0 1px 0 rgba(4, 4, 5, 0.2), 0 1.5px 0 rgba(6, 6, 7, 0.05), 0 2px 0 rgba(4, 4, 5, 0.05);
   --elevation-high: 0 8px 16px rgba(0, 0, 0, 0.24);
+  
+  /* Dark theme specific */
+  --sidebar-bg: #2b2d31;
+  --sidebar-hover: #393c43;
+  --sidebar-active: #404249;
+  --member-list-bg: #2b2d31;
+  --input-bg: #383a40;
+  --input-border: #3f4147;
+  --input-focus-border: #5865f2;
+  --notification-bg: #36393f;
+  --scroll-track: #2b2d31;
+  --scroll-thumb: #3f4147;
+  --scroll-thumb-hover: #4f545c;
 }

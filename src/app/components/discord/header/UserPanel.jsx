@@ -15,10 +15,12 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../../features/userSlice";
 import { getUserAvatarSrc, handleAvatarError } from "../../../utils/avatarUtils";
+import useTheme from "../../../../hooks/useTheme";
 import Tooltip from "../../ui/Tooltip";
 
 const UserPanel = ({ state, handlers }) => {
   const user = useSelector(selectUser);
+  const { isDarkMode, toggleTheme } = useTheme();
   const [userIcon, setUserIcon] = useState(null);
 
   // Get the base URL for serving uploaded images
@@ -56,11 +58,11 @@ const UserPanel = ({ state, handlers }) => {
         {/* Theme Toggle */}
         <Tooltip
           content={
-            state.isDarkTheme ? "Switch to Light Mode" : "Switch to Dark Mode"
+            isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"
           }
         >
-          <button className="theme-toggle" onClick={handlers.toggleTheme}>
-            {state.isDarkTheme ? <Sun size={20} /> : <Moon size={20} />}
+          <button className="theme-toggle" onClick={toggleTheme}>
+            {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
           </button>
         </Tooltip>
       </div>

@@ -1,17 +1,19 @@
 /* Sidebar Styles */
 .sidebar {
   width: 240px;
-  background: var(--bg-secondary);
+  background: var(--sidebar-bg);
   display: flex;
   flex-direction: column;
   position: relative;
   z-index: 50;
   flex-shrink: 0;
+  transition: var(--theme-transition);
 }
 
 .sidebar__header {
   position: relative;
   border-bottom: 1px solid var(--border);
+  transition: var(--theme-transition);
 }
 
 .server-dropdown-btn {
@@ -24,20 +26,23 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  transition: background 0.2s ease;
+  transition: all 0.2s ease, var(--theme-transition);
 }
 
 .server-dropdown-btn:hover {
-  background: var(--hover);
+  background: var(--sidebar-hover);
 }
 
 .server-dropdown-btn h3 {
   font-size: 16px;
   font-weight: 600;
+  color: var(--text-primary);
+  transition: var(--theme-transition);
 }
 
 .dropdown-arrow {
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, var(--theme-transition);
+  color: var(--text-secondary);
 }
 
 .dropdown-arrow--open {

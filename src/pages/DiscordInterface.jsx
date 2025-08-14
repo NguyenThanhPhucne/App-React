@@ -8,6 +8,7 @@ import { useDiscordState } from "../hooks/useDiscordState"
 import { useDiscordHandlers } from "../hooks/useDiscordHandlers"
 import { members } from "../app/data/discordData"
 import apiService from "../app/services/apiServices"
+import useTheme from "../hooks/useTheme"
 
 import DiscordHeader from "../app/components/discord/header/DiscordHeader";
 import ServerSettingsModal from "../app/components/discord/modals/ServerSettingsModal";
@@ -25,6 +26,7 @@ const DiscordInterface = () => {
   const dispatch = useDispatch()
   const selectedServerId = useSelector(selectSelectedServerId)
   const servers = useSelector(selectServers)
+  const { themeClass } = useTheme()
   const { state, updateState, dropdownRef, notificationRef } = useDiscordState()
   const handlers = useDiscordHandlers(state, updateState)
 
@@ -104,7 +106,7 @@ const DiscordInterface = () => {
   }, [updateState, dropdownRef, notificationRef])
 
   return (
-    <div className={`app ${state.isDarkTheme ? "theme-dark" : "theme-light"}`}>
+    <div className={`app ${themeClass}`}>
       {/* Mobile Components */}
       <MobileDiscordInterface
         state={state}

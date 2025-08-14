@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import userReducer, { signOut } from "./userSlice";
 import channelReducer from "./channelSlice";
 import appSlice, { clearServers } from "./appSlice";
+import themeReducer from "./themeSlice";
 //import loadingReducer from "../features/loadingSlice";
 
 // Middleware to clear app data when user signs out
@@ -17,6 +18,7 @@ export const store = configureStore({
     user: userReducer,
     channel: channelReducer,
     app: appSlice,
+    theme: themeReducer,
     //loading: loadingReducer,
   },
   middleware: (getDefaultMiddleware) =>

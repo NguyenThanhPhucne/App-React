@@ -7,7 +7,6 @@ export const useDiscordState = () => {
   const notificationRef = useRef(null);
 
   const [state, setState] = useState({
-    isDarkTheme: true,
     activeChannel: "chung",
     currentServer: 0,
     serverScrollIndex: 0,

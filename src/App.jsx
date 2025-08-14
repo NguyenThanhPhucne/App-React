@@ -7,6 +7,7 @@ import { selectUser, signIn, signOut } from "./features/userSlice";
 import { selectServers, setServers, clearServers } from "./features/appSlice";
 import apiService from "./app/services/apiServices";
 import socketService from "./app/services/socketService";
+import ThemeProvider from "./app/components/ui/ThemeProvider";
 import AppRoutes from "./appRoutes/Routes";
 
 function AppContent() {
@@ -72,9 +73,11 @@ function AppContent() {
 
   return (
     <Router>
-      <div className="App">
-        <AppRoutes />
-      </div>
+      <ThemeProvider>
+        <div className="App">
+          <AppRoutes />
+        </div>
+      </ThemeProvider>
     </Router>
   );
 }

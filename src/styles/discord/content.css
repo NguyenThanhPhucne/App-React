@@ -3,24 +3,25 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: var(--bg-primary, #36393f);
+  background: var(--bg-primary);
   min-width: 0;
-  transition: none;
+  transition: var(--theme-transition);
   position: relative;
 }
 
 .content__header {
   height: 48px;
   padding: 0 16px;
-  border-bottom: 1px solid var(--border, rgba(79, 84, 92, 0.48));
+  border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-shrink: 0;
-  background: var(--bg-primary, #36393f);
-  box-shadow: var(--elevation-low, 0 1px 0 rgba(4, 4, 5, 0.2), 0 1.5px 0 rgba(6, 6, 7, 0.05), 0 2px 0 rgba(4, 4, 5, 0.05));
+  background: var(--bg-primary);
+  box-shadow: var(--elevation-low);
   z-index: 2;
   position: relative;
+  transition: var(--theme-transition);
 }
 
 .channel-info {
@@ -32,33 +33,36 @@
 }
 
 .channel-icon {
-  color: var(--text-muted, #72767d);
+  color: var(--text-muted);
   font-size: 20px;
   display: flex;
   align-items: center;
+  transition: var(--theme-transition);
 }
 
 .channel-name {
   font-size: 16px;
   font-weight: 600;
-  color: var(--header-primary, #ffffff);
+  color: var(--header-primary);
   margin: 0;
+  transition: var(--theme-transition);
 }
 
 .channel-desc {
   font-size: 14px;
-  color: var(--text-muted, #72767d);
+  color: var(--text-muted);
   margin-left: 8px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   position: relative;
+  transition: var(--theme-transition);
 }
 
 .channel-desc::before {
   content: "|";
   margin-right: 8px;
-  color: var(--text-muted, #72767d);
+  color: var(--text-muted);
 }
 
 .header-actions {
@@ -68,9 +72,9 @@
 }
 
 .header-action {
-  color: var(--interactive-normal, #b9bbbe);
+  color: var(--interactive-normal);
   cursor: pointer;
-  transition: color 0.15s ease-out;
+  transition: all 0.15s ease-out, var(--theme-transition);
   padding: 4px;
   border-radius: 4px;
   display: flex;
@@ -79,41 +83,45 @@
 }
 
 .header-action:hover {
-  color: var(--interactive-hover, #dcddde);
-  background-color: var(--background-modifier-hover, rgba(79, 84, 92, 0.16));
+  color: var(--interactive-hover);
+  background-color: var(--background-modifier-hover);
 }
 
 .search {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: var(--bg-tertiary, #202225);
+  background: var(--bg-tertiary);
   padding: 4px 8px;
   border-radius: 4px;
   min-width: 200px;
-  transition: background-color 0.15s ease-out;
+  transition: all 0.15s ease-out, var(--theme-transition);
+  border: 1px solid transparent;
 }
 
 .search:focus-within {
-  background: var(--bg-secondary, #2f3136);
+  background: var(--input-bg);
+  border-color: var(--input-focus-border);
 }
 
 .search input {
   background: none;
   border: none;
   outline: none;
-  color: var(--text-primary, #dcddde);
+  color: var(--text-primary);
   font-size: 14px;
   flex: 1;
+  transition: var(--theme-transition);
 }
 
 .search input::placeholder {
-  color: var(--text-muted, #72767d);
+  color: var(--text-muted);
 }
 
 .search-icon {
-  color: var(--text-muted, #72767d);
+  color: var(--text-muted);
   font-size: 14px;
+  transition: var(--theme-transition);
 }
 
 .content__body {
@@ -214,21 +222,21 @@
 }
 
 .message-input {
-  background: var(--channeltextarea-background, #383a40);
+  background: var(--channeltextarea-background);
   border-radius: 8px;
   padding: 11px 16px;
   display: flex;
   align-items: center;
   gap: 12px;
   min-height: 44px;
-  transition: background-color 0.1s ease-out;
+  transition: all 0.1s ease-out, var(--theme-transition);
   position: relative;
   border: 2px solid transparent;
 }
 
 .message-input:focus-within {
-  background: var(--channeltextarea-background-focus, #32343a);
-  border-color: var(--brand, #5865f2);
+  background: var(--channeltextarea-background-focus);
+  border-color: var(--accent);
 }
 
 .message-input__form {
@@ -243,16 +251,17 @@
   background: none;
   border: none;
   outline: none;
-  color: var(--text-primary, #dcddde);
+  color: var(--text-primary);
   font-size: 14px;
   line-height: 1.375rem;
   resize: none;
   font-family: inherit;
   min-width: 0;
+  transition: var(--theme-transition);
 }
 
 .message-input input::placeholder {
-  color: var(--text-muted, #72767d);
+  color: var(--text-muted);
   font-weight: 400;
 }
 
@@ -266,9 +275,9 @@
 
 .message-input__icon-left svg,
 .message-input__icon-right svg {
-  color: var(--interactive-normal, #b9bbbe);
+  color: var(--interactive-normal);
   cursor: pointer;
-  transition: all 0.15s ease-out;
+  transition: all 0.15s ease-out, var(--theme-transition);
   padding: 6px;
   border-radius: 4px;
   width: 32px;
@@ -281,16 +290,16 @@
 
 .message-input__icon-left svg:hover,
 .message-input__icon-right svg:hover {
-  color: var(--interactive-hover, #dcddde);
-  background-color: var(--background-modifier-hover, rgba(79, 84, 92, 0.16));
+  color: var(--interactive-hover);
+  background-color: var(--background-modifier-hover);
   transform: scale(1.1);
 }
 
 /* Legacy support for direct SVG children */
 .message-input > svg {
-  color: var(--interactive-normal, #b9bbbe);
+  color: var(--interactive-normal);
   cursor: pointer;
-  transition: all 0.15s ease-out;
+  transition: all 0.15s ease-out, var(--theme-transition);
   padding: 6px;
   border-radius: 4px;
   width: 32px;
@@ -302,8 +311,8 @@
 }
 
 .message-input > svg:hover {
-  color: var(--interactive-hover, #dcddde);
-  background-color: var(--background-modifier-hover, rgba(79, 84, 92, 0.16));
+  color: var(--interactive-hover);
+  background-color: var(--background-modifier-hover);
   transform: scale(1.1);
 }
 

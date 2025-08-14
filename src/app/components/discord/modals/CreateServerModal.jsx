@@ -271,17 +271,17 @@ const CreateServerModal = ({ isOpen, onClose, onServerCreated }) => {
             <p className="modal-description">Enter an invite below to join an existing server</p>
 
             <div className="join-form">
-              <label htmlFor="invite-link">Invite Link *</label>
+              <label htmlFor="invite-link">Invite Your Code Here *</label>
               <input
                 type="text"
                 id="invite-link"
                 value={inviteLink}
                 onChange={(e) => setInviteLink(e.target.value)}
-                placeholder="https://discord.gg/hTKzmak"
+                placeholder="Your Code"
                 className="invite-link-field"
               />
 
-              <div className="discovery-section">
+              {/* <div className="discovery-section">
                 <div className="discovery-icon">
                   <Globe size={20} />
                 </div>
@@ -290,7 +290,7 @@ const CreateServerModal = ({ isOpen, onClose, onServerCreated }) => {
                   <span className="discovery-desc">Check out Discoverable communities in Server Discovery.</span>
                 </div>
                 <ChevronRight size={16} />
-              </div>
+              </div> */}
             </div>
           </div>
         )}

@@ -13,6 +13,7 @@
   height: 100vh;
   background: var(--bg-primary);
   color: var(--text-primary);
+  transition: var(--theme-transition);
 }
 
 /* Main Layout */
@@ -23,20 +24,21 @@
   position: relative;
 }
 
-/* Scrollbar */
+/* Scrollbar with theme support */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-secondary);
+  background: var(--scroll-track);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--bg-tertiary);
+  background: var(--scroll-thumb);
   border-radius: 4px;
+  transition: var(--theme-transition);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--border);
+  background: var(--scroll-thumb-hover);
 }

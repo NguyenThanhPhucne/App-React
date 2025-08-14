@@ -5,15 +5,15 @@
     padding: 0.125rem 48px 0.125rem 72px;
     margin: 0;
     position: relative;
-    color: var(--text-primary, #dcddde);
+    color: var(--text-primary);
     word-wrap: break-word;
-    transition: background-color 0.1s ease-out;
+    transition: opacity 0.1s ease-out, var(--theme-transition);
     min-height: 1.375rem;
     line-height: 1.375rem;
 }
 
 .message:hover {
-    background-color: var(--background-message-hover, #04040512);
+    background-color: var(--background-message-hover);
 }
 
 .message.message--first {
@@ -45,14 +45,16 @@
     object-fit: cover;
     flex-shrink: 0;
     cursor: pointer;
-    transition: transform 0.1s ease-out;
+    transition: transform 0.1s ease-out, var(--theme-transition);
     position: absolute;
     left: 16px;
     top: 0.5rem;
+    border: 2px solid transparent;
 }
 
 .message__avatar:hover {
     transform: scale(1.05);
+    border-color: var(--border);
 }
 
 .message.message--subsequent .message__avatar {
@@ -84,9 +86,9 @@
 .message__username {
     font-size: 1rem;
     font-weight: 500;
-    color: var(--header-primary, #ffffff);
+    color: var(--header-primary);
     cursor: pointer;
-    transition: text-decoration 0.1s ease-out;
+    transition: text-decoration 0.1s ease-out, var(--theme-transition);
     vertical-align: baseline;
     flex-shrink: 0;
 }
@@ -97,13 +99,13 @@
 
 .message__timestamp {
     font-size: 0.75rem;
-    color: var(--text-muted, #a3a6aa);
+    color: var(--text-muted);
+    transition: var(--theme-transition);
     font-weight: 500;
     line-height: 1.375rem;
     cursor: default;
     vertical-align: baseline;
     opacity: 1;
-    transition: opacity 0.1s ease-out;
     flex-shrink: 0;
 }
 
@@ -116,10 +118,10 @@
     padding-right: 8px;
     opacity: 0;
     font-size: 0.6875rem;
-    color: var(--text-muted, #a3a6aa);
+    color: var(--text-muted);
     line-height: 1.375rem;
     pointer-events: none;
-    transition: opacity 0.1s ease-out;
+    transition: opacity 0.1s ease-out, var(--theme-transition);
 }
 
 .message:hover .message__timestamp--compact {
@@ -133,9 +135,10 @@
     word-wrap: break-word;
     overflow-wrap: break-word;
     white-space: pre-wrap;
-    color: var(--text-primary, #dcddde);
+    color: var(--text-primary);
     user-select: text;
     padding-right: 48px; /* Space for actions */
+    transition: var(--theme-transition);
 }
 
 .message__text:last-child {
@@ -156,15 +159,15 @@
     position: absolute;
     top: -0.5rem;
     right: 0.5rem;
-    background: var(--background-primary, #36393f);
-    border: 1px solid var(--background-modifier-accent, #4f545c);
+    background: var(--background-primary);
+    border: 1px solid var(--background-modifier-accent);
     border-radius: 8px;
     padding: 4px;
     display: flex;
     gap: 4px;
     opacity: 0;
     transform: translateY(4px);
-    transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+    transition: opacity 0.15s ease-out, transform 0.15s ease-out, var(--theme-transition);
     pointer-events: none;
     z-index: 10;
     box-shadow: var(--elevation-high);
@@ -181,19 +184,19 @@
     height: 32px;
     border: none;
     background: transparent;
-    color: var(--interactive-normal, #b9bbbe);
+    color: var(--interactive-normal);
     cursor: pointer;
     border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.15s ease-out, color 0.15s ease-out;
+    transition: background-color 0.15s ease-out, color 0.15s ease-out, var(--theme-transition);
     padding: 6px;
 }
 
 .message__action:hover {
-    background-color: var(--background-modifier-hover, #40444b);
-    color: var(--interactive-hover, #dcddde);
+    background-color: var(--background-modifier-hover);
+    color: var(--interactive-hover);
 }
 
 .message__action:active {
@@ -232,33 +235,37 @@
     align-items: center;
     margin: 24px 16px 8px 16px;
     position: relative;
+    transition: var(--theme-transition);
 }
 
 .message__date-divider::before {
     content: "";
     flex: 1;
     height: 1px;
-    background: var(--background-modifier-accent, #4f545c);
+    background: var(--background-modifier-accent);
     margin-right: 16px;
+    transition: var(--theme-transition);
 }
 
 .message__date-divider::after {
     content: "";
     flex: 1;
     height: 1px;
-    background: var(--background-modifier-accent, #4f545c);
+    background: var(--background-modifier-accent);
     margin-left: 16px;
+    transition: var(--theme-transition);
 }
 
 .message__date-text {
     font-size: 0.75rem;
     font-weight: 600;
-    color: var(--text-muted, #a3a6aa);
+    color: var(--text-muted);
     text-transform: uppercase;
+    transition: var(--theme-transition);
     letter-spacing: 0.02em;
     white-space: nowrap;
     padding: 2px 4px;
-    background: var(--background-primary, #36393f);
+    background: var(--bg-primary);
 }
 
 /* Message grouping improvements */

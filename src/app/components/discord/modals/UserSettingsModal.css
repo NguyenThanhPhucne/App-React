@@ -2,13 +2,14 @@
 
 /* File Info */
 .user-settings-modal .user-settings-file-info {
-  color: #b9bbbe;
+  color: var(--text-secondary);
   font-size: 0.8rem;
   text-align: center;
   margin-top: 8px;
   padding: 8px 12px;
-  background: rgba(64, 68, 75, 0.3);
+  background: var(--bg-tertiary);
   border-radius: 6px;
+  transition: var(--theme-transition);
 }
 
 /* Specific styling for User Settings Modal */
@@ -53,10 +54,11 @@
   gap: 12px; /* Reduced from 16px to 12px for more compact */
   align-items: center;
   padding: 12px; /* Reduced from 16px to 12px for more compact */
-  background: linear-gradient(135deg, rgba(88, 101, 242, 0.1), rgba(47, 49, 54, 0.1));
+  background: var(--bg-secondary);
   border-radius: 12px;
-  border: 1px solid rgba(88, 101, 242, 0.2);
+  border: 1px solid var(--border-color);
   margin: 6px 0; /* Reduced from 8px to 6px */
+  transition: var(--theme-transition);
 }
 
 .user-settings-modal .user-settings-avatar-preview {
@@ -71,14 +73,14 @@
   border-radius: 50%;
   overflow: hidden;
   cursor: pointer;
-  border: 3px solid #40444b; /* Reduced border from 4px to 3px */
-  transition: all 0.3s ease;
-  background: linear-gradient(135deg, #5865f2, #7289da);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); /* Reduced shadow */
+  border: 3px solid var(--border-color); /* Reduced border from 4px to 3px */
+  transition: all 0.3s ease, var(--theme-transition);
+  background: var(--accent);
+  box-shadow: var(--elevation-low); /* Reduced shadow */
 }
 
 .user-settings-modal .user-settings-avatar-container:hover {
-  border-color: #5865f2;
+  border-color: var(--accent);
   transform: scale(1.05);
   box-shadow: 0 12px 32px rgba(88, 101, 242, 0.4);
 }
@@ -96,8 +98,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #40444b, #36393f);
-  color: #b9bbbe;
+  background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary));
+  color: var(--text-secondary);
+  transition: var(--theme-transition);
   gap: 8px;
   font-weight: 600;
 }
@@ -107,6 +110,7 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  transition: var(--theme-transition);
 }
 
 .user-settings-modal .user-settings-avatar-overlay {
@@ -115,14 +119,14 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(88, 101, 242, 0.3));
+  background: rgba(0, 0, 0, 0.7);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   opacity: 0;
-  transition: all 0.3s ease;
-  color: #fff;
+  transition: all 0.3s ease, var(--theme-transition);
+  color: var(--text-primary);
   gap: 6px;
   backdrop-filter: blur(2px);
 }
@@ -136,7 +140,6 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .user-settings-modal .user-settings-avatar-actions {
@@ -146,15 +149,15 @@
 }
 
 .user-settings-modal .user-settings-avatar-btn {
-  background: linear-gradient(135deg, #5865f2, #4752c4);
-  color: #fff;
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  color: var(--text-primary);
   border: none;
   border-radius: 6px; /* Reduced from 8px to 6px */
   padding: 8px 12px; /* Reduced from 10px 16px to 8px 12px */
   font-size: 0.75rem; /* Reduced from 0.8rem to 0.75rem */
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s ease, var(--theme-transition);
   display: flex;
   align-items: center;
   gap: 4px; /* Reduced from 6px to 4px */
@@ -173,11 +176,11 @@
 }
 
 .user-settings-modal .user-settings-avatar-btn--upload {
-  background: linear-gradient(135deg, #5865f2, #4752c4);
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
 }
 
 .user-settings-modal .user-settings-avatar-btn--remove {
-  background: linear-gradient(135deg, #ed4245, #c23e41);
+  background: var(--danger);
   box-shadow: 0 4px 12px rgba(237, 66, 69, 0.3);
 }
 
@@ -193,8 +196,9 @@
 
 /* Help Text */
 .user-settings-modal .user-settings-help-text {
-  color: #b9bbbe;
+  color: var(--text-secondary);
   font-size: 0.8rem;
+  transition: var(--theme-transition);
   line-height: 1.5;
   margin-top: 8px;
   display: flex;
@@ -207,7 +211,7 @@
 
 /* Validation */
 .user-settings-modal .user-settings-validation-error {
-  color: #ed4245;
+  color: var(--danger);
   font-size: 0.8rem;
   margin-top: 8px;
   display: flex;
@@ -217,20 +221,22 @@
   padding: 8px 12px;
   background: rgba(237, 66, 69, 0.1);
   border-radius: 6px;
+  transition: var(--theme-transition);
 }
 
 .user-settings-modal .user-settings-general-error {
-  background: linear-gradient(135deg, rgba(237, 66, 69, 0.15), rgba(237, 66, 69, 0.05));
-  border: 1px solid #ed4245;
+  background: rgba(237, 66, 69, 0.1);
+  border: 1px solid var(--danger);
   border-radius: 8px;
   padding: 16px;
   margin-bottom: 24px;
-  color: #ed4245;
+  color: var(--danger);
   font-size: 0.95rem;
   display: flex;
   align-items: center;
   gap: 8px;
   font-weight: 600;
+  transition: var(--theme-transition);
 }
 
 .user-settings-modal .user-settings-general-error::before {
@@ -257,7 +263,7 @@
 
 /* Input Focus Enhancement */
 .user-settings-modal .modal-input:focus {
-  border-color: #5865f2;
+  border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(88, 101, 242, 0.1);
   transform: translateY(-1px);
 }

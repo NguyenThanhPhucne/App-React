@@ -64,21 +64,14 @@
   100% { transform: rotate(360deg); }
 }
 
-/* Base Layout */
+/* Server Selection Theme CSS */
 .server-selection-container {
   min-height: 100vh;
-  height: 100vh;
-  background: linear-gradient(135deg, 
-    var(--bg-primary) 0%, 
-    var(--bg-secondary) 50%, 
-    var(--bg-tertiary) 100%
-  );
-  background-attachment: fixed;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   display: flex;
   flex-direction: column;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   color: var(--text-primary);
-  transition: all 0.3s ease;
+  transition: all 0.3s ease, var(--theme-transition);
   overflow-x: hidden;
 }
 
@@ -91,12 +84,13 @@
   );
 }
 
-/* Light mode specific background */
+/* Light mode specific background - Improved */
 .theme-light .server-selection-container {
   background: linear-gradient(135deg, 
-    #fafbfc 0%, 
-    var(--bg-secondary) 50%, 
-    #f0f1f2 100%
+    #ffffff 0%, 
+    #f8f9fa 30%,
+    var(--bg-secondary) 70%, 
+    #e9ecef 100%
   );
 }
 
@@ -111,11 +105,13 @@
   border-bottom: 1px solid var(--border);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   animation: slideInFromLeft 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: var(--theme-transition);
 }
 
 .theme-light .server-selection-header {
-  background: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .user-info {

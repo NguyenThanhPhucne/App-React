@@ -2,8 +2,11 @@
 
 import { Search, Plus, Sun, Moon } from "lucide-react"
 import Tooltip from "../../ui/Tooltip"
+import useTheme from "../../../../hooks/useTheme"
 
 const HeaderControls = ({ state, handlers }) => {
+  const { isDarkMode, toggleTheme } = useTheme();
+  
   return (
     <div className="header__controls">
       <button className="mobile-search-btn" onClick={handlers.toggleMobileSearch}>
@@ -18,9 +21,9 @@ const HeaderControls = ({ state, handlers }) => {
       </Tooltip>
 
       {/* Theme Toggle */}
-      <Tooltip content={state.isDarkTheme ? "Switch to Light Mode" : "Switch to Dark Mode"}>
-        <button className="theme-toggle" onClick={handlers.toggleTheme}>
-          {state.isDarkTheme ? <Sun size={20} /> : <Moon size={20} />}
+      <Tooltip content={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}>
+        <button className="theme-toggle" onClick={toggleTheme}>
+          {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
         </button>
       </Tooltip>
     </div>

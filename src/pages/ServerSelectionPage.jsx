@@ -6,6 +6,7 @@ import { setSelectedServer } from "../features/appSlice";
 import { Sun, Moon, Hash, Volume2, Users, Plus } from "lucide-react";
 import apiService from "../app/services/apiServices";
 import { getUserAvatarSrc, handleAvatarError } from "../app/utils/avatarUtils";
+import useTheme from "../hooks/useTheme";
 import "../styles/server-selection.css";
 
 const ServerSelectionPage = () => {
@@ -13,26 +14,13 @@ const ServerSelectionPage = () => {
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
   const user = useSelector(selectUser);
+  const { isDarkMode, toggleTheme } = useTheme();
   const [servers, setServers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [creatingServer, setCreatingServer] = useState(false);
   const [error, setError] = useState("");
-  const [isDarkTheme, setIsDarkTheme] = useState(() => {
-    // Get theme from localStorage or default to true (dark)
-    const saved = localStorage.getItem('theme');
-    return saved ? JSON.parse(saved) : true;
-  });
 
   // Apply theme class to body
-  useEffect(() => {
-    document.body.className = isDarkTheme ? 'theme-dark' : 'theme-light';
-    localStorage.setItem('theme', JSON.stringify(isDarkTheme));
-  }, [isDarkTheme]);
-
-  const toggleTheme = () => {
-    setIsDarkTheme(!isDarkTheme);
-  };
-
   useEffect(() => {
     if (!user) {
       navigate("/login");
@@ -135,9 +123,9 @@ const ServerSelectionPage = () => {
           <button 
             className="theme-toggle"
             onClick={toggleTheme}
-            title={isDarkTheme ? "Switch to Light Mode" : "Switch to Dark Mode"}
+            title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
           >
-            {isDarkTheme ? <Sun size={20} /> : <Moon size={20} />}
+            {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
           </button>
           <button onClick={handleLogout} className="logout-btn">
             Logout

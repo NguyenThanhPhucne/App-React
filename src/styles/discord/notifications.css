@@ -14,7 +14,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.15s ease;
+  transition: all 0.15s ease, var(--theme-transition);
   position: relative;
 }
 
@@ -37,9 +37,9 @@
   white-space: nowrap;
   opacity: 0;
   visibility: hidden;
-  transition: all 0.15s ease;
+  transition: all 0.15s ease, var(--theme-transition);
   z-index: 1000;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.24);
+  box-shadow: var(--elevation-high);
   pointer-events: none;
 }
 
@@ -69,16 +69,17 @@
   position: absolute;
   top: calc(100% + 8px);
   right: 0;
-  background: var(--dropdown-bg);
+  background: var(--notification-bg);
   border-radius: 8px;
-  box-shadow: 0 8px 16px var(--dropdown-shadow);
+  box-shadow: var(--dropdown-shadow);
   z-index: 1000;
   overflow: visible;
   min-width: 280px;
   opacity: 0;
   visibility: hidden;
   transform: translateY(-8px);
-  transition: all 0.15s ease;
+  transition: all 0.15s ease, var(--theme-transition);
+  border: 1px solid var(--border);
 }
 
 .notification-dropdown--open {

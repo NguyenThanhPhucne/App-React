@@ -20,8 +20,6 @@ export const useDiscordHandlers = (state, updateState) => {
   const currentServer = useSelector(selectCurrentServer)
 
   const handlers = {
-    toggleTheme: () => updateState({ isDarkTheme: !state.isDarkTheme }),
-
     toggleMute: () =>
       updateState({
         isMuted: !state.isMuted,
