@@ -301,8 +301,21 @@
   font-weight: 500;
   text-align: left;
   width: 100%;
-  transition: all 0.2s ease;
-  justify-content: space-between;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.channel::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  background: var(--brand, #5865f2);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 0 4px 4px 0;
 }
 
 .channel:hover {
@@ -319,6 +332,15 @@
 .channel--active {
   background: var(--active);
   color: var(--text-primary);
+  font-weight: 600;
+}
+
+.channel--active::before {
+  width: 3px;
+}
+
+.channel:active {
+  transform: translateX(2px) scale(0.98);
 }
 
 .channel span:first-child {

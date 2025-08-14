@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useCallback, useState } from "react";
+import { useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { clearTextChannel } from "../../../../features/channelSlice";
 import apiService from "../../../services/apiServices";
@@ -12,17 +12,15 @@ import {
   setSelectedServer,
 } from "../../../../features/appSlice";
 
-import { Home, Menu, UserPlus } from "lucide-react";
+import { Home, Menu } from "lucide-react";
 import ServerList from "./ServerList";
 import UserPanel from "./UserPanel";
-import InviteServerPopup from "./InviteServerPopup";
 
 const DiscordHeader = ({ state, updateState, handlers }) => {
   const dispatch = useDispatch();
   const servers = useSelector(selectServers);
   const currentServer = useSelector(selectCurrentServer);
   const selectedServerId = useSelector(selectSelectedServerId);
-  const [isInvitePopupOpen, setIsInvitePopupOpen] = useState(false);
 
   // Function to fetch a specific server by ID
   const fetchServerById = useCallback(
@@ -127,13 +125,6 @@ const DiscordHeader = ({ state, updateState, handlers }) => {
           <button className="home-btn">
             <Home size={20} />
           </button>
-          <button
-            className="invite-btn"
-            onClick={() => setIsInvitePopupOpen(true)}
-            title="Join Server"
-          >
-            <UserPlus size={20} />
-          </button>
         </div>
 
         <div className="header__center">
@@ -147,11 +138,6 @@ const DiscordHeader = ({ state, updateState, handlers }) => {
 
         <UserPanel state={state} handlers={handlers} />
       </header>
-
-      <InviteServerPopup
-        isOpen={isInvitePopupOpen}
-        onClose={() => setIsInvitePopupOpen(false)}
-      />
     </>
   );
 };

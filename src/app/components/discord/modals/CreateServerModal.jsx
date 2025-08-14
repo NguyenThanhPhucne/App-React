@@ -1,33 +1,47 @@
 "use client";
 
 import { useState } from "react";
-import { X, Camera } from "lucide-react";
+import { X, ChevronRight, Globe, Camera, ArrowLeft } from "lucide-react";
 import apiService from "../../../services/apiServices.js";
 
 const CreateServerModal = ({ isOpen, onClose, onServerCreated }) => {
+  const [currentStep, setCurrentStep] = useState("main"); // main, customize, join
   const [serverName, setServerName] = useState("");
   const [serverDescription, setServerDescription] = useState("");
   const [serverIcon, setServerIcon] = useState(null);
   const [serverIconFile, setServerIconFile] = useState(null);
   const [isUploadingIcon, setIsUploadingIcon] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
+  const [inviteLink, setInviteLink] = useState("");
 
   const handleClose = () => {
+    setCurrentStep("main");
     setServerName("");
     setServerDescription("");
     setServerIcon(null);
+    setServerIconFile(null);
+    setInviteLink("");
     onClose();
   };
 
+  const handleBack = () => {
+    if (currentStep === "customize") setCurrentStep("main");
+    else if (currentStep === "join") setCurrentStep("main");
+  };
+
+  const handleCreateMyOwn = () => {
+    setCurrentStep("customize");
+  };
+
+  const handleJoinServer = () => {
+    setCurrentStep("join");
+  };
+
   const handleCreateServer = async () => {
-    if (!serverName.trim() || serverName.trim().length < 3) {
+    if (!serverName.trim() || serverName.trim().length < 2) {
+      alert("Server name must be at least 2 characters long");
       return;
     }
-
-    if (!serverIconFile && !serverIcon) {
-    alert("Please select a server avatar");
-    return;
-  }
 
     setIsCreating(true);
 
@@ -40,7 +54,6 @@ const CreateServerModal = ({ isOpen, onClose, onServerCreated }) => {
           serverAvatarPath = await apiService.uploadServerAvatar(serverIconFile);
         } catch (uploadError) {
           console.error("Error uploading server avatar:", uploadError);
-          // Continue with server creation even if upload fails
           alert("Failed to upload server icon, but server will be created without it");
         } finally {
           setIsUploadingIcon(false);
@@ -58,8 +71,7 @@ const CreateServerModal = ({ isOpen, onClose, onServerCreated }) => {
         _id: newServer._id,
         name: newServer.name,
         serverAvatar: newServer.serverAvatar,
-      }
-      console.log(newServerData);
+      };
       
       if (onServerCreated) {
         await onServerCreated(newServerData);
@@ -68,31 +80,66 @@ const CreateServerModal = ({ isOpen, onClose, onServerCreated }) => {
       handleClose();
     } catch (error) {
       console.error("Error creating server:", error);
-      alert(error.message || "Failed to create server");
+      alert(error.message || "Failed to create server. Please try again.");
     } finally {
       setIsCreating(false);
+    }
+  };
+
+  const handleJoinServerSubmit = async () => {
+    if (!inviteLink.trim()) {
+      alert("Please enter an invite link");
+      return;
+    }
+
+    try {
+      // Extract invite code from different formats
+      let inviteCode = inviteLink.trim();
+      if (inviteCode.includes('discord.gg/')) {
+        inviteCode = inviteCode.split('discord.gg/')[1];
+      } else if (inviteCode.includes('discord.com/invite/')) {
+        inviteCode = inviteCode.split('discord.com/invite/')[1];
+      }
+
+      // Basic validation for invite code format
+      if (inviteCode.length < 3) {
+        alert("Please enter a valid invite link");
+        return;
+      }
+
+      console.log("Joining server with invite code:", inviteCode);
+      
+      // Use the existing API service if available
+      if (apiService.joinServerByInvite) {
+        const result = await apiService.joinServerByInvite(inviteCode);
+        if (result && onServerCreated) {
+          await onServerCreated(result);
+        }
+        handleClose();
+      } else {
+        alert("Join server functionality will be implemented soon!");
+        handleClose();
+      }
+    } catch (error) {
+      console.error("Error joining server:", error);
+      alert(error.message || "Failed to join server. Please check the invite link.");
     }
   };
 
   const handleIconUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
-      // Validate file type
       if (!file.type.startsWith('image/')) {
         alert('Please select a valid image file');
         return;
       }
 
-      // Validate file size (max 5MB)
       if (file.size > 5 * 1024 * 1024) {
         alert('File size must be less than 5MB');
         return;
       }
 
-      // Store the actual file for upload
       setServerIconFile(file);
-
-      // Create preview URL
       const reader = new FileReader();
       reader.onload = (e) => setServerIcon(e.target.result);
       reader.readAsDataURL(file);
@@ -106,112 +153,176 @@ const CreateServerModal = ({ isOpen, onClose, onServerCreated }) => {
       <div className="create-server-modal" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div className="modal-header">
-          <h2 className="modal-title">Create Your Server</h2>
+          <h2 className="modal-title">
+            {currentStep === "main" && "Create Your Server"}
+            {currentStep === "customize" && "Customize Your Server"}
+            {currentStep === "join" && "Join a Server"}
+          </h2>
           <button className="modal-close-btn" onClick={handleClose}>
             <X size={20} />
           </button>
         </div>
 
-        {/* Content */}
-        <div className="modal-content">
-          <p className="modal-description">
-            Give your new server a personality with a name and description. You
-            can always change it later.
-          </p>
+        {/* Main Step */}
+        {currentStep === "main" && (
+          <div className="modal-content">
+            <p className="modal-description">
+              Your server is where you and your friends hang out. Make yours and start talking.
+            </p>
 
-          <div className="customize-section">
-            <div className="icon-upload">
-              <div
-                className="icon-upload-area"
-                onClick={() =>
-                  document.getElementById("server-icon-input").click()
-                }
-              >
-                {serverIcon ? (
-                  <img
-                    src={serverIcon}
-                    alt="Server icon"
-                    className="server-icon-preview"
-                  />
-                ) : (
-                  <>
-                    <Camera size={24} />
-                    <span>UPLOAD</span>
-                  </>
-                )}
-                <button
-                  className="icon-upload-btn"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleIconUpload}
-                    style={{ display: "none" }}
-                    id="server-icon-input"
-                  />
-                  <label htmlFor="server-icon-input">
-                    <div className="upload-plus">+</div>
-                  </label>
+            <div className="server-options">
+              <button className="server-option" onClick={handleCreateMyOwn}>
+                <div className="server-option-icon">
+                  <Globe size={24} />
+                </div>
+                <span>Create My Own</span>
+                <ChevronRight size={16} />
+              </button>
+
+              <div className="join-section">
+                <p className="join-question">Have an invite already?</p>
+                <button className="join-server-btn" onClick={handleJoinServer}>
+                  Join a Server
                 </button>
               </div>
-              {serverIconFile && (
-                <p className="file-info">
-                  Selected: {serverIconFile.name} ({(serverIconFile.size / 1024 / 1024).toFixed(2)} MB)
-                </p>
-              )}
             </div>
+          </div>
+        )}
 
-            <div className="server-name-input">
-              <label htmlFor="server-name">SERVER NAME *</label>
+        {/* Customize Step */}
+        {currentStep === "customize" && (
+          <div className="modal-content">
+            <p className="modal-description">
+              Give your new server a personality with a name and an icon. You can always change it later.
+            </p>
+
+            <div className="customize-section">
+              <div className="icon-upload">
+                <div className="icon-upload-area" onClick={() => document.getElementById("server-icon-input").click()}>
+                  {serverIcon ? (
+                    <img src={serverIcon} alt="Server icon" className="server-icon-preview" />
+                  ) : (
+                    <>
+                      <Camera size={24} />
+                      <span>UPLOAD</span>
+                    </>
+                  )}
+                  <button className="icon-upload-btn" onClick={(e) => e.stopPropagation()}>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleIconUpload}
+                      style={{ display: "none" }}
+                      id="server-icon-input"
+                    />
+                    <label htmlFor="server-icon-input">
+                      <div className="upload-plus">+</div>
+                    </label>
+                  </button>
+                </div>
+                {serverIconFile && (
+                  <p className="file-info">
+                    Selected: {serverIconFile.name} ({(serverIconFile.size / 1024 / 1024).toFixed(2)} MB)
+                  </p>
+                )}
+              </div>
+
+              <div className="server-name-input">
+                <label htmlFor="server-name">SERVER NAME</label>
+                <input
+                  type="text"
+                  id="server-name"
+                  value={serverName}
+                  onChange={(e) => setServerName(e.target.value)}
+                  placeholder="Enter server name"
+                  className="server-name-field"
+                  maxLength={100}
+                />
+                {serverName.trim().length > 0 && serverName.trim().length < 2 && (
+                  <span className="validation-error">Server name must be at least 2 characters long</span>
+                )}
+              </div>
+
+              <div className="server-description-input">
+                <label htmlFor="server-description">
+                  SERVER DESCRIPTION (Optional)
+                </label>
+                <textarea
+                  id="server-description"
+                  value={serverDescription}
+                  onChange={(e) => setServerDescription(e.target.value)}
+                  placeholder="Tell people what your server is about"
+                  className="server-description-field"
+                  maxLength={500}
+                  rows={3}
+                />
+              </div>
+
+              <p className="agreement-text">
+                By creating a server, you agree to the Community Guidelines.
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* Join Step */}
+        {currentStep === "join" && (
+          <div className="modal-content">
+            <p className="modal-description">Enter an invite below to join an existing server</p>
+
+            <div className="join-form">
+              <label htmlFor="invite-link">Invite Link *</label>
               <input
                 type="text"
-                id="server-name"
-                value={serverName}
-                onChange={(e) => setServerName(e.target.value)}
-                placeholder="Enter server name"
-                className="server-name-field"
-                maxLength={100}
+                id="invite-link"
+                value={inviteLink}
+                onChange={(e) => setInviteLink(e.target.value)}
+                placeholder="https://discord.gg/hTKzmak"
+                className="invite-link-field"
               />
-              {serverName.trim().length > 0 && serverName.trim().length < 3 && (
-                <span className="validation-error">
-                  Server name must be at least 3 characters long
-                </span>
-              )}
-            </div>
 
-            <div className="server-description-input">
-              <label htmlFor="server-description">
-                SERVER DESCRIPTION (Optional)
-              </label>
-              <textarea
-                id="server-description"
-                value={serverDescription}
-                onChange={(e) => setServerDescription(e.target.value)}
-                placeholder="Tell people what your server is about"
-                className="server-description-field"
-                maxLength={500}
-                rows={3}
-              />
+              <div className="discovery-section">
+                <div className="discovery-icon">
+                  <Globe size={20} />
+                </div>
+                <div className="discovery-content">
+                  <span className="discovery-title">Don't have an invite?</span>
+                  <span className="discovery-desc">Check out Discoverable communities in Server Discovery.</span>
+                </div>
+                <ChevronRight size={16} />
+              </div>
             </div>
-
-            <p className="agreement-text">
-              By creating a server, you agree to the Community Guidelines.
-            </p>
           </div>
-        </div>
+        )}
 
         {/* Footer */}
         <div className="modal-footer">
-          <button
-            className="modal-create-btn"
-            onClick={handleCreateServer}
-            disabled={
-              !serverName.trim() || serverName.trim().length < 3 || !serverIconFile || isCreating
-            }
-          >
-            {isCreating ? "Creating..." : "Create"}
-          </button>
+          {currentStep !== "main" && (
+            <button className="modal-back-btn" onClick={handleBack}>
+              <ArrowLeft size={16} />
+              Back
+            </button>
+          )}
+          
+          {currentStep === "customize" && (
+            <button 
+              className="modal-create-btn" 
+              onClick={handleCreateServer} 
+              disabled={!serverName.trim() || serverName.trim().length < 2 || isCreating}
+            >
+              {isCreating ? (isUploadingIcon ? "Uploading..." : "Creating...") : "Create"}
+            </button>
+          )}
+          
+          {currentStep === "join" && (
+            <button 
+              className="modal-join-btn"
+              onClick={handleJoinServerSubmit}
+              disabled={!inviteLink.trim()}
+            >
+              Join Server
+            </button>
+          )}
         </div>
       </div>
     </div>
