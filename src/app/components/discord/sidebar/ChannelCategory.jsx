@@ -44,43 +44,63 @@ const ChannelCategory = ({ type, title, channels, state, handlers }) => {
     }
   };
 
-  const handleCreateChannel = () => {
+  const handleCreateChannel = (e) => {
+    e.stopPropagation(); // Prevent event bubbling to category header
+    e.preventDefault(); // Prevent any default behavior
     handlers.toggleCreateChannelModal();
     handlers.updateState({ channelTypeToCreate: type });
   };
 
-  const handleChannelSettings = (e, channel) => {
-    e.stopPropagation();
-    handlers.handleChannelSettings(channel);
+  const handleKeyDown = (e) => {
+    // Handle keyboard navigation
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.stopPropagation();
+      e.preventDefault();
+      handleCreateChannel(e);
+    }
   };
 
   return (
     <div className="category">
-      <button
-        className="category__header"
-        onClick={() => handlers.toggleCategory(type)}
-      >
-        {isCollapsed ? <ChevronRight size={12} /> : <ChevronDown size={12} />}
-        <span>{title}</span>
-        <Plus
-          size={16}
-          className="category__add"
+      <div className="category__header-wrapper">
+        <button
+          className="category__header ripple-effect"
+          onClick={() => handlers.toggleCategory(type)}
+          aria-expanded={!isCollapsed}
+          aria-controls={`category-${type}-content`}
+        >
+          <span className={`category__arrow ${!isCollapsed ? 'category__arrow--expanded' : ''}`}>
+            {isCollapsed ? <ChevronRight size={12} /> : <ChevronDown size={12} />}
+          </span>
+          <span>{title}</span>
+        </button>
+        <button
+          className="category__add-btn ripple-effect"
           onClick={handleCreateChannel}
-        />
-      </button>
+          onKeyDown={handleKeyDown}
+          title={`Add ${type} channel`}
+          aria-label={`Add new ${type} channel`}
+        >
+          <Plus size={16} className="category__add" />
+        </button>
+      </div>
 
       <div
+        id={`category-${type}-content`}
         className={`category__content ${
           isCollapsed ? "category__content--collapsed" : ""
         }`}
+        role="group"
+        aria-labelledby={`category-${type}-header`}
       >
         {channels.map((channel) => (
           <button
             key={channel._id || channel.id}
-            className={`channel ${
+            className={`channel ripple-effect ${
               state.activeChannel === channel._id ? "channel--active" : ""
             }`}
             onClick={() => handleChannelSelect(channel)}
+            aria-pressed={state.activeChannel === channel._id}
           >
             <span><ChannelIcon size={16} />
                {channel.name}</span>

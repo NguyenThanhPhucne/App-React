@@ -58,7 +58,9 @@ const MessageInput = ({
   return (
     <div className="content__footer">
       <div className="message-input">
-        <Paperclip size={20} />
+        <div className="message-input__icon-left">
+          <Paperclip size={20} />
+        </div>
         <form onSubmit={handleSubmit} className="message-input__form">
           <input
             type="text"
@@ -70,7 +72,9 @@ const MessageInput = ({
             Send
           </button>
         </form>
-        <Smile size={20} />
+        <div className="message-input__icon-right">
+          <Smile size={20} />
+        </div>
       </div>
     </div>
   );

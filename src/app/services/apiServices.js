@@ -137,9 +137,8 @@ class ApiService {
       console.error("No access token found in localStorage");
       return { isValid: false, shouldSignOut: true };
     }
-    
+
     try {
-      
       const tokenData = JSON.parse(atob(accessToken.split(".")[1]));
       console.log(tokenData);
       if (tokenData.exp * 1000 > Date.now()) {
@@ -366,206 +365,71 @@ class ApiService {
     }
   }
 
-  async updateChannel(serverId, channelId, channelData) {
-    const accessToken = localStorage.getItem("accessToken");
-
-    if (!accessToken) {
-      throw new Error("No access token found");
-    }
-
+  async getUserServers() {
     try {
-      const response = await fetch(
-        `${API_BASE_URL}/server/${serverId}/channels/${channelId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
-          },
-          credentials: "include",
-          body: JSON.stringify(channelData),
-        }
-      );
+      const accessToken = localStorage.getItem("accessToken");
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to update channel");
+      if (!accessToken) {
+        throw new Error("No access token found");
       }
 
-      return response.json();
-    } catch (error) {
-      console.error("Error updating channel:", error);
-      throw error;
-    }
-  }
-
-  async deleteChannel(serverId, channelId) {
-    const accessToken = localStorage.getItem("accessToken");
-
-    if (!accessToken) {
-      throw new Error("No access token found");
-    }
-
-    try {
-      const response = await fetch(
-        `${API_BASE_URL}/server/${serverId}/channels/${channelId}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
-          },
-          credentials: "include",
-        }
-      );
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to delete channel");
-      }
-
-      return response.json();
-    } catch (error) {
-      console.error("Error deleting channel:", error);
-      throw error;
-    }
-  }
-
-  // Join Server
-  async joinServerByInvite(inviteCode) {
-    const accessToken = localStorage.getItem("accessToken");
-
-    if (!accessToken) {
-      throw new Error("No access token found");
-    }
-
-    try {
-      const response = await fetch(
-        `${API_BASE_URL}/server/join/${inviteCode}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
-          },
-          credentials: "include",
-        }
-      );
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to join server");
-      }
-
-      return response.json();
-    } catch (error) {
-      console.error("Error joining server:", error);
-      throw error;
-    }
-  }
-
-  // Avatar
-  async uploadServerAvatar(imageFile) {
-    const accessToken = localStorage.getItem("accessToken");
-
-    if (!accessToken) {
-      throw new Error("No access token found");
-    }
-
-    try {
-      const formData = new FormData();
-      formData.append("serverAvatar", imageFile);
-
-      const response = await fetch(`${API_BASE_URL}/upload/server-avatar`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-        credentials: "include",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to upload server avatar");
-      }
-
-      const result = await response.json();
-      return result.avatarPath;
-    } catch (error) {
-      console.error("Upload server avatar error:", error);
-      throw error;
-    }
-  }
-
-  // User
-  async uploadUserAvatar(imageFile) {
-    const accessToken = localStorage.getItem("accessToken");
-
-    if (!accessToken) {
-      throw new Error("No access token found");
-    }
-
-    try {
-      const formData = new FormData();
-      formData.append("userAvatar", imageFile);
-
-      const response = await fetch(`${API_BASE_URL}/upload/user-avatar`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-        credentials: "include",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to upload user avatar");
-      }
-
-      const result = await response.json();
-      return result.avatarPath;
-    } catch (error) {
-      console.error("Upload user avatar error:", error);
-      throw error;
-    }
-  }
-
-  async updateUser(userData) {
-    const accessToken = localStorage.getItem("accessToken");
-
-    if (!accessToken) {
-      throw new Error("No access token found");
-    }
-
-    try {
-      const response = await fetch(`${API_BASE_URL}/user/profile`, {
-        method: "PUT",
+      const response = await fetch(`${API_BASE_URL}/server`, {
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
         },
         credentials: "include",
-        body: JSON.stringify(userData),
       });
 
       if (!response.ok) {
+        if (response.status === 401) {
+          // Token expired, try to refresh
+          await this.refreshAccessToken();
+          return this.getUserServers(); // Retry with new token
+        }
         const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to update user");
+        throw new Error(errorData.message || "Failed to fetch servers");
       }
 
-      const result = await response.json();
-
-      if (result.accessToken) {
-        localStorage.setItem("accessToken", result.accessToken);
-      }
-
-      const { accessToken: newToken, ...updatedUserData } = result;
-
-      return updatedUserData;
+      return response.json();
     } catch (error) {
-      console.error("Error updating user:", error);
+      console.error("Error fetching user servers:", error);
+      throw error;
+    }
+  }
+
+  async createServer(serverData) {
+    try {
+      const accessToken = localStorage.getItem("accessToken");
+
+      if (!accessToken) {
+        throw new Error("No access token found");
+      }
+
+      const response = await fetch(`${API_BASE_URL}/server`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        credentials: "include",
+        body: JSON.stringify(serverData),
+      });
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          // Token expired, try to refresh
+          await this.refreshAccessToken();
+          return this.createServer(serverData); // Retry with new token
+        }
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to create server");
+      }
+
+      return response.json();
+    } catch (error) {
+      console.error("Error creating server:", error);
       throw error;
     }
   }

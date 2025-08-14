@@ -34,7 +34,13 @@ const MobileMembersPanel = ({ state, handlers, members }) => {
           >
             <Search size={20} />
           </button>
-          <button className="mobile-action-btn" onClick={handlers.toggleNotificationDropdown}>
+          <button 
+            className="mobile-action-btn" 
+            data-bell="true"
+            data-has-notification={state.hasNotifications ? "true" : "false"}
+            onClick={handlers.toggleNotificationDropdown}
+            aria-label="Notification Settings"
+          >
             <Bell size={20} />
           </button>
         </div>

@@ -49,17 +49,25 @@ const ContentBody = ({ channel, socketService }) => {
   }, [channelId, socketService]);
 
   // Improved auto-scroll function
-  const scrollToBottom = () => {
+  const scrollToBottom = (force = false) => {
     if (messagesContainerRef.current) {
       const container = messagesContainerRef.current;
-      container.scrollTop = container.scrollHeight;
+      
+      // Only auto-scroll if user is near the bottom or force scroll
+      const isNearBottom = container.scrollTop + container.clientHeight >= container.scrollHeight - 100;
+      
+      if (force || isNearBottom) {
+        container.scrollTop = container.scrollHeight;
+      }
     }
   };
 
   // Auto-scroll to bottom when messages change
   useEffect(() => {
     const timer = setTimeout(() => {
-      scrollToBottom();
+      // Only force scroll for initial load, otherwise respect user scroll position
+      const isInitialLoad = messages.length > 0 && !messagesContainerRef.current?.scrollTop;
+      scrollToBottom(isInitialLoad);
     }, 100);
 
     return () => clearTimeout(timer);

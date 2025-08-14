@@ -24,6 +24,8 @@
   --mention-text: #ffffff;
   --accent-hover: #4752c4;
   --success: #23a559;
+  --channeltextarea-background: #e8e9ea;
+  --channeltextarea-background-focus: #d2d3d5;
 }
 
 .theme-dark {
@@ -51,4 +53,6 @@
   --mention-text: #ffffff;
   --accent-hover: #4752c4;
   --success: #23a559;
+  --channeltextarea-background: #383a40;
+  --channeltextarea-background-focus: #32343a;
 }
