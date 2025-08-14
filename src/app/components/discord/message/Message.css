@@ -66,6 +66,16 @@
     flex-direction: column;
     position: relative;
     padding-right: 8px; /* Prevent overlap with actions */
+  display: flex;
+  align-items: flex-start;
+  padding: 10px 0;
+  color: var(--white-color);
+  word-wrap: break-word;
+  position: relative; /* For absolute positioning of delete button */
+}
+
+.message:hover {
+  background-color: rgba(255, 255, 255, 0.02); /* Subtle hover effect */
 }
 
 .message__header {
@@ -93,6 +103,10 @@
 
 .message__username:hover {
     text-decoration: underline;
+.message__info {
+  margin-left: 15px;
+  flex: 1;
+  min-width: 0;
 }
 
 .message__timestamp {
@@ -124,6 +138,8 @@
 
 .message:hover .message__timestamp--compact {
     opacity: 1;
+.message__info p:first-child {
+  margin: 0 0 5px 0;
 }
 
 .message__text {
@@ -136,6 +152,10 @@
     color: var(--text-primary, #dcddde);
     user-select: text;
     padding-right: 48px; /* Space for actions */
+.message__info p:last-child {
+  margin: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .message__text:last-child {
@@ -283,6 +303,11 @@
 .message__status--edited {
     color: var(--text-muted, #a3a6aa);
     font-size: 0.625rem;
+.message__info-timestamp {
+  color: var(--light-grey-color);
+  margin-left: 10px;
+  font-size: 12px;
+  font-weight: normal;
 }
 
 /* Hover improvements */
@@ -607,4 +632,46 @@
     .message__actions {
         display: none;
     }
+/* Avatar styles */
+.message__avatar {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+  flex-shrink: 0;
+}
+
+/* Delete button styles */
+.message__actions {
+  position: absolute;
+  top: 8px;
+  right: 15px;
+  display: flex;
+  gap: 5px;
+  background-color: var(--dark-bg-color, #2f3136);
+  border-radius: 4px;
+  padding: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.message__delete-btn {
+  background: none;
+  border: none;
+  color: #ed4245;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.message__delete-btn:hover {
+  background-color: #ed4245;
+  color: white;
+}
+
+.message__delete-btn:active {
+  transform: scale(0.95);
 }

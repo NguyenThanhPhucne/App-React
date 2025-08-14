@@ -140,7 +140,7 @@ class ApiService {
 
     try {
       const tokenData = JSON.parse(atob(accessToken.split(".")[1]));
-
+      console.log(tokenData);
       if (tokenData.exp * 1000 > Date.now()) {
         return {
           isValid: true,
@@ -150,6 +150,7 @@ class ApiService {
             username: tokenData.username,
             avatar: tokenData.avatar,
             role: tokenData.role,
+            displayName: tokenData.displayName,
           },
         };
       } else {
@@ -173,6 +174,7 @@ class ApiService {
             username: newTokenData.username,
             avatar: newTokenData.avatar,
             role: newTokenData.role,
+            displayName: newTokenData.displayName,
           },
         };
       }
@@ -180,6 +182,36 @@ class ApiService {
       console.error("Token validation/refresh failed:", error);
       localStorage.removeItem("accessToken");
       return { isValid: false, shouldSignOut: true };
+    }
+  }
+
+  async createServer(severData) {
+    const accessToken = localStorage.getItem("accessToken");
+
+    if (!accessToken) {
+      throw new Error("No access token found");
+    }
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/server`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        credentials: "include",
+        body: JSON.stringify(severData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to fetch channels");
+      }
+
+      return response.json();
+    } catch (error) {
+      console.log("Error fetching channels:", error);
+      throw error;
     }
   }
 
@@ -240,6 +272,66 @@ class ApiService {
     }
   }
 
+  async updateServer(serverId, serverData) {
+    const accessToken = localStorage.getItem("accessToken");
+
+    if (!accessToken) {
+      throw new Error("No access token found");
+    }
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/server/${serverId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        credentials: "include",
+        body: JSON.stringify(serverData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to update server");
+      }
+
+      return response.json();
+    } catch (error) {
+      console.error("Error updating server:", error);
+      throw error;
+    }
+  }
+
+  async deleteServer(serverId) {
+    const accessToken = localStorage.getItem("accessToken");
+
+    if (!accessToken) {
+      throw new Error("No access token found");
+    }
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/server/${serverId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to delete server");
+      }
+
+      return response.json();
+    } catch (error) {
+      console.error("Error deleting server:", error);
+      throw error;
+    }
+  }
+
+  // CHANNEL
   async createChannel(serverId, newChannel) {
     const accessToken = localStorage.getItem("accessToken");
 
@@ -276,7 +368,7 @@ class ApiService {
   async getUserServers() {
     try {
       const accessToken = localStorage.getItem("accessToken");
-      
+
       if (!accessToken) {
         throw new Error("No access token found");
       }
@@ -310,7 +402,7 @@ class ApiService {
   async createServer(serverData) {
     try {
       const accessToken = localStorage.getItem("accessToken");
-      
+
       if (!accessToken) {
         throw new Error("No access token found");
       }

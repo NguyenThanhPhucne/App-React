@@ -207,7 +207,7 @@
 }
 
 .category__add-btn::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -307,7 +307,7 @@
 }
 
 .channel::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 0;
@@ -366,7 +366,7 @@
 }
 
 .ripple-effect::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -420,7 +420,7 @@
 }
 
 .channel--loading::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   right: 8px;
@@ -434,8 +434,12 @@
 }
 
 @keyframes spin {
-  0% { transform: translateY(-50%) rotate(0deg); }
-  100% { transform: translateY(-50%) rotate(360deg); }
+  0% {
+    transform: translateY(-50%) rotate(0deg);
+  }
+  100% {
+    transform: translateY(-50%) rotate(360deg);
+  }
 }
 
 /* Notification Badges */
@@ -444,7 +448,7 @@
 }
 
 .channel--notification::before {
-  content: '';
+  content: "";
   position: absolute;
   right: 8px;
   top: 50%;
@@ -478,24 +482,24 @@
     padding: 0 12px 4px 8px;
     gap: 6px;
   }
-  
+
   .category__header {
     font-size: 11px;
     gap: 6px;
   }
-  
+
   .category__add-btn {
     width: 24px;
     height: 24px;
     border-radius: 4px;
     opacity: 0.7; /* Show add button more prominently on mobile */
   }
-  
+
   .category__add-btn:active {
     transform: scale(0.95);
     background: var(--background-modifier-active, rgba(79, 84, 92, 0.32));
   }
-  
+
   .category__header-wrapper:hover .category__add-btn,
   .category__add-btn:hover {
     opacity: 1;
@@ -507,12 +511,12 @@
     padding: 0 8px 4px 8px;
     gap: 4px;
   }
-  
+
   .category__header {
     font-size: 10px;
     gap: 4px;
   }
-  
+
   .category__add-btn {
     width: 20px;
     height: 20px;
@@ -520,7 +524,7 @@
     opacity: 1; /* Always visible on small screens */
     background: var(--background-tertiary, rgba(79, 84, 92, 0.08));
   }
-  
+
   .category__add-btn:active {
     transform: scale(0.9);
     background: var(--background-modifier-active, rgba(79, 84, 92, 0.32));

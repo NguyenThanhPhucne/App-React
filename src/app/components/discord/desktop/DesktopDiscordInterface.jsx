@@ -13,7 +13,6 @@ const DesktopDiscordInterface = ({
   setTypeOfChannel,
   members,
 }) => {
-  //const members = server?.members || [];
 
   return (
     <div className="main">

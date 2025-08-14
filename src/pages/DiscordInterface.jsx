@@ -111,6 +111,12 @@ const DiscordInterface = () => {
         onServerCreated={handlers.handleServerCreated}
       />
 
+      {/* Channel Settings Modal */}
+      <ServerSettingsModal
+        isOpen={state.showServerSettingsModal}
+        onClose={() => handlers.toggleServerSettingsModal()}
+      />
+
       {/* Create Channel Modal */}
       <CreateChannelModal
         isOpen={state.showCreateChannelModal}

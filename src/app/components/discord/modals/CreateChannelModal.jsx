@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { selectCurrentServer } from "../../../../features/appSlice";
 import { X, Hash, Volume2, Lock } from "lucide-react";
+import apiService from "../../../services/apiServices";
 import "./CreateChannelModal.css";
 
 const CreateChannelModal = ({
@@ -33,11 +34,16 @@ const CreateChannelModal = ({
         description: description,
       };
 
-      if (onChannelCreated) {
-        await onChannelCreated(serverId, newChannel);
+      const result = await apiService.createChannel(serverId, newChannel);
+      console.log(result);
+      if (result) {
+        if (onChannelCreated) {
+          await onChannelCreated(serverId, result);
+        }
+        handleClose();
+      } else {
+        throw new Error("Channel creation failed - no channel data returned");
       }
-
-      handleClose();
     } catch (error) {
       console.error("Error creating channel:", error);
     } finally {

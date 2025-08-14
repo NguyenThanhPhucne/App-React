@@ -1,7 +1,14 @@
 "use client";
 
 import React from "react";
-import { ChevronDown, ChevronRight, Plus, Hash, Volume2 } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronRight,
+  Plus,
+  Hash,
+  Volume2,
+  Settings,
+} from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setTextChannel,
@@ -10,13 +17,7 @@ import {
 } from "../../../../features/channelSlice";
 import socketService from "../../../services/socketService";
 
-const ChannelCategory = ({
-  type,
-  title,
-  channels,
-  state,
-  handlers,
-}) => {
+const ChannelCategory = ({ type, title, channels, state, handlers }) => {
   const previousChannel = useSelector(selectTextChannelId);
   const dispatch = useDispatch();
   const isCollapsed = state.collapsedCategories?.[type];
@@ -101,8 +102,15 @@ const ChannelCategory = ({
             onClick={() => handleChannelSelect(channel)}
             aria-pressed={state.activeChannel === channel._id}
           >
-            <ChannelIcon size={16} />
-            <span>{channel.name}</span>
+            <span><ChannelIcon size={16} />
+               {channel.name}</span>
+            <span
+              className="channel-settings-btn"
+              onClick={(e) => handleChannelSettings(e, channel)}
+              title="Channel Settings"
+            >
+              <Settings size={14} />
+            </span>
           </button>
         ))}
       </div>

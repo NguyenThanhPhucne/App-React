@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../../../features/userSlice";
+import { Trash2 } from "lucide-react";
 import "./Message.css";
 import { getUserAvatarSrc, handleAvatarError } from "../../../utils/avatarUtils";
 

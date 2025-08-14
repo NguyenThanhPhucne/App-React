@@ -9,13 +9,10 @@ class SocketService {
 
   connect() {
     if (!this.socket) {
-      this.socket = io(
-        API_BASE_URL || "http://localhost:6001",
-        {
-          withCredentials: true,
-          transports: ["websocket", "polling"],
-        }
-      );
+      this.socket = io(API_BASE_URL || "http://localhost:6001", {
+        withCredentials: true,
+        transports: ["websocket", "polling"],
+      });
 
       this.socket.on("connect", () => {
         console.log("Connected to server:", this.socket.id);
@@ -131,6 +128,44 @@ class SocketService {
   onMessageError(callback) {
     if (this.socket) {
       this.socket.on("message-error", callback);
+    }
+  }
+
+  // Delete a message
+  deleteMessage(messageId, userId, channelId) {
+    if (this.socket) {
+      this.socket.emit("delete-message", {
+        messageId,
+        userId,
+        channelId,
+      });
+    }
+  }
+
+  // Listen for message deletion
+  onMessageDeleted(callback) {
+    if (this.socket) {
+      this.socket.on("message-deleted", callback);
+    }
+  }
+
+  // Listen for delete errors
+  onDeleteError(callback) {
+    if (this.socket) {
+      this.socket.on("delete-error", callback);
+    }
+  }
+
+  // Remove delete listeners
+  offMessageDeleted() {
+    if (this.socket) {
+      this.socket.off("message-deleted");
+    }
+  }
+
+  offDeleteError() {
+    if (this.socket) {
+      this.socket.off("delete-error");
     }
   }
 }

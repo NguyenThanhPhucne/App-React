@@ -24,6 +24,16 @@ export const appSlice = createSlice({
       if (index !== -1) {
         state.servers[index] = action.payload;
       }
+
+      if (
+        state.currentServer &&
+        state.currentServer._id === action.payload._id
+      ) {
+        state.currentServer = action.payload;
+      }
+    },
+    addServer: (state, action) => {
+      state.servers.push(action.payload);
     },
     clearServers: (state) => {
       state.servers = [];
