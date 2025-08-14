@@ -5,7 +5,8 @@ import { X, Hash, Volume2, Trash2, Edit } from "lucide-react";
 import { useSelector } from "react-redux";
 import { selectCurrentServer } from "../../../../features/appSlice";
 import apiService from "../../../services/apiServices";
-import "./ChannelSettingsModal.css"; // Reuse the same CSS
+import "../../../../styles/discord/modals.css"; // Import main modal styles
+import "./ChannelSettingsModal.css"; // Import specific channel modal styles
 
 // Update the modal to use the passed handlers instead of internal logic
 const ChannelSettingsModal = ({
@@ -149,8 +150,8 @@ const ChannelSettingsModal = ({
               </div>
 
               {/* Channel Name Input */}
-              <div className="server-name-input">
-                <label htmlFor="channel-name">
+              <div className="settings-input-group">
+                <label htmlFor="channel-name" className="settings-label">
                   CHANNEL NAME <span className="required-asterisk">*</span>
                 </label>
                 <div className="channel-name-wrapper">
@@ -166,21 +167,21 @@ const ChannelSettingsModal = ({
                     id="channel-name"
                     value={channelName}
                     onChange={handleNameChange}
-                    className="server-name-field"
+                    className="settings-input"
                     maxLength={100}
                     required
                   />
                 </div>
                 {!channelName.trim() && channelName.length >= 0 && (
-                  <span className="validation-error">
+                  <span className="settings-error">
                     Channel name is required
                   </span>
                 )}
               </div>
 
               {/* Channel Description Input */}
-              <div className="server-name-input">
-                <label htmlFor="channel-description">
+              <div className="settings-input-group">
+                <label htmlFor="channel-description" className="settings-label">
                   CHANNEL DESCRIPTION{" "}
                   <span className="optional-text">(optional)</span>
                 </label>
@@ -189,15 +190,15 @@ const ChannelSettingsModal = ({
                   value={description}
                   onChange={handleDescriptionChange}
                   placeholder="What's this channel about?"
-                  className="channel-description-field"
+                  className="settings-textarea"
                   maxLength={1024}
                   rows={3}
                 />
-                <div className="character-count">
+                <div className="settings-char-count">
                   <span
                     className={
                       description.length > 1000
-                        ? "character-count--warning"
+                        ? "settings-char-count--warning"
                         : ""
                     }
                   >

@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { X, Camera, User } from "lucide-react";
+import { X, Camera, User, AlertTriangle, Lightbulb, Users, Edit3, Trash2 } from "lucide-react";
 import { selectUser, signIn } from "../../../../features/userSlice";
 import apiService from "../../../services/apiServices";
+import "../../../../styles/discord/modals.css"; // Import base modal styles
 import "./UserSettingsModal.css";
 
 const UserSettingsModal = ({ isOpen, onClose }) => {
@@ -137,10 +138,13 @@ const UserSettingsModal = ({ isOpen, onClose }) => {
 
   return (
     <div className="modal-overlay" onClick={handleClose}>
-      <div className="user-settings-modal" onClick={(e) => e.stopPropagation()}>
+      <div className="create-server-modal user-settings-modal" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div className="modal-header">
-          <h2 className="modal-title">User Settings</h2>
+          <h2 className="modal-title">
+            <User size={20} />
+            User Settings
+          </h2>
           <button className="modal-close-btn" onClick={handleClose}>
             <X size={20} />
           </button>
@@ -154,36 +158,68 @@ const UserSettingsModal = ({ isOpen, onClose }) => {
 
           {/* General Error */}
           {errors.general && (
-            <div className="error-message general-error">
+            <div className="user-settings-general-error">
               {errors.general}
             </div>
           )}
 
           {/* Avatar Section */}
-          <div className="avatar-section">
-            <label className="section-label">Avatar</label>
-            <div className="avatar-upload">
-              <div
-                className="avatar-upload-area"
-                onClick={() =>
-                  document.getElementById("user-avatar-input").click()
-                }
-              >
-                {avatar ? (
-                  <img
-                    src={avatar}
-                    alt="User avatar"
-                    className="user-avatar-preview"
-                  />
-                ) : (
-                  <div className="default-avatar">
-                    <User size={40} />
+          <div className="modal-input-group">
+            <label className="modal-label">
+              <User size={16} />
+              Profile Picture
+            </label>
+            <div className="user-settings-avatar-section">
+              <div className="user-settings-avatar-preview">
+                <div
+                  className="user-settings-avatar-container"
+                  onClick={() =>
+                    document.getElementById("user-avatar-input").click()
+                  }
+                >
+                  {avatar ? (
+                    <img
+                      src={avatar}
+                      alt="User avatar"
+                      className="user-settings-avatar-image"
+                    />
+                  ) : (
+                    <div className="user-settings-avatar-placeholder">
+                      <User size={40} />
+                      <span>Upload Image</span>
+                    </div>
+                  )}
+                  <div className="user-settings-avatar-overlay">
+                    <Camera size={20} />
+                    <span>Change Avatar</span>
                   </div>
-                )}
-                <div className="avatar-upload-overlay">
-                  <Camera size={20} />
-                  <span>Change Avatar</span>
                 </div>
+              </div>
+              
+              <div className="user-settings-avatar-actions">
+                <button
+                  type="button"
+                  className="user-settings-avatar-btn user-settings-avatar-btn--upload"
+                  onClick={() => document.getElementById("user-avatar-input").click()}
+                  disabled={isUploading}
+                >
+                  <Camera size={16} />
+                  {isUploading ? "Uploading..." : avatar ? "Change Avatar" : "Upload Avatar"}
+                </button>
+                {avatar && (
+                  <button
+                    type="button"
+                    className="user-settings-avatar-btn user-settings-avatar-btn--remove"
+                    onClick={() => {
+                      setAvatar(null);
+                      setAvatarFile(null);
+                    }}
+                    disabled={isUploading}
+                  >
+                    <Trash2 size={16} />
+                    Remove
+                  </button>
+                )}
               </div>
               
               <input
@@ -191,18 +227,27 @@ const UserSettingsModal = ({ isOpen, onClose }) => {
                 id="user-avatar-input"
                 accept="image/*"
                 onChange={handleAvatarUpload}
-                style={{ display: "none" }}
+                className="user-settings-avatar-input"
               />
               
               {errors.avatar && (
-                <span className="error-message">{errors.avatar}</span>
+                <div className="user-settings-validation-error">
+                  <AlertTriangle size={14} />
+                  {errors.avatar}
+                </div>
               )}
+              
+              <div className="user-settings-help-text">
+                <Lightbulb size={14} />
+                Recommended: Square image, at least 128×128px, max 5MB
+              </div>
             </div>
           </div>
 
           {/* Username Input */}
-          <div className="input-section">
-            <label htmlFor="username" className="input-label">
+          <div className="modal-input-group">
+            <label htmlFor="username" className="modal-label">
+              <Edit3 size={16} />
               Username <span className="required-asterisk">*</span>
             </label>
             <input
@@ -211,50 +256,57 @@ const UserSettingsModal = ({ isOpen, onClose }) => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Enter username"
-              className={`input-field ${errors.username ? "input-field--error" : ""}`}
+              className="modal-input"
               maxLength={20}
             />
             {errors.username && (
-              <span className="error-message">{errors.username}</span>
+              <div className="user-settings-validation-error">{errors.username}</div>
             )}
+            <div className="user-settings-help-text">
+              <Edit3 size={14} />
+              This is your unique identifier. Must be 6-20 characters, only letters, numbers, and underscores.
+            </div>
           </div>
 
           {/* Display Name Input */}
-          <div className="input-section">
-            <label htmlFor="displayName" className="input-label">
-              Display Name
+          <div className="modal-input-group">
+            <label htmlFor="displayName" className="modal-label">
+              <Users size={16} />
+              Display Name <span className="optional-text">— optional</span>
             </label>
             <input
               type="text"
               id="displayName"
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
-              placeholder="Enter display name (optional)"
-              className={`input-field ${errors.displayName ? "input-field--error" : ""}`}
+              placeholder="How others will see your name"
+              className="modal-input"
               maxLength={32}
             />
             {errors.displayName && (
-              <span className="error-message">{errors.displayName}</span>
+              <div className="user-settings-validation-error">
+                <AlertTriangle size={14} />
+                {errors.displayName}
+              </div>
             )}
-            <span className="input-help">
+            <div className="user-settings-help-text">
+              <Users size={14} />
               This is how others will see your name in servers and direct messages.
-            </span>
+            </div>
           </div>
         </div>
 
         {/* Footer */}
         <div className="modal-footer">
           <button
-            className="cancel-btn"
+            className="modal-back-btn"
             onClick={handleClose}
             disabled={isUpdating}
           >
             Cancel
           </button>
           <button
-            className={`save-btn ${
-              (!username.trim() || isUpdating) ? "save-btn--disabled" : ""
-            }`}
+            className="modal-create-btn"
             onClick={handleUpdateUser}
             disabled={!username.trim() || isUpdating}
           >

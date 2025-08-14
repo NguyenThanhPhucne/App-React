@@ -11,6 +11,11 @@ import {
   AlertTriangle,
   Camera,
   Upload,
+  Server,
+  FileText,
+  Users,
+  Lightbulb,
+  Link,
 } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -19,6 +24,7 @@ import {
   removeServer,
 } from "../../../../features/appSlice";
 import apiService from "../../../services/apiServices";
+import "../../../../styles/discord/modals.css"; // Import base modal styles
 import "./ServerSettingsModal.css";
 
 const ServerSettingsModal = ({ isOpen, onClose }) => {
@@ -188,19 +194,19 @@ const ServerSettingsModal = ({ isOpen, onClose }) => {
   if (!isOpen || !currentServer) return null;
 
   return (
-    <div className="server-settings-modal-overlay" onClick={handleClose}>
+    <div className="modal-overlay" onClick={handleClose}>
       <div
-        className="server-settings-modal"
+        className="create-server-modal server-settings-modal"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="server-settings-modal__header">
-          <h2 className="server-settings-modal__title">
+        <div className="modal-header">
+          <h2 className="modal-title">
             <Settings size={20} />
             Server Settings
           </h2>
           <button
-            className="server-settings-modal__close"
+            className="modal-close-btn"
             onClick={handleClose}
           >
             <X size={20} />
@@ -208,15 +214,16 @@ const ServerSettingsModal = ({ isOpen, onClose }) => {
         </div>
 
         {/* Content */}
-        <div className="server-settings-modal__content">
-          <p className="server-settings-modal__description">
+        <div className="modal-content">
+          <p className="modal-description">
             Manage your server settings below.
           </p>
 
           {/* Server Avatar Section */}
-          <div className="server-settings-input-group">
-            <label className="server-settings-label">
-              SERVER AVATAR <span className="required-asterisk">*</span>
+          <div className="modal-input-group">
+            <label className="modal-label">
+              <Settings size={16} />
+              Server Avatar <span className="required-asterisk">*</span>
             </label>
             <div className="server-settings-avatar-section">
               <div className="server-settings-avatar-preview">
@@ -234,19 +241,20 @@ const ServerSettingsModal = ({ isOpen, onClose }) => {
                     />
                   ) : (
                     <div className="server-settings-avatar-placeholder">
-                      <Camera size={32} />
-                      <span>Upload Avatar</span>
+                      <Upload size={36} />
+                      <span>Upload Server Icon</span>
                     </div>
                   )}
                   <div className="server-settings-avatar-overlay">
-                    <Upload size={20} />
+                    <Camera size={20} />
+                    <span>Change Icon</span>
                   </div>
                 </div>
                 <input
                   type="file"
                   accept="image/*"
                   onChange={handleIconUpload}
-                  style={{ display: "none" }}
+                  className="server-settings-avatar-input"
                   id="server-icon-input"
                 />
               </div>
@@ -257,60 +265,81 @@ const ServerSettingsModal = ({ isOpen, onClose }) => {
                     document.getElementById("server-icon-input").click()
                   }
                   className="server-settings-avatar-btn server-settings-avatar-btn--upload"
+                  disabled={isUploadingIcon}
                 >
                   <Upload size={16} />
-                  {serverIcon ? "Change Avatar" : "Upload Avatar"}
+                  {isUploadingIcon ? "Uploading..." : serverIcon ? "Change Avatar" : "Upload Avatar"}
                 </button>
+                {serverIcon && (
+                  <button
+                    type="button"
+                    className="server-settings-avatar-btn server-settings-avatar-btn--remove"
+                    onClick={() => {
+                      setServerIcon(null);
+                      setServerIconFile(null);
+                    }}
+                    disabled={isUploadingIcon}
+                  >
+                    Remove
+                  </button>
+                )}
               </div>
               {serverIconFile && (
-                <p className="server-settings-file-info">
-                  Selected: {serverIconFile.name} (
-                  {(serverIconFile.size / 1024 / 1024).toFixed(2)} MB)
-                </p>
+                <div className="server-settings-file-info">
+                  <Upload size={14} />
+                  Selected: {serverIconFile.name} ({(serverIconFile.size / 1024 / 1024).toFixed(2)} MB)
+                </div>
               )}
-              <span className="server-settings-help-text">
-                Recommended size: 512x512px. Max file size: 5MB. Supports JPG,
-                PNG, GIF.
-              </span>
+              <div className="server-settings-help-text">
+                <Lightbulb size={14} />
+                Recommended: 512×512px, max 5MB. Supports JPG, PNG, GIF.
+              </div>
             </div>
           </div>
 
           {/* Server Name Input */}
-          <div className="server-settings-input-group">
-            <label htmlFor="server-name" className="server-settings-label">
-              SERVER NAME <span className="required-asterisk">*</span>
+          <div className="modal-input-group">
+            <label htmlFor="server-name" className="modal-label">
+              <Server size={16} />
+              Server Name <span className="required-asterisk">*</span>
             </label>
             <input
               type="text"
               id="server-name"
               value={serverName}
               onChange={(e) => setServerName(e.target.value)}
-              className="server-settings-input"
+              className="modal-input"
+              placeholder="Enter your server name"
               maxLength={100}
               required
             />
             {serverName.trim().length > 0 && serverName.trim().length < 3 && (
-              <span className="server-settings-validation-error">
+              <div className="server-settings-validation-error">
+                <AlertTriangle size={14} />
                 Server name must be at least 3 characters long
-              </span>
+              </div>
             )}
+            <div className="server-settings-help-text">
+              <Server size={14} />
+              This is how your server will appear to members.
+            </div>
           </div>
 
           {/* Server Description Input */}
-          <div className="server-settings-input-group">
+          <div className="modal-input-group">
             <label
               htmlFor="server-description"
-              className="server-settings-label"
+              className="modal-label"
             >
-              SERVER DESCRIPTION{" "}
-              <span className="optional-text">(optional)</span>
+              <FileText size={16} />
+              Server Description <span className="optional-text">— optional</span>
             </label>
             <textarea
               id="server-description"
               value={serverDescription}
               onChange={(e) => setServerDescription(e.target.value)}
-              placeholder="What's this server about?"
-              className="server-settings-textarea"
+              placeholder="Describe what your server is about..."
+              className="modal-textarea"
               maxLength={1024}
               rows={3}
             />
@@ -325,18 +354,23 @@ const ServerSettingsModal = ({ isOpen, onClose }) => {
                 {serverDescription.length}/1024
               </span>
             </div>
+            <div className="server-settings-help-text">
+              <FileText size={14} />
+              Help members understand what your server is all about.
+            </div>
           </div>
 
           {/* Owner Selection */}
-          <div className="server-settings-input-group">
-            <label htmlFor="server-owner" className="server-settings-label">
-              SERVER OWNER
+          <div className="modal-input-group">
+            <label htmlFor="server-owner" className="modal-label">
+              <Crown size={16} />
+              Server Owner
             </label>
             <select
               id="server-owner"
               value={selectedOwnerId}
               onChange={(e) => setSelectedOwnerId(e.target.value)}
-              className="server-settings-select"
+              className="modal-select"
             >
               {currentServer.members?.map((member) => (
                 <option
@@ -359,16 +393,17 @@ const ServerSettingsModal = ({ isOpen, onClose }) => {
           </div>
 
           {/* Invite Code Section */}
-          <div className="server-settings-input-group">
-            <label htmlFor="invite-code" className="server-settings-label">
-              INVITE CODE
+          <div className="modal-input-group">
+            <label htmlFor="invite-code" className="modal-label">
+              <Link size={16} />
+              Invite Code
             </label>
             <div className="server-settings-invite-container">
               <input
                 type="text"
                 id="invite-code"
                 value={currentServer.inviteCode || "No invite code"}
-                className="server-settings-input server-settings-invite-input"
+                className="modal-input server-settings-invite-input"
                 readOnly
               />
               <button
@@ -381,14 +416,16 @@ const ServerSettingsModal = ({ isOpen, onClose }) => {
               </button>
             </div>
             <span className="server-settings-help-text">
+              <Link size={14} />
               Share this code with others to invite them to your server
             </span>
           </div>
 
           {/* Danger Zone */}
           <div className="server-settings-danger-zone">
-            <label className="server-settings-label server-settings-danger-label">
-              DANGER ZONE
+            <label className="modal-label server-settings-danger-label">
+              <AlertTriangle size={16} />
+              Danger Zone
             </label>
             <div className="server-settings-danger-container">
               <div className="server-settings-danger-header">
@@ -439,15 +476,15 @@ const ServerSettingsModal = ({ isOpen, onClose }) => {
         </div>
 
         {/* Footer */}
-        <div className="server-settings-modal__footer">
+        <div className="modal-footer">
           <button
-            className="server-settings-footer-btn server-settings-footer-btn--cancel"
+            className="modal-back-btn"
             onClick={handleClose}
           >
             Cancel
           </button>
           <button
-            className="server-settings-footer-btn server-settings-footer-btn--save"
+            className="modal-create-btn"
             onClick={handleUpdateServer}
             disabled={
               !serverName.trim() ||

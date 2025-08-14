@@ -9,7 +9,7 @@ const NotificationDropdown = ({ state, handlers, isOpen }) => {
   return (
     <div className="notification-dropdown notification-dropdown--open">
       <div className="notification-mute-container">
-        <button className="notification-mute-item">
+        <div className="notification-mute-item">
           <span>Mute Channel</span>
           <ChevronRight size={14} className="submenu-arrow" />
 
@@ -20,7 +20,7 @@ const NotificationDropdown = ({ state, handlers, isOpen }) => {
               </button>
             ))}
           </div>
-        </button>
+        </div>
       </div>
 
       <div className="notification-settings">
@@ -29,7 +29,7 @@ const NotificationDropdown = ({ state, handlers, isOpen }) => {
             <div className="notification-label-main">Use Category Default</div>
             <div className="notification-label-sub">All Messages</div>
           </div>
-          <button
+          <div
             className={`notification-radio ${
               state.notificationSettings.useDefault ? "notification-radio--active" : ""
             }`}
@@ -40,7 +40,7 @@ const NotificationDropdown = ({ state, handlers, isOpen }) => {
           <div className="notification-label">
             <div className="notification-label-main">All Messages</div>
           </div>
-          <button
+          <div
             className={`notification-radio ${
               state.notificationSettings.allMessages ? "notification-radio--active" : ""
             }`}
@@ -51,7 +51,7 @@ const NotificationDropdown = ({ state, handlers, isOpen }) => {
           <div className="notification-label">
             <div className="notification-label-main">Only @mentions</div>
           </div>
-          <button
+          <div
             className={`notification-radio ${
               state.notificationSettings.onlyMentions ? "notification-radio--active" : ""
             }`}
@@ -62,7 +62,7 @@ const NotificationDropdown = ({ state, handlers, isOpen }) => {
           <div className="notification-label">
             <div className="notification-label-main">Nothing</div>
           </div>
-          <button
+          <div
             className={`notification-radio ${state.notificationSettings.nothing ? "notification-radio--active" : ""}`}
           />
         </div>
