@@ -1,8 +1,14 @@
 "use client";
 
-import { ChevronLeft, ChevronRight, Hash } from "lucide-react";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { selectCurrentServer } from "../../../../features/appSlice";
+import { ChevronLeft, ChevronRight, Hash, Loader2 } from "lucide-react";
 
 const ServerList = ({ servers, state, updateState, handlers }) => {
+  const currentServer = useSelector(selectCurrentServer);
+  const [loadingServerId, setLoadingServerId] = useState(null);
+  
   const visibleServers =
     servers?.slice(
       state.serverScrollIndex || 0,
@@ -54,11 +60,12 @@ const ServerList = ({ servers, state, updateState, handlers }) => {
             <button
               key={server._id}
               className={`server-btn ${
-                state.currentServer === server._id ? "server-btn--active" : ""
-              }`}
+                currentServer?._id === server._id ? "server-btn--active" : ""
+              } ${loadingServerId === server._id ? "server-btn--loading" : ""}`}
               onClick={() => handleServerClick(server._id)}
               style={{ "--server-color": server.color || "#5865f2" }}
               title={server.name}
+              disabled={loadingServerId === server._id}
             >
               {renderServerIcon(server)}
             </button>

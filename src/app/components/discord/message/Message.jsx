@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../../../features/userSlice";
 import { Trash2 } from "lucide-react";
 import "./Message.css";
+import { getUserAvatarSrc, handleAvatarError } from "../../../utils/avatarUtils";
 
 function Message({
   message,
@@ -21,16 +22,26 @@ function Message({
     const date = new Date(timestamp);
     const now = new Date();
     const isToday = date.toDateString() === now.toDateString();
+    const yesterday = new Date(now);
+    yesterday.setDate(yesterday.getDate() - 1);
+    const isYesterday = date.toDateString() === yesterday.toDateString();
 
     if (isToday) {
       return date.toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
       });
+    } else if (isYesterday) {
+      return "Yesterday at " + date.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
     } else {
       return date.toLocaleDateString([], {
-        month: "short",
-        day: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        year: "numeric",
+      }) + " " + date.toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
       });

@@ -11,6 +11,7 @@ const DesktopDiscordInterface = ({
   notificationRef,
   setCreateChannel,
   setTypeOfChannel,
+  members,
 }) => {
 
   return (

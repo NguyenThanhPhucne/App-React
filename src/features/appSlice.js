@@ -4,6 +4,7 @@ export const appSlice = createSlice({
   name: "app",
   initialState: {
     currentServer: null,
+    selectedServerId: null,
     servers: [],
   },
   reducers: {
@@ -12,6 +13,9 @@ export const appSlice = createSlice({
     },
     setCurrentServer: (state, action) => {
       state.currentServer = action.payload;
+    },
+    setSelectedServer: (state, action) => {
+      state.selectedServerId = action.payload;
     },
     updateServerInList: (state, action) => {
       const index = state.servers.findIndex(
@@ -102,5 +106,6 @@ export const {
 
 export const selectServers = (state) => state.app.servers;
 export const selectCurrentServer = (state) => state.app.currentServer;
+export const selectSelectedServerId = (state) => state.app.selectedServerId;
 
 export default appSlice.reducer;

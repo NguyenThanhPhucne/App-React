@@ -14,6 +14,7 @@ import {
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../../features/userSlice";
+import { getUserAvatarSrc, handleAvatarError } from "../../../utils/avatarUtils";
 import Tooltip from "../../ui/Tooltip";
 
 const UserPanel = ({ state, handlers }) => {
