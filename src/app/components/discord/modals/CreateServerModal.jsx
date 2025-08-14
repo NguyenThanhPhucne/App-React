@@ -219,5 +219,3 @@ const CreateServerModal = ({ isOpen, onClose, onServerCreated }) => {
 };
 
 export default CreateServerModal;
-
-export default CreateServerModal;
