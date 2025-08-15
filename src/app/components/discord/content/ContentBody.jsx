@@ -236,6 +236,10 @@ const ContentBody = ({ channel, socketService }) => {
           <h2>Welcome to {currentServer?.name || "Discord"}!</h2>
           <p>Select a channel to start chatting.</p>
         </div>
+      ) : loading ? (
+        <div className="loading-container">
+          <LoadingSpinner />
+        </div>
       ) : messages.length === 0 ? (
         <div className="welcome">
           <div className="welcome__icon">

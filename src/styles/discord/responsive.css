@@ -1044,12 +1044,7 @@
 }
 
 /* === CHANNEL HEADER IMPROVEMENTS === */
-.content__header .channel-name::before {
-  content: "#";
-  color: var(--text-muted, #72767d);
-  margin-right: 4px;
-  font-weight: 300;
-}
+/* Removed ::before content as we use Hash icon in React component */
 
 .content__header .channel-info {
   align-items: baseline;

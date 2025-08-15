@@ -22,20 +22,24 @@ const DiscordContent = ({ state, handlers, notificationRef }) => {
           : "content--without-members"
       }`}
     >
-      <ContentHeader
-        state={state}
-        handlers={handlers}
-        channel={channel}
-        notificationRef={notificationRef}
-      />
+      {channel && (
+        <ContentHeader
+          state={state}
+          handlers={handlers}
+          channel={channel}
+          notificationRef={notificationRef}
+        />
+      )}
 
       <ContentBody channel={channel} socketService={socketService}/>
 
-      <MessageInput
-        socketService={socketService}
-        channel={channel}
-        user={user}
-      />
+      {channel && (
+        <MessageInput
+          socketService={socketService}
+          channel={channel}
+          user={user}
+        />
+      )}
     </main>
   );
 };

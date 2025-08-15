@@ -8,8 +8,8 @@ const ContentHeader = ({ state, handlers, channel, notificationRef }) => {
   return (
     <div className="content__header">
       <div className="channel-info">
-        <Hash size={20} />
-        <span className="channel-name">{channel.name}</span>
+        {channel && <Hash size={20} className="channel-icon" />}
+        <span className="channel-name">{channel?.name}</span>
         {/*<span className="channel-desc">{members.online.length} Online</span>*/}
       </div>
 
