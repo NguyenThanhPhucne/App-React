@@ -32,7 +32,7 @@
 .spinner-ring:nth-child(3) {
   width: 50%;
   height: 50%;
-  border-top-color: var(--accent);
+  border-top-color: var(--text-primary);
   opacity: 0.9;
   animation-delay: -0.3s;
 }
