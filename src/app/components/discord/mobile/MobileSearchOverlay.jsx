@@ -11,7 +11,7 @@ const MobileSearchOverlay = ({ isVisible, onClose }) => {
         <button className="action-btn" onClick={onClose}>
           <ArrowLeft size={20} />
         </button>
-        <input className="mobile-search-input" type="text" placeholder="Search" autoFocus />
+        <input className="mobile-search-input" type="text" placeholder="Search messages, people, or channels" autoFocus />
       </div>
     </div>
   )

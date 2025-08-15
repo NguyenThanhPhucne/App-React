@@ -2,7 +2,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { MdArrowBack } from "react-icons/md";
-import { SiGoogle } from "react-icons/si";
+import { FcGoogle } from "react-icons/fc";
 import { useForm } from "../hooks/useForm";
 import apiService from "../app/services/apiServices";
 
@@ -47,24 +47,27 @@ const SignupPage = () => {
   };
 
   const formFields = [
-    { name: "email", label: "Email", type: "email", autoComplete: "email" },
+    { name: "email", label: "Email", type: "email", autoComplete: "email", placeholder: "Enter your email address" },
     {
       name: "username",
       label: "Username",
       type: "text",
       autoComplete: "username",
+      placeholder: "Choose a unique username"
     },
     {
       name: "password",
       label: "Password",
       type: "password",
       autoComplete: "new-password",
+      placeholder: "Create a strong password"
     },
     {
       name: "confirmPassword",
       label: "Confirm Password",
       type: "password",
       autoComplete: "new-password",
+      placeholder: "Re-enter your password"
     },
   ];
 
@@ -95,7 +98,7 @@ const SignupPage = () => {
                   className="input-field"
                   name={field.name}
                   type={field.type}
-                  placeholder="Enter..."
+                  placeholder={field.placeholder}
                   value={values[field.name]}
                   onChange={handleChange}
                   autoComplete={field.autoComplete}
@@ -118,7 +121,7 @@ const SignupPage = () => {
               className="social-button google"
               onClick={() => handleSocialSignup("google")}
             >
-              <SiGoogle size={18} />
+              <FcGoogle size={18} />
               Sign up with Google
             </button>
           </div>

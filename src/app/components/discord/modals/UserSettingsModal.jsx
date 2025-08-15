@@ -255,7 +255,7 @@ const UserSettingsModal = ({ isOpen, onClose }) => {
               id="username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              placeholder="Enter username"
+              placeholder="Choose a unique username"
               className="modal-input"
               maxLength={20}
             />
@@ -279,7 +279,7 @@ const UserSettingsModal = ({ isOpen, onClose }) => {
               id="displayName"
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
-              placeholder="How others will see your name"
+              placeholder="Your public display name"
               className="modal-input"
               maxLength={32}
             />

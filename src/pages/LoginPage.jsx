@@ -3,8 +3,8 @@
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { MdArrowBack } from "react-icons/md";
-import { SiGoogle } from "react-icons/si";
-import { MdEmail } from "react-icons/md";
+import { FcGoogle } from "react-icons/fc";
+import { SiGmail } from "react-icons/si";
 import { useForm } from "../hooks/useForm";
 import apiService from "../app/services/apiServices";
 import { signIn } from "../features/userSlice";
@@ -60,7 +60,7 @@ const LoginPage = () => {
               <input
                 className="input-field"
                 name="account"
-                placeholder="Enter..."
+                placeholder="Username or email address"
                 value={values.account}
                 onChange={handleChange}
                 autoComplete="username"
@@ -73,7 +73,7 @@ const LoginPage = () => {
                 className="input-field"
                 name="password"
                 type="password"
-                placeholder="Enter..."
+                placeholder="Enter your password"
                 value={values.password}
                 onChange={handleChange}
                 autoComplete="current-password"
@@ -108,7 +108,7 @@ const LoginPage = () => {
               className="social-button email"
               onClick={() => navigate("/signup")}
             >
-              <MdEmail size={20} />
+              <SiGmail size={20} />
               Sign in with Email & Phone
             </button>
 
@@ -116,7 +116,7 @@ const LoginPage = () => {
               className="social-button google"
               onClick={() => handleSocialLogin("google")}
             >
-              <SiGoogle size={18} />
+              <FcGoogle size={18} />
               Google
             </button>
           </div>

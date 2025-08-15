@@ -3,6 +3,7 @@
 .auth-container {
   min-height: 100vh;
   display: flex;
+  transition: var(--theme-transition);
 }
 
 /* Left side - Form (2/5) - ZIM Style */
@@ -16,6 +17,7 @@
   padding: 3rem 2rem;
   background: #ffffff;
   position: relative;
+  transition: var(--theme-transition);
 }
 
 .back-button {
@@ -31,7 +33,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: var(--theme-transition);
   color: #6b7280;
 }
 
@@ -42,12 +44,14 @@
 .form-wrapper {
   width: 100%;
   max-width: 380px;
+  transition: var(--theme-transition);
 }
 
 .form-title {
   font-size: 1.75rem;
   font-weight: 600;
   color: #111827;
+  transition: var(--theme-transition);
   margin-bottom: 2.5rem;
   text-align: left;
 }

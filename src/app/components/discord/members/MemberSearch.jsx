@@ -8,7 +8,7 @@ const MemberSearch = ({ searchQuery, onSearchChange }) => {
       <Search size={16} />
       <input
         type="text"
-        placeholder="Search members"
+        placeholder="Search members by name"
         value={searchQuery}
         onChange={(e) => onSearchChange(e.target.value)}
       />

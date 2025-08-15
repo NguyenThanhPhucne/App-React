@@ -520,6 +520,39 @@
   background: var(--accent-hover);
 }
 
+/* Join Server Card */
+.join-server-card {
+  border: 2px dashed var(--border);
+  background: var(--bg-tertiary);
+  opacity: 0.8;
+}
+
+.join-server-card:hover {
+  border-color: var(--accent);
+  background: var(--hover);
+  opacity: 1;
+}
+
+.join-server-card .server-name {
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.join-icon {
+  background: var(--accent);
+  border: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.server-card:hover .join-icon {
+  background: var(--accent-hover);
+}
+
 /* No Servers State */
 .no-servers {
   grid-column: 1 / -1;

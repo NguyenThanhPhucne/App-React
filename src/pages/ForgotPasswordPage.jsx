@@ -95,7 +95,7 @@ const ForgotPasswordPage = () => {
                 className="input-field"
                 name="email"
                 type="email"
-                placeholder="Enter your email..."
+                placeholder="Enter your email address to receive reset link"
                 value={values.email}
                 onChange={handleChange}
                 disabled={isSubmitting}

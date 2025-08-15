@@ -103,7 +103,7 @@ const ResetPasswordPage = () => {
                 className="input-field verification-input"
                 name="resetCode"
                 type="text"
-                placeholder="Enter 6-digit code..."
+                placeholder="Enter the 6-digit code from your email"
                 value={values.resetCode}
                 onChange={handleChange}
                 maxLength={6}
@@ -118,7 +118,7 @@ const ResetPasswordPage = () => {
                 className="input-field"
                 name="newPassword"
                 type="password"
-                placeholder="Enter new password..."
+                placeholder="Create a new secure password"
                 value={values.newPassword}
                 onChange={handleChange}
                 disabled={isSubmitting}
@@ -132,7 +132,7 @@ const ResetPasswordPage = () => {
                 className="input-field"
                 name="confirmPassword"
                 type="password"
-                placeholder="Confirm new password..."
+                placeholder="Re-enter your new password"
                 value={values.confirmPassword}
                 onChange={handleChange}
                 disabled={isSubmitting}

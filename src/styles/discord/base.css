@@ -1,4 +1,4 @@
-/* Base Styles */
+/* Base Styles with Enhanced Theme Transition */
 .app * {
   margin: 0;
   padding: 0;
@@ -16,21 +16,48 @@
   transition: var(--theme-transition);
 }
 
+/* Enhanced global transition for all interactive elements */
+.app *:not(.theme-preload *) {
+  transition: var(--theme-transition);
+}
+
+/* Specific element transitions */
+.app button,
+.app input,
+.app textarea,
+.app select,
+.app [role="button"],
+.app [role="menuitem"],
+.app [role="tab"] {
+  transition: var(--theme-transition);
+}
+
+/* SVG and icon transitions */
+.app svg,
+.app svg *,
+.app .icon,
+.app [class*="icon"] {
+  transition: var(--theme-transition);
+}
+
 /* Main Layout */
 .main {
   display: flex;
   flex: 1;
   overflow: hidden;
   position: relative;
+  transition: var(--theme-transition);
 }
 
-/* Scrollbar with theme support */
+/* Enhanced Scrollbar with smooth transitions */
 ::-webkit-scrollbar {
   width: 8px;
+  transition: var(--theme-transition);
 }
 
 ::-webkit-scrollbar-track {
   background: var(--scroll-track);
+  transition: var(--theme-transition);
 }
 
 ::-webkit-scrollbar-thumb {

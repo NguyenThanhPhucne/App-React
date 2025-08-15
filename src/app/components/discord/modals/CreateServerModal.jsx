@@ -234,7 +234,7 @@ const CreateServerModal = ({ isOpen, onClose, onServerCreated }) => {
                   id="server-name"
                   value={serverName}
                   onChange={(e) => setServerName(e.target.value)}
-                  placeholder="Enter server name"
+                  placeholder="Give your server a memorable name"
                   className="server-name-field"
                   maxLength={100}
                 />
@@ -251,7 +251,7 @@ const CreateServerModal = ({ isOpen, onClose, onServerCreated }) => {
                   id="server-description"
                   value={serverDescription}
                   onChange={(e) => setServerDescription(e.target.value)}
-                  placeholder="Tell people what your server is about"
+                  placeholder="What makes your server special? (optional)"
                   className="server-description-field"
                   maxLength={500}
                   rows={3}
@@ -277,7 +277,7 @@ const CreateServerModal = ({ isOpen, onClose, onServerCreated }) => {
                 id="invite-link"
                 value={inviteLink}
                 onChange={(e) => setInviteLink(e.target.value)}
-                placeholder="Your Code"
+                placeholder="Paste your invite code or link here"
                 className="invite-link-field"
               />
 

@@ -41,7 +41,7 @@ const ContentHeader = ({ state, handlers, channel, notificationRef }) => {
 
         <div className="search">
           <Search size={16} />
-          <input type="text" placeholder="Search" />
+          <input type="text" placeholder="Search messages in this channel" />
         </div>
       </div>
     </div>

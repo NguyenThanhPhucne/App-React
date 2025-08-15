@@ -168,7 +168,7 @@ const ChannelSettingsModal = ({
                     id="channel-name"
                     value={channelName}
                     onChange={handleNameChange}
-                    placeholder="new-channel"
+                    placeholder="channel-name"
                     className="modal-input"
                     maxLength={100}
                     required
@@ -191,7 +191,7 @@ const ChannelSettingsModal = ({
                   id="channel-description"
                   value={description}
                   onChange={handleDescriptionChange}
-                  placeholder="What's this channel about?"
+                  placeholder="Describe what this channel is for"
                   className="modal-textarea"
                   maxLength={1024}
                   rows={3}

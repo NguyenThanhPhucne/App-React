@@ -3,10 +3,12 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser, signOut } from "../features/userSlice";
 import { setSelectedServer } from "../features/appSlice";
-import { Sun, Moon, Hash, Volume2, Users, Plus } from "lucide-react";
+import { Sun, Moon, Hash, Volume2, Users, Plus, UserPlus } from "lucide-react";
 import apiService from "../app/services/apiServices";
 import { getUserAvatarSrc, handleAvatarError } from "../app/utils/avatarUtils";
 import useTheme from "../hooks/useTheme";
+import CreateServerModal from "../app/components/discord/modals/CreateServerModal";
+import JoinServerModal from "../app/components/discord/modals/JoinServerModal";
 import "../styles/server-selection.css";
 
 const ServerSelectionPage = () => {
@@ -17,8 +19,9 @@ const ServerSelectionPage = () => {
   const { isDarkMode, toggleTheme } = useTheme();
   const [servers, setServers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [creatingServer, setCreatingServer] = useState(false);
   const [error, setError] = useState("");
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
 
   // Apply theme class to body
   useEffect(() => {
@@ -62,30 +65,51 @@ const ServerSelectionPage = () => {
   };
 
   const handleCreateServer = () => {
-    if (creatingServer) return; // Prevent multiple clicks
-    
-    // Tạo server mặc định và chuyển thẳng đến app
-    const defaultServerName = `${user?.username || "User"}'s Server`;
-    createDefaultServer(defaultServerName);
+    setIsCreateModalOpen(true);
   };
 
-  const createDefaultServer = async (serverName) => {
+  const handleJoinServer = () => {
+    setIsJoinModalOpen(true);
+  };
+
+  const handleServerCreated = async (newServerData) => {
     try {
-      setCreatingServer(true);
-      const newServer = await apiService.createServer({
-        name: serverName,
-        description: "New server created"
-      });
+      // Refresh server list to include the new server
+      await fetchUserServers();
       
-      // Chọn server mới tạo và chuyển đến app
-      dispatch(setSelectedServer(newServer._id));
+      // Select the new server and navigate to app
+      dispatch(setSelectedServer(newServerData._id));
       navigate("/app");
     } catch (error) {
-      console.error("Error creating server:", error);
-      setError("Unable to create new server. Please try again.");
-    } finally {
-      setCreatingServer(false);
+      console.error("Error after server creation:", error);
+      // Even if refresh fails, still navigate to the new server
+      dispatch(setSelectedServer(newServerData._id));
+      navigate("/app");
     }
+  };
+
+  const handleServerJoined = async (joinedServerData) => {
+    try {
+      // Refresh server list to include the joined server
+      await fetchUserServers();
+      
+      // Select the joined server and navigate to app
+      dispatch(setSelectedServer(joinedServerData._id));
+      navigate("/app");
+    } catch (error) {
+      console.error("Error after joining server:", error);
+      // Even if refresh fails, still navigate to the joined server
+      dispatch(setSelectedServer(joinedServerData._id));
+      navigate("/app");
+    }
+  };
+
+  const handleCloseCreateModal = () => {
+    setIsCreateModalOpen(false);
+  };
+
+  const handleCloseJoinModal = () => {
+    setIsJoinModalOpen(false);
   };
 
   const handleLogout = () => {
@@ -191,26 +215,17 @@ const ServerSelectionPage = () => {
           )}
 
           <div 
-            className={`server-card create-server-card ${creatingServer ? 'creating' : ''}`} 
+            className="server-card create-server-card" 
             onClick={handleCreateServer}
           >
             <div className="server-content">
               <div className="server-icon create-icon">
-                {creatingServer ? (
-                  <div className="loading-spinner-small"></div>
-                ) : (
-                  <span>+</span>
-                )}
+                <span>+</span>
               </div>
               <div className="server-info">
-                <h3 className="server-name">
-                  {creatingServer ? "Creating..." : "Create New Server"}
-                </h3>
+                <h3 className="server-name">Create New Server</h3>
                 <p className="server-description">
-                  {creatingServer 
-                    ? "Please wait a moment"
-                    : "Create a new server to chat with friends"
-                  }
+                  Create a new server to chat with friends
                 </p>
               </div>
             </div>
@@ -221,8 +236,45 @@ const ServerSelectionPage = () => {
               </div>
             </div>
           </div>
+
+          <div 
+            className="server-card join-server-card" 
+            onClick={handleJoinServer}
+          >
+            <div className="server-content">
+              <div className="server-icon join-icon">
+                <UserPlus size={24} />
+              </div>
+              <div className="server-info">
+                <h3 className="server-name">Join a Server</h3>
+                <p className="server-description">
+                  Join an existing server with an invite code
+                </p>
+              </div>
+            </div>
+            <div className="server-stats">
+              <div className="stat-item">
+                <UserPlus className="stat-icon" size={16} />
+                <span className="stat-label">Join</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+
+      {/* Create Server Modal */}
+      <CreateServerModal
+        isOpen={isCreateModalOpen}
+        onClose={handleCloseCreateModal}
+        onServerCreated={handleServerCreated}
+      />
+
+      {/* Join Server Modal */}
+      <JoinServerModal
+        isOpen={isJoinModalOpen}
+        onClose={handleCloseJoinModal}
+        onServerJoined={handleServerJoined}
+      />
     </div>
   );
 };

@@ -54,7 +54,7 @@ const MobileMembersPanel = ({ state, handlers, members }) => {
               <Search size={16} />
               <input
                 type="text"
-                placeholder="Search members..."
+                placeholder="Search members by name"
                 value={state.memberSearchQuery}
                 onChange={(e) => handlers.handleMemberSearch(e.target.value)}
                 className="mobile-search-input-field"

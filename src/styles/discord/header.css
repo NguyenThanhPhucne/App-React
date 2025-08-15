@@ -228,7 +228,7 @@
   transform: scale(1.05);
 }
 
-/* Theme Toggle */
+/* Enhanced Theme Toggle with Smooth Transitions */
 .user-panel__controls .theme-toggle {
   width: 36px;
   height: 36px;
@@ -240,13 +240,45 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
+  transition: var(--theme-transition), transform 0.2s var(--transition-timing), scale 0.2s var(--transition-timing);
+  position: relative;
+  overflow: hidden;
+}
+
+.user-panel__controls .theme-toggle::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--hover);
+  opacity: 0;
+  transition: opacity 0.2s var(--transition-timing);
+  border-radius: 8px;
+}
+
+.user-panel__controls .theme-toggle:hover::before {
+  opacity: 1;
 }
 
 .user-panel__controls .theme-toggle:hover {
-  background: var(--hover);
   color: var(--text-primary);
   transform: scale(1.05);
+}
+
+.user-panel__controls .theme-toggle svg {
+  transition: var(--theme-transition), transform 0.3s var(--transition-timing);
+  z-index: 1;
+  position: relative;
+}
+
+.user-panel__controls .theme-toggle:active {
+  transform: scale(0.95);
+}
+
+.user-panel__controls .theme-toggle:active svg {
+  transform: rotate(10deg);
 }
 
 .user-info {

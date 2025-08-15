@@ -387,6 +387,15 @@
   color: var(--text-muted);
 }
 
+.input-help {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: -12px;
+  margin-bottom: 12px;
+  line-height: 1.4;
+  transition: var(--theme-transition);
+}
+
 /* Discovery Section */
 .discovery-section {
   background-color: var(--bg-secondary);

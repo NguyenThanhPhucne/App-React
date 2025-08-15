@@ -1,17 +1,30 @@
 /* Theme Variables */
 :root {
-  /* Transition properties for smooth theme switching */
-  --theme-transition: background-color 0.3s ease, 
-                     color 0.3s ease, 
-                     border-color 0.3s ease,
-                     box-shadow 0.3s ease;
+  /* Enhanced transition properties for ultra-smooth theme switching */
+  --transition-duration: 0.25s;
+  --transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+  --theme-transition: 
+    background-color var(--transition-duration) var(--transition-timing),
+    color var(--transition-duration) var(--transition-timing),
+    border-color var(--transition-duration) var(--transition-timing),
+    box-shadow var(--transition-duration) var(--transition-timing),
+    fill var(--transition-duration) var(--transition-timing),
+    stroke var(--transition-duration) var(--transition-timing),
+    opacity var(--transition-duration) var(--transition-timing);
 }
 
-/* Smooth transition for theme changes */
+/* Universal smooth transition for theme changes */
+.theme-transitioning,
 .theme-transitioning *,
 .theme-transitioning *::before,
 .theme-transitioning *::after {
   transition: var(--theme-transition) !important;
+  animation-duration: var(--transition-duration) !important;
+}
+
+/* Prevent FOUC (Flash of Unstyled Content) */
+.theme-preload * {
+  transition: none !important;
 }
 
 .theme-light {

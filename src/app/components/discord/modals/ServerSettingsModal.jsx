@@ -309,7 +309,7 @@ const ServerSettingsModal = ({ isOpen, onClose }) => {
               value={serverName}
               onChange={(e) => setServerName(e.target.value)}
               className="modal-input"
-              placeholder="Enter your server name"
+              placeholder="Give your server a memorable name"
               maxLength={100}
               required
             />
