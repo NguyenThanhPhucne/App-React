@@ -1,7 +1,9 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Paperclip, Smile } from "lucide-react";
+import { selectCurrentServer } from "../../../../features/appSlice";
 
 const MessageInput = ({
   channel,
@@ -9,10 +11,20 @@ const MessageInput = ({
   socketService,
 }) => {
   const channelId = channel?._id || channel?.id;
+  const currentServer = useSelector(selectCurrentServer);
 
   const [isTyping, setIsTyping] = useState(false);
   const [input, setInput] = useState("");
   const typingTimeout = useRef(null);
+
+  // Clear input when server changes
+  useEffect(() => {
+    setInput("");
+    setIsTyping(false);
+    if (typingTimeout.current) {
+      clearTimeout(typingTimeout.current);
+    }
+  }, [currentServer?._id]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

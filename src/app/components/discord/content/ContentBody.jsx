@@ -1,52 +1,72 @@
 "use client";
 
 import React, { useEffect, useState, useRef } from "react";
+import { useSelector } from "react-redux";
 import { Hash } from "lucide-react";
 import Message from "../message/Message";
+import LoadingSpinner from "../../ui/LoadingSpinner";
+import { selectCurrentServer } from "../../../../features/appSlice";
 
 const ContentBody = ({ channel, socketService }) => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [serverLoading, setServerLoading] = useState(false);
   const messagesEndRef = useRef(null);
   const messagesContainerRef = useRef(null);
   const [typingUsers, setTypingUsers] = useState([]);
-
+  
+  const currentServer = useSelector(selectCurrentServer);
   const channelId = channel?._id || channel?.id;
 
   // Load messages when channel changes
   useEffect(() => {
     const loadChannelMessages = async () => {
       if (!channelId) {
+        setMessages([]); // Clear messages when no channel is selected
         return;
       }
-      if (channelId) {
-        // Join new channel
-        socketService.joinChannel(channelId);
+      
+      // Clear messages immediately when channel changes
+      setMessages([]);
+      
+      // Join new channel
+      socketService.joinChannel(channelId);
 
-        // Load previous messages
-        setLoading(true);
+      // Load previous messages
+      setLoading(true);
 
-        try {
-          const response = await socketService.fetchChannelMessages(channelId);
+      try {
+        const response = await socketService.fetchChannelMessages(channelId);
 
-          if (response && response.data) {
-            setMessages(response.data);
-          } else {
-            setMessages([]);
-          }
-        } catch (error) {
-          console.error("Error loading messages:", error);
+        if (response && response.data) {
+          setMessages(response.data);
+        } else {
           setMessages([]);
-        } finally {
-          setLoading(false);
         }
+      } catch (error) {
+        console.error("Error loading messages:", error);
+        setMessages([]);
+      } finally {
+        setLoading(false);
       }
     };
 
-    if (channelId) {
-      loadChannelMessages();
-    }
+    loadChannelMessages();
   }, [channelId, socketService]);
+
+  // Clear messages when server changes (before new channel is selected)
+  useEffect(() => {
+    setMessages([]);
+    setTypingUsers([]);
+    setServerLoading(true);
+    
+    // Add a small delay to show loading state
+    const timer = setTimeout(() => {
+      setServerLoading(false);
+    }, 150);
+    
+    return () => clearTimeout(timer);
+  }, [currentServer?._id]);
 
   // Improved auto-scroll function
   const scrollToBottom = (force = false) => {
@@ -164,23 +184,65 @@ const ContentBody = ({ channel, socketService }) => {
     return currentDate.toDateString() !== previousDate.toDateString();
   };
 
-  if (loading) {
+  if (loading || serverLoading) {
     return (
       <div className="content__body">
-        <div className="loading">Loading messages...</div>
+        {serverLoading ? (
+          <div className="server-switching-skeleton">
+            <div className="skeleton-header">
+              <div className="skeleton-avatar"></div>
+              <div className="skeleton-lines">
+                <div className="skeleton-line skeleton-line--title"></div>
+                <div className="skeleton-line skeleton-line--subtitle"></div>
+              </div>
+            </div>
+            <div className="skeleton-messages">
+              {[...Array(3)].map((_, i) => (
+                <div key={i} className="skeleton-message" style={{ animationDelay: `${i * 0.1}s` }}>
+                  <div className="skeleton-message-avatar"></div>
+                  <div className="skeleton-message-content">
+                    <div className="skeleton-line skeleton-line--name"></div>
+                    <div className="skeleton-line skeleton-line--message"></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="switching-text">Switching server...</div>
+          </div>
+        ) : (
+          <div className="content-loading">
+            <LoadingSpinner size={32} />
+            <div className="loading-text">
+              Loading messages
+              <span className="loading-dots">
+                <span className="loading-dot"></span>
+                <span className="loading-dot"></span>
+                <span className="loading-dot"></span>
+              </span>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
 
   return (
     <div className="content__body" ref={messagesContainerRef}>
-      {messages.length === 0 ? (
+      {!channelId ? (
         <div className="welcome">
           <div className="welcome__icon">
             <Hash size={48} />
           </div>
-          <h2>Welcome to #{channel.name}!</h2>
-          <p>This is the start of the #{channel.name} channel.</p>
+          <h2>Welcome to {currentServer?.name || "Discord"}!</h2>
+          <p>Select a channel to start chatting.</p>
+        </div>
+      ) : messages.length === 0 ? (
+        <div className="welcome">
+          <div className="welcome__icon">
+            <Hash size={48} />
+          </div>
+          <h2>Welcome to #{channel?.name}!</h2>
+          <p>This is the start of the #{channel?.name} channel.</p>
         </div>
       ) : (
         messages.map((message, index) => {

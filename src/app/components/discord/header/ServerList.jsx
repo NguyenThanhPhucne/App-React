@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { selectCurrentServer } from "../../../../features/appSlice";
-import { ChevronLeft, ChevronRight, Hash, Loader2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Hash } from "lucide-react";
+import LoadingSpinner from "../../ui/LoadingSpinner";
 
 const ServerList = ({ servers, state, updateState, handlers }) => {
   const currentServer = useSelector(selectCurrentServer);
@@ -15,8 +16,16 @@ const ServerList = ({ servers, state, updateState, handlers }) => {
       (state.serverScrollIndex || 0) + 3
     ) || [];
 
-  const handleServerClick = (_id) => {
-    updateState(_id);
+  const handleServerClick = async (_id) => {
+    setLoadingServerId(_id);
+    try {
+      await updateState(_id);
+    } finally {
+      // Clear loading state after a small delay to show loading feedback
+      setTimeout(() => {
+        setLoadingServerId(null);
+      }, 200);
+    }
   };
 
   const API_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL;
@@ -67,7 +76,11 @@ const ServerList = ({ servers, state, updateState, handlers }) => {
               title={server.name}
               disabled={loadingServerId === server._id}
             >
-              {renderServerIcon(server)}
+              {loadingServerId === server._id ? (
+                <LoadingSpinner size={20} simple={true} className="server-loading-spinner" />
+              ) : (
+                renderServerIcon(server)
+              )}
             </button>
           );
         })}
