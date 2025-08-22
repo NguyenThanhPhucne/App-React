@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { MdArrowBack } from "react-icons/md";
 import { FcGoogle } from "react-icons/fc";
 import { SiGmail } from "react-icons/si";
+import { useState } from "react";
 import { useForm } from "../hooks/useForm";
 import apiService from "../app/services/apiServices";
 import { signIn } from "../features/userSlice";
@@ -12,22 +13,45 @@ import { signIn } from "../features/userSlice";
 const LoginPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [apiError, setApiError] = useState("");
 
-  const { values, handleChange, handleSubmit, isValid } = useForm({
+  const { 
+    values, 
+    handleChange, 
+    handleSubmit, 
+    isValid, 
+    errors, 
+    handleBlur,
+    emailSuggestions,
+    showSuggestions,
+    handleSuggestionClick,
+    handleSuggestionsMouseEnter,
+    handleSuggestionsMouseLeave
+  } = useForm({
     account: "",
     password: "",
   }, {
-    account: { required: true },
+    account: { required: true, minLength: 3, email: true },
     password: { required: true, minLength: 6 },
   });
 
   const onSubmit = async (data) => {
     try {
+      setApiError("");
       const userData = await apiService.login(data.account, data.password);
       dispatch(signIn(userData));
+      navigate("/app");
     } catch (error) {
       console.error("Login failed:", error);
-      // You might want to show an error message to the user here
+      if (error.message === "User not found") {
+        setApiError("Account not found. Please check your username/email or sign up.");
+      } else if (error.message === "Invalid password") {
+        setApiError("Incorrect password. Please try again.");
+      } else if (error.message?.includes("Failed to fetch")) {
+        setApiError("Cannot connect to server. Please check your internet connection.");
+      } else {
+        setApiError(error.message || "Login failed. Please try again.");
+      }
     }
   };
 
@@ -48,6 +72,13 @@ const LoginPage = () => {
         <div className="form-wrapper">
           <h1 className="form-title">Sign In</h1>
 
+          {/* API Error Display */}
+          {apiError && (
+            <div className="api-error-message">
+              {apiError}
+            </div>
+          )}
+
           <form
             className="auth-form"
             onSubmit={(e) => {
@@ -56,28 +87,56 @@ const LoginPage = () => {
             }}
           >
             <div className="input-group">
-              <label className="input-label">Account</label>
-              <input
-                className="input-field"
-                name="account"
-                placeholder="Username or email address"
-                value={values.account}
-                onChange={handleChange}
-                autoComplete="username"
-              />
+              <label className="input-label">Account (Username or Email)</label>
+              <div className="input-with-suggestions">
+                <input
+                  className={`input-field ${errors.account ? 'error' : ''}`}
+                  name="account"
+                  placeholder="Username or Email address"
+                  value={values.account}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  autoComplete="username"
+                />
+                {showSuggestions.account && emailSuggestions.length > 0 && (
+                  <div 
+                    className="email-suggestions"
+                    onMouseEnter={() => handleSuggestionsMouseEnter('account')}
+                    onMouseLeave={() => handleSuggestionsMouseLeave('account')}
+                  >
+                    {emailSuggestions.map((suggestion, index) => (
+                      <div
+                        key={index}
+                        className="suggestion-item"
+                        onClick={() => handleSuggestionClick('account', suggestion)}
+                      >
+                        {suggestion}
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+              </div>
+              {errors.account && (
+                <span className="error-message">{errors.account}</span>
+              )}
             </div>
 
             <div className="input-group">
-              <label className="input-label">Password</label>
+              <label className="input-label">Password (min. 6 characters)</label>
               <input
-                className="input-field"
+                className={`input-field ${errors.password ? 'error' : ''}`}
                 name="password"
                 type="password"
                 placeholder="Enter your password"
                 value={values.password}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 autoComplete="current-password"
               />
+              {errors.password && (
+                <span className="error-message">{errors.password}</span>
+              )}
             </div>
 
             <div className="forgot-password">

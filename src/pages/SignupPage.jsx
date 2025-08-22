@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MdArrowBack } from "react-icons/md";
 import { FcGoogle } from "react-icons/fc";
@@ -8,8 +8,22 @@ import apiService from "../app/services/apiServices";
 
 const SignupPage = () => {
   const navigate = useNavigate();
+  const [apiError, setApiError] = useState("");
+  const [apiSuccess, setApiSuccess] = useState("");
 
-  const { values, handleChange, handleSubmit, isValid } = useForm(
+  const { 
+    values, 
+    handleChange, 
+    handleSubmit, 
+    isValid, 
+    getFieldError, 
+    handleBlur,
+    emailSuggestions,
+    showSuggestions,
+    handleSuggestionClick,
+    handleSuggestionsMouseEnter,
+    handleSuggestionsMouseLeave
+  } = useForm(
     {
       email: "",
       username: "",
@@ -18,14 +32,17 @@ const SignupPage = () => {
     },
     {
       email: { required: true, email: true },
-      username: { required: true },
-      password: { required: true, minLength: 6 },
+      username: { required: true, username: true },
+      password: { required: true, password: true },
       confirmPassword: { required: true, match: "password" },
     }
   );
 
   const onSubmit = async (data) => {
     try {
+      setApiError("");
+      setApiSuccess("");
+      
       const registerData = {
         email: data.email,
         username: data.username,
@@ -35,9 +52,22 @@ const SignupPage = () => {
       const result = await apiService.register(registerData);
 
       console.log("Signup successful:", result);
-      navigate("/login");
+      setApiSuccess("Account created successfully! Redirecting to login...");
+      
+      // Redirect to login after 2 seconds
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
     } catch (error) {
       console.error("Signup error:", error.message);
+      // Display API error to user
+      if (error.message === "Username or email already exists") {
+        setApiError("Username or email already exists. Please choose different credentials.");
+      } else if (error.message?.includes("Failed to fetch")) {
+        setApiError("Cannot connect to server. Please check your internet connection.");
+      } else {
+        setApiError(error.message || "Registration failed. Please try again.");
+      }
     }
   };
 
@@ -46,28 +76,85 @@ const SignupPage = () => {
     navigate("/app");
   };
 
+  const renderInputField = (field) => {
+    if (field.name === 'email') {
+      return (
+        <div className="input-with-suggestions">
+          <input
+            className={`input-field ${getFieldError(field.name) ? 'error' : ''}`}
+            name={field.name}
+            type={field.type}
+            placeholder={field.placeholder}
+            value={values[field.name]}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            autoComplete={field.autoComplete}
+            required
+          />
+          {showSuggestions.email && emailSuggestions.length > 0 && (
+            <div 
+              className="email-suggestions"
+              onMouseEnter={() => handleSuggestionsMouseEnter('email')}
+              onMouseLeave={() => handleSuggestionsMouseLeave('email')}
+            >
+              {emailSuggestions.map((suggestion, index) => (
+                <div
+                  key={index}
+                  className="suggestion-item"
+                  onClick={() => handleSuggestionClick('email', suggestion)}
+                >
+                  {suggestion}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    return (
+      <input
+        className={`input-field ${getFieldError(field.name) ? 'error' : ''}`}
+        name={field.name}
+        type={field.type}
+        placeholder={field.placeholder}
+        value={values[field.name]}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        autoComplete={field.autoComplete}
+        required
+      />
+    );
+  };
+
   const formFields = [
-    { name: "email", label: "Email", type: "email", autoComplete: "email", placeholder: "Enter your email address" },
+    { 
+      name: "email", 
+      label: "Email",
+      type: "email", 
+      autoComplete: "email", 
+      placeholder: "Enter your email address"
+    },
     {
       name: "username",
       label: "Username",
       type: "text",
       autoComplete: "username",
-      placeholder: "Choose a unique username"
+      placeholder: "Choose a username (letters, numbers, underscores)"
     },
     {
       name: "password",
       label: "Password",
       type: "password",
       autoComplete: "new-password",
-      placeholder: "Create a strong password"
+      placeholder: "Create a strong password (min. 6 chars)"
     },
     {
       name: "confirmPassword",
       label: "Confirm Password",
       type: "password",
       autoComplete: "new-password",
-      placeholder: "Re-enter your password"
+      placeholder: "Re-enter your password to confirm (must match)"
     },
   ];
 
@@ -84,6 +171,21 @@ const SignupPage = () => {
           {" "}
           {/* The form is too high */}
           <h1 className="form-title">Create Account</h1>
+          
+          {/* API Error Display */}
+          {apiError && (
+            <div className="api-error-message">
+              {apiError}
+            </div>
+          )}
+
+          {/* API Success Display */}
+          {apiSuccess && (
+            <div className="api-success-message">
+              {apiSuccess}
+            </div>
+          )}
+
           <form
             className="auth-form"
             onSubmit={(e) => {
@@ -94,16 +196,10 @@ const SignupPage = () => {
             {formFields.map((field) => (
               <div key={field.name} className="input-group">
                 <label className="input-label">{field.label}</label>
-                <input
-                  className="input-field"
-                  name={field.name}
-                  type={field.type}
-                  placeholder={field.placeholder}
-                  value={values[field.name]}
-                  onChange={handleChange}
-                  autoComplete={field.autoComplete}
-                  required
-                />
+                {renderInputField(field)}
+                {getFieldError(field.name) && (
+                  <span className="error-message">{getFieldError(field.name)}</span>
+                )}
               </div>
             ))}
 
