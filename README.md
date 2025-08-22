@@ -320,8 +320,7 @@ This project is licensed under the MIT License. See the LICENSE file for full de
 
 ## Author & Contact
 
-Student's name: Nguyễn Thành Phúc
-Student's ID: 24560045
+Student's name: Nguyễn Thành Phúc and Student's ID: 24560045
 
 ---
 
