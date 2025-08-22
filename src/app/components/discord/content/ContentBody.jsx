@@ -6,6 +6,7 @@ import { Hash } from "lucide-react";
 import Message from "../message/Message";
 import LoadingSpinner from "../../ui/LoadingSpinner";
 import { selectCurrentServer } from "../../../../features/appSlice";
+import { selectUser } from "../../../../features/userSlice";
 
 const ContentBody = ({ channel, socketService }) => {
   const [messages, setMessages] = useState([]);
@@ -16,10 +17,12 @@ const ContentBody = ({ channel, socketService }) => {
   const [typingUsers, setTypingUsers] = useState([]);
   
   const currentServer = useSelector(selectCurrentServer);
+  const currentUser = useSelector(selectUser);
   const channelId = channel?._id || channel?.id;
 
   // Load messages when channel changes
   useEffect(() => {
+    if (currentUser) {
     const loadChannelMessages = async () => {
       if (!channelId) {
         setMessages([]); // Clear messages when no channel is selected
@@ -52,7 +55,7 @@ const ContentBody = ({ channel, socketService }) => {
     };
 
     loadChannelMessages();
-  }, [channelId, socketService]);
+  }}, [channelId, socketService,currentUser]);
 
   // Clear messages when server changes (before new channel is selected)
   useEffect(() => {

@@ -44,7 +44,6 @@ const LoginPage = () => {
       setApiError("");
       const userData = await apiService.login(data.account, data.password);
       dispatch(signIn(userData));
-      navigate("/app");
     } catch (error) {
       console.error("Login failed:", error);
       if (error.message === "User not found") {

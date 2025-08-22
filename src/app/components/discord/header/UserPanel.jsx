@@ -23,15 +23,12 @@ const UserPanel = ({ state, handlers }) => {
   const { isDarkMode, toggleTheme } = useTheme();
   const [userIcon, setUserIcon] = useState(null);
 
-  // Get the base URL for serving uploaded images
-  const API_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL;
-
   useEffect(() => {
     if (user) {
       // Set current user avatar
-      setUserIcon(`${API_BASE_URL}${user.avatar}`);
+      setUserIcon(`${user.avatar}`);
     }
-  }, [user, API_BASE_URL]);
+  }, [user]);
 
   return (
     <div className="user-panel">
