@@ -44,8 +44,10 @@ export const useForm = (initialValues, validationRules = {}) => {
       localPart = input
     }
     
+    if (localPart.length < 3) return []
+    
     const filteredDomains = commonEmailDomains.filter(domain => 
-      domain.startsWith(domainPart.toLowerCase())
+      domain.toLowerCase().startsWith(domainPart.toLowerCase())
     )
     
     if (filteredDomains.length === 0) return []
