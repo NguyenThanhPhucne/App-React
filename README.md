@@ -8,7 +8,7 @@
 
 ## Project Overview
 
-A modern real-time chat application built with React, mimicking Discord's interface and functionality. The application features a responsive design that works seamlessly across desktop and mobile devices, with real-time messaging capabilities powered by Socket.io. Built using modern web technologies and best practices for scalable frontend development.
+A modern real-time chat application built with React, mimicking Discord's interface and functionality. The application features a responsive design that works seamlessly across desktop and mobile devices, with real-time messaging capabilities powered by Socket.io.
 
 ## Core Features
 
@@ -307,8 +307,6 @@ npm run build
 - **Responsive Design**: Tablet and desktop layout verification
 - **Touch Events**: Mobile gesture and interaction testing
 
-## Performance Optimization
-
 ### Frontend Performance
 
 - **Code Splitting**: Lazy loading for route-based components
@@ -316,77 +314,13 @@ npm run build
 - **Image Optimization**: Compression and responsive image loading
 - **Caching Strategy**: Browser caching and service worker implementation
 
-### Real-time Performance
-
-- **WebSocket Optimization**: Connection pooling and heartbeat
-- **Message Batching**: Efficient message delivery and processing
-- **Memory Management**: Proper cleanup of event listeners
-- **Network Resilience**: Automatic reconnection and fallback strategies
-
-## Troubleshooting & Common Issues
-
-### Development Issues
-
-- **Build Errors**: Clear node_modules and reinstall dependencies
-- **Hot Reload Issues**: Check Vite configuration and file watching
-- **Dependency Conflicts**: Verify package versions and peer dependencies
-
-### Runtime Issues
-
-- **Socket Connection**: Verify backend URL and CORS configuration
-- **API Errors**: Check authentication tokens and endpoint availability
-- **Mobile Issues**: Verify viewport configuration and touch event handling
-- **Theme Issues**: Check localStorage and CSS variable definitions
-
-### Performance Issues
-
-- **Slow Rendering**: Implement React.memo and useMemo optimizations
-- **Large Bundle Size**: Analyze bundle with build tools
-- **Memory Leaks**: Check for proper cleanup in useEffect hooks
-
-## Future Enhancements & Roadmap
-
-### Planned Features
-
-- **Voice Channels**: Real-time audio communication
-- **Video Calls**: WebRTC-based video conferencing
-- **Advanced Permissions**: Role-based access control system
-- **Bot Integration**: Discord bot API compatibility
-- **Server Analytics**: Usage statistics and insights
-- **Advanced Search**: Full-text search across messages and channels
-
-### Technical Improvements
-
-- **TypeScript Migration**: Full type safety implementation
-- **Testing Framework**: Jest and React Testing Library integration
-- **PWA Support**: Progressive Web App capabilities
-- **Offline Support**: Service worker and offline message queuing
-
-## Contributing & Development
-
-### Development Workflow
-
-1. **Fork** the repository
-2. **Create** feature branch (`git checkout -b feature/amazing-feature`)
-3. **Implement** changes with proper testing
-4. **Commit** changes with descriptive messages
-5. **Push** to branch and create Pull Request
-
-### Contribution Guidelines
-
-- Follow existing code style and ESLint rules
-- Write clear commit messages and documentation
-- Test changes across different devices and browsers
-- Ensure responsive design compatibility
-- Update documentation for new features
-
 ## License & Legal
 
 This project is licensed under the MIT License. See the LICENSE file for full details.
 
 ## Author & Contact
 
-**Phuc Nguyen** - Full-stack Developer & Project Maintainer
+Student's name: Nguyễn Thành Phúc and Student's ID: 24560045
 
 ---
 
