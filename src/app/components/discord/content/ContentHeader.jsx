@@ -15,7 +15,7 @@ const ContentHeader = ({ state, handlers, channel, notificationRef }) => {
 
       <div className="header-actions">
         {/* Enhanced Notification Button */}
-        <div
+        {/* <div
           className={`notification-container ${
             state.showNotificationDropdown ? "notification-container--dropdown-open" : ""
           }`}
@@ -28,7 +28,7 @@ const ContentHeader = ({ state, handlers, channel, notificationRef }) => {
           <div className="notification-tooltip">Notification Settings</div>
 
           <NotificationDropdown state={state} handlers={handlers} isOpen={state.showNotificationDropdown} />
-        </div>
+        </div> */}
 
         {/* Enhanced Member List Button */}
         <Tooltip
@@ -39,10 +39,10 @@ const ContentHeader = ({ state, handlers, channel, notificationRef }) => {
           </button>
         </Tooltip>
 
-        <div className="search">
+        {/* <div className="search">
           <Search size={16} />
           <input type="text" placeholder="Search messages in this channel" />
-        </div>
+        </div> */}
       </div>
     </div>
   )
