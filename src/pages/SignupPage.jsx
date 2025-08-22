@@ -4,12 +4,16 @@ import { useNavigate } from "react-router-dom";
 import { MdArrowBack } from "react-icons/md";
 import { FcGoogle } from "react-icons/fc";
 import { useForm } from "../hooks/useForm";
+import { GoogleLogin } from "@react-oauth/google";
 import apiService from "../app/services/apiServices";
+import { signIn } from "../features/userSlice";
+import { useDispatch } from "react-redux";
 
 const SignupPage = () => {
   const navigate = useNavigate();
   const [apiError, setApiError] = useState("");
   const [apiSuccess, setApiSuccess] = useState("");
+  const dispatch = useDispatch();
 
   const { 
     values, 
@@ -71,9 +75,23 @@ const SignupPage = () => {
     }
   };
 
-  const handleSocialSignup = (provider) => {
-    console.log(`Signup with ${provider}`);
-    navigate("/app");
+  const handleSocialLogin = async (provider) => {
+    try {
+      const { credential } = provider;
+      const userData = await apiService.googleLogin(credential);
+      dispatch(signIn(userData));
+    } catch (error) {
+      console.error("Login failed:", error);
+      if (error.message === "No Google token provided") {
+        setApiError(
+          "Google login error. Please use website account or refresh page."
+        );
+      } else if (error.message === "No email provided") {
+        setApiError(error.message);
+      } else {
+        setApiError(error.message || "Login failed. Please try again.");
+      }
+    }
   };
 
   const renderInputField = (field) => {
@@ -213,13 +231,15 @@ const SignupPage = () => {
           </form>
           <div className="divider">Or</div>
           <div className="social-buttons">
-            <button
-              className="social-button google"
-              onClick={() => handleSocialSignup("google")}
-            >
-              <FcGoogle size={18} />
-              Sign up with Google
-            </button>
+            <GoogleLogin
+            className="social-button google"
+              onSuccess={(credentialResponse) => {
+                handleSocialLogin(credentialResponse);
+              }}
+              onError={() => {
+                console.log("Login Failed");
+              }}
+            />
           </div>
           <div className="terms-text">
             By creating an account, you agree to accept our{" "}

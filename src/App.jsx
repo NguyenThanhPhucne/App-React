@@ -9,15 +9,16 @@ import apiService from "./app/services/apiServices";
 import socketService from "./app/services/socketService";
 import ThemeProvider from "./app/components/ui/ThemeProvider";
 import AppRoutes from "./appRoutes/Routes";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 function AppContent() {
   const user = useSelector(selectUser);
   const servers = useSelector(selectServers);
   const dispatch = useDispatch();
+  const token = localStorage.getItem("accessToken");
 
   useEffect(() => {
     //dispatch(setGlobalLoading({ isLoading: true, message: "Validating session..." }));
-    const token = localStorage.getItem("accessToken");
     if (!token) return;
     const validateUser = async () => {
       try {
@@ -62,14 +63,14 @@ function AppContent() {
 
   // Connect to socket when user mounts
   useEffect(() => {
-    if (user) {
-      socketService.connect();
+    if (token) {
+      socketService.connect(token);
     }
 
     return () => {
       socketService.disconnect();
     };
-  }, [user]);
+  }, [token]);
 
   return (
     <Router>
@@ -84,9 +85,11 @@ function AppContent() {
 
 function App() {
   return (
-    <Provider store={store}>
-      <AppContent />
-    </Provider>
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+      <Provider store={store}>
+        <AppContent />
+      </Provider>
+    </GoogleOAuthProvider>
   );
 }
 

@@ -4,14 +4,13 @@ import { Crown } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const MemberItem = ({ member }) => {
-  const API_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL;
   const [avatar, setAvatar] = useState(null);
 
   useEffect(() => {
     if (member) {
-      setAvatar(`${API_BASE_URL}${member.avatar}`);
+      setAvatar(`${member.avatar}`);
     }
-  }, [member, API_BASE_URL]);
+  }, [member]);
 
   // Generate initials from name or username
   const getInitials = (name, username) => {
@@ -47,7 +46,7 @@ const MemberItem = ({ member }) => {
     return colors[Math.abs(hash) % colors.length];
   };
 
-  const initials = member.initials || getInitials(member.name, member.username);
+  const initials = member?.initials || getInitials(member.name, member.username);
   const avatarColor = getAvatarColor(member);
 
   return (

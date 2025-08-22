@@ -9,6 +9,7 @@ import { getUserAvatarSrc, handleAvatarError } from "../app/utils/avatarUtils";
 import useTheme from "../hooks/useTheme";
 import CreateServerModal from "../app/components/discord/modals/CreateServerModal";
 import JoinServerModal from "../app/components/discord/modals/JoinServerModal";
+import {useDiscordHandlers} from "../hooks/useDiscordHandlers"
 import "../styles/server-selection.css";
 
 const ServerSelectionPage = () => {
@@ -22,6 +23,7 @@ const ServerSelectionPage = () => {
   const [error, setError] = useState("");
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
+  const handlers = useDiscordHandlers()
 
   // Apply theme class to body
   useEffect(() => {
@@ -112,11 +114,6 @@ const ServerSelectionPage = () => {
     setIsJoinModalOpen(false);
   };
 
-  const handleLogout = () => {
-    dispatch(signOut());
-    navigate("/login");
-  };
-
   if (loading) {
     return (
       <div className="server-selection-container">
@@ -151,7 +148,7 @@ const ServerSelectionPage = () => {
           >
             {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
           </button>
-          <button onClick={handleLogout} className="logout-btn">
+          <button onClick={handlers.handleLogout} className="logout-btn">
             Logout
           </button>
         </div>

@@ -34,6 +34,37 @@ class ApiService {
     }
   }
 
+  async googleLogin(googleToken){
+    try {
+      const response = await fetch(`${API_BASE_URL}/google-login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ googleToken }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Login failed");
+      }
+
+      // Store token
+      if (data.accessToken) {
+        localStorage.setItem("accessToken", data.accessToken);
+      }
+
+      const userData = data.user;
+
+      return userData;
+    } catch (error) {
+      console.error("Login error:", error);
+      throw error;
+    }
+  }
+
   async logout() {
     try {
       const token = localStorage.getItem("accessToken");
@@ -139,9 +170,7 @@ class ApiService {
     }
     
     try {
-      
       const tokenData = JSON.parse(atob(accessToken.split(".")[1]));
-      console.log(tokenData);
       if (tokenData.exp * 1000 > Date.now()) {
         return {
           isValid: true,
