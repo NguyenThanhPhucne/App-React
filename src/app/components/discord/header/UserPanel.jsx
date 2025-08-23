@@ -76,7 +76,7 @@ const UserPanel = ({ state, handlers }) => {
       </div>
 
       <div className="user-actions">
-        Mic button with tooltip
+        {/* Mic button with tooltip */}
         {/* <Tooltip content={state.isMuted ? "Unmute" : "Mute"}>
           <button
             className={`action-btn ${state.isMuted ? "action-btn--muted" : ""}`}
