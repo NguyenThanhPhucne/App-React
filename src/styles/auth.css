@@ -321,26 +321,49 @@
 
 /* Social Button Styles */
 .social-button.google {
-  padding: 0.75rem 1.25rem;
-  background: #e8f0fe;
-  color: #1a73e8;
-  border: 1.5px solid #e8f0fe;
+  width: 100%;
+  height: 44px;
+  background-color: #fff;
+  border: 1px solid #dadce0;
+  border-radius: 4px;
+  color: #3c4043;
+  cursor: pointer;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-size: 15px;
   font-weight: 500;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  letter-spacing: 0.25px;
+  padding: 0 16px;
+  position: relative;
+  text-align: center;
+  transition: background-color .218s, border-color .218s, box-shadow .218s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
 }
 
-.social-button.google:hover {
-  background: #d2e3fc;
+.social-button.google:hover:not(:disabled) {
+  background-color: #f6fafe;
+  border-color: #d2e3fc;
+  box-shadow: 0 1px 3px rgba(60, 64, 67, 0.3);
+}
+
+.social-button.google:active:not(:disabled) {
+  background-color: #f4f8fc;
   border-color: #aecbfa;
-  color: #174ea6;
-  box-shadow: 0 4px 16px rgba(60,60,100,0.13);
-  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3);
+}
+
+.social-button.google:disabled {
+  cursor: not-allowed;
+  opacity: 0.9;
+  background-color: #f1f3f4;
 }
 
 .social-button.google svg {
-  width: 20px;
-  height: 20px;
-  margin-right: 8px;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
 }
 
 /* ZIM Facebook Button */

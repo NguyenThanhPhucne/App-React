@@ -232,18 +232,25 @@ const SignupPage = () => {
           <div className="divider">Or</div>
           <div className="social-buttons">
             <GoogleLogin
-              text="signup_with"
-              type="standard"
-              theme="outline"
-              size="large"
-              logo_alignment="center"
-              className="social-button google"
-              onSuccess={(credentialResponse) => {
-                handleSocialLogin(credentialResponse);
+              clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}
+              onSuccess={handleSocialLogin}
+              onFailure={(err) => {
+                console.error("Google Login Failed:", err);
+                setApiError("Google login failed. Please try again.");
               }}
-              onError={() => {
-                console.log("Login Failed");
-              }}
+              cookiePolicy={"single_host_origin"}
+              isSignedIn={false}
+              render={renderProps => (
+                <button 
+                  type="button"
+                  className="social-button google"
+                  onClick={renderProps.onClick}
+                  disabled={renderProps.disabled}
+                >
+                  <FcGoogle size={18} />
+                  Sign up with Google
+                </button>
+              )}
             />
           </div>
           <div className="terms-text">
