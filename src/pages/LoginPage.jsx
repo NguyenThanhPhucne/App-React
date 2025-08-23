@@ -184,13 +184,25 @@ const LoginPage = () => {
 
           <div className="social-buttons">
             <GoogleLogin
-            className="social-button google"
-              onSuccess={(credentialResponse) => {
-                handleSocialLogin(credentialResponse);
+              clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}
+              onSuccess={handleSocialLogin}
+              onFailure={(err) => {
+                console.error("Google Login Failed:", err);
+                setApiError("Google login failed. Please try again.");
               }}
-              onError={() => {
-                console.log("Login Failed");
-              }}
+              cookiePolicy={"single_host_origin"}
+              isSignedIn={false}
+              render={renderProps => (
+                <button 
+                  type="button"
+                  className="social-button google"
+                  onClick={renderProps.onClick}
+                  disabled={renderProps.disabled}
+                >
+                  <FcGoogle size={18} />
+                  Sign in with Google
+                </button>
+              )}
             />
           </div>
 

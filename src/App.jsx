@@ -11,6 +11,13 @@ import ThemeProvider from "./app/components/ui/ThemeProvider";
 import AppRoutes from "./appRoutes/Routes";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
+// Cấu hình cho Google OAuth
+const googleConfig = {
+  client_id: "your-client-id", // Giữ nguyên client ID của bạn
+  ux_mode: 'popup',
+  locale: 'en' // Đặt locale thành tiếng Anh
+};
+
 function AppContent() {
   const user = useSelector(selectUser);
   const servers = useSelector(selectServers);
@@ -87,7 +94,11 @@ function AppContent() {
 
 function App() {
   return (
-    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+    <GoogleOAuthProvider 
+      clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}
+      locale="en" // Đặt ngôn ngữ mặc định là tiếng Anh
+      ux_mode="popup"
+    >
       <Provider store={store}>
         <AppContent />
       </Provider>
