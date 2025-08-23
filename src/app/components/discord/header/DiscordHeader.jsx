@@ -24,8 +24,7 @@ const DiscordHeader = ({ state, updateState, handlers }) => {
   const servers = useSelector(selectServers);
   const currentServer = useSelector(selectCurrentServer);
   const selectedServerId = useSelector(selectSelectedServerId);
-  const navigate = useNavigate();
-
+  
   // Function to fetch a specific server by ID
   const fetchServerById = useCallback(
     async (serverId) => {
