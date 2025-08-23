@@ -265,6 +265,45 @@
   font-weight: 400;
 }
 
+/* Message Input Send Button */
+.message-input__send-btn {
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  color: var(--interactive-normal);
+  transition: all 0.15s ease-out, var(--theme-transition);
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+.message-input__send-btn:hover:not(:disabled) {
+  color: var(--interactive-hover);
+  background-color: var(--background-modifier-hover);
+  transform: scale(1.05);
+}
+
+.message-input__send-btn:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.message-input__send-btn:disabled {
+  color: var(--text-muted);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.message-input__send-btn:disabled:hover {
+  transform: none;
+  background: none;
+}
+
 .message-input__icon-left,
 .message-input__icon-right {
   display: flex;
