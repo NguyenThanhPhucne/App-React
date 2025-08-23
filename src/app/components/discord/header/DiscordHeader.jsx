@@ -2,6 +2,7 @@
 
 import { useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { clearTextChannel } from "../../../../features/channelSlice";
 import apiService from "../../../services/apiServices";
 import {
@@ -18,6 +19,7 @@ import UserPanel from "./UserPanel";
 
 const DiscordHeader = ({ state, updateState, handlers }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const servers = useSelector(selectServers);
   const currentServer = useSelector(selectCurrentServer);
   const selectedServerId = useSelector(selectSelectedServerId);
@@ -118,11 +120,14 @@ const DiscordHeader = ({ state, updateState, handlers }) => {
         <div className="header__home">
           <button
             className="mobile-menu-btn"
-            onClick={handlers.toggleMobileSidebar}
+            onClick={() => navigate("/servers")}
           >
             <Menu size={20} />
           </button>
-          <button className="home-btn">
+          <button 
+            className="home-btn"
+            onClick={() => navigate("/servers")}
+          >
             <Home size={20} />
           </button>
         </div>
