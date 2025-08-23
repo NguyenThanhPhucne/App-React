@@ -4,37 +4,37 @@ const API_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL;
 class SocketService {
   constructor() {
     this.socket = null;
-    this.isConnected = false;
   }
 
   connect(token) {
-    if (!this.socket) {
-      this.socket = io(API_BASE_URL, {
-        withCredentials: true,
-        transports: ["websocket", "polling"],
-        extraHeaders: {
+    if (this.socket) {
+      this.socket.disconnect();
+      this.socket = null;
+    }
+    this.socket = io(API_BASE_URL, {
+      withCredentials: true,
+      transports: ["websocket", "polling"],
+      auth: {
         Authorization: `Bearer ${token}`,
       },
-      });
-
-      this.socket.on("connect", () => {
-        console.log("Connected to server:", this.socket.id);
-        this.isConnected = true;
-      });
-
-      this.socket.on("disconnect", () => {
-        console.log("Disconnected from server");
-        this.isConnected = false;
-      });
-    }
+    });
+    
+    this.socket.on("connect", () => {
+      console.log("Connected to server:", this.socket.id);
+    });
+    
+    this.socket.on("disconnect", () => {
+      console.log("Disconnected from server");
+    });
+    console.log(this.socket);
     return this.socket;
   }
 
   disconnect() {
     if (this.socket) {
+      console.log("disconnect.....");
       this.socket.disconnect();
       this.socket = null;
-      this.isConnected = false;
     }
   }
 
@@ -50,13 +50,14 @@ class SocketService {
     }
   }
 
-  sendMessage(channelId, message, user) {
-    if (this.socket) {
+  sendMessage(channelId, message) {
+    if (this.socket && this.socket.connected) {
       this.socket.emit("send-message", {
         channelId,
         message,
-        user,
       });
+    } else {
+      console.warn("Socket not connected, cannot send message");
     }
   }
 
@@ -135,11 +136,10 @@ class SocketService {
   }
 
   // Delete a message
-  deleteMessage(messageId, userId, channelId) {
+  deleteMessage(messageId, channelId) {
     if (this.socket) {
       this.socket.emit("delete-message", {
         messageId,
-        userId,
         channelId,
       });
     }
@@ -169,6 +169,44 @@ class SocketService {
   offDeleteError() {
     if (this.socket) {
       this.socket.off("delete-error");
+    }
+  }
+
+  // Update a message
+  updateMessage(messageId, newMessage, channelId) {
+    if (this.socket) {
+      this.socket.emit("edit-message", {
+        messageId,
+        newMessage,
+        channelId,
+      });
+    }
+  }
+
+  // Listen for message updates
+  onMessageUpdate(callback) {
+    if (this.socket) {
+      this.socket.on("message-edited", callback);
+    }
+  }
+
+  // Listen for delete errors
+  onUpdateError(callback) {
+    if (this.socket) {
+      this.socket.on("edit-error", callback);
+    }
+  }
+
+  // Remove delete listeners
+  offMessageUpdate() {
+    if (this.socket) {
+      this.socket.off("message-edited");
+    }
+  }
+
+  offUpdateError() {
+    if (this.socket) {
+      this.socket.off("edit-error");
     }
   }
 }

@@ -28,30 +28,10 @@ const MessageInput = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Message submit attempt:', {
-      inputValue: input.trim(),
-      channelId,
-      user,
-      socketConnected: socketService.isConnected,
-      socketExists: !!socketService.socket
-    });
     
     if (input.trim() && channelId && user) {
-      console.log('Sending message...', {
-        channelId,
-        message: input.trim(),
-        user: {
-          id: user.id,
-          username: user.username,
-          avatar: user.avatar,
-        }
-      });
       
-      socketService.sendMessage(channelId, input.trim(), {
-        id: user.id,
-        username: user.username,
-        avatar: user.avatar,
-      });
+      socketService.sendMessage(channelId, input.trim());
       setInput("");
 
       // Stop typing indicator

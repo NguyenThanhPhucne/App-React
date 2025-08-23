@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../../features/userSlice";
-import { Trash2 } from "lucide-react";
+import { Trash2, MoreHorizontal } from "lucide-react";
 import "./Message.css";
-import { getUserAvatarSrc, handleAvatarError } from "../../../utils/avatarUtils";
+import {
+  getUserAvatarSrc,
+  handleAvatarError,
+} from "../../../utils/avatarUtils";
 import React from "react";
 
 function Message({
@@ -13,9 +16,10 @@ function Message({
   messageId,
   channelId,
   onDeleteMessage,
+  onUpdateMessage,
   isGroupStart = true,
   showDateDivider = false,
-  previousMessage = null 
+  previousMessage = null,
 }) {
   const [isHovered, setIsHovered] = useState(false);
   const currentUser = useSelector(selectUser);
@@ -36,19 +40,26 @@ function Message({
         minute: "2-digit",
       });
     } else if (isYesterday) {
-      return "Yesterday at " + date.toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-      });
+      return (
+        "Yesterday at " +
+        date.toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        })
+      );
     } else {
-      return date.toLocaleDateString([], {
-        month: "2-digit",
-        day: "2-digit",
-        year: "numeric",
-      }) + " " + date.toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-      });
+      return (
+        date.toLocaleDateString([], {
+          month: "2-digit",
+          day: "2-digit",
+          year: "numeric",
+        }) +
+        " " +
+        date.toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        })
+      );
     }
   };
 
@@ -97,9 +108,18 @@ function Message({
   const getUsernameColor = () => {
     // Color based on user role or random color
     const colors = [
-      "#7289da", "#747f8d", "#43b581", "#f04747", 
-      "#faa61a", "#9266cc", "#e91e63", "#00bcd4",
-      "#4caf50", "#ff9800", "#795548", "#607d8b"
+      "#7289da",
+      "#747f8d",
+      "#43b581",
+      "#f04747",
+      "#faa61a",
+      "#9266cc",
+      "#e91e63",
+      "#00bcd4",
+      "#4caf50",
+      "#ff9800",
+      "#795548",
+      "#607d8b",
     ];
     if (user?.color) return user.color;
     if (user?.id) {
@@ -110,12 +130,19 @@ function Message({
 
   const handleDeleteMessage = () => {
     if (window.confirm("Are you sure you want to delete this message?")) {
-      onDeleteMessage(messageId, currentUser?.id, channelId);
+      onDeleteMessage(messageId, channelId);
+    }
+  };
+
+  const handleUpdateMessage = () => {
+    const newMessage = window.prompt("Edit your message:", message);
+    if (newMessage && newMessage.trim() !== "" && newMessage !== message) {
+      onUpdateMessage(messageId, newMessage.trim(), channelId);
     }
   };
 
   // Check if current user can delete this message
-  const canDelete = currentUser && user && currentUser.id === user.id;
+  const auth = currentUser && user && currentUser.id === user.id;
 
   return (
     <>
@@ -126,26 +153,26 @@ function Message({
           </span>
         </div>
       )}
-      
-      <div 
+
+      <div
         className={getMessageClasses()}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
         {isGroupStart && (
-          <img 
-            src={getUserAvatarSrc(user)} 
-            alt={user?.username || "User"} 
+          <img
+            src={getUserAvatarSrc(user)}
+            alt={user?.username || "User"}
             className="message__avatar"
             onError={handleAvatarError}
           />
         )}
-        
+
         <div className="message__content">
           {isGroupStart && (
             <div className="message__header">
-              <span 
-                className="message__username" 
+              <span
+                className="message__username"
                 style={{ color: getUsernameColor() }}
               >
                 {user?.username || "Unknown User"}
@@ -161,10 +188,8 @@ function Message({
               {formatCompactTimestamp(timestamp)}
             </span>
           )}
-          
-          <div className="message__text">
-            {message}
-          </div>
+
+          <div className="message__text">{message}</div>
         </div>
 
         {/* Message actions (reactions, reply, delete) */}
@@ -177,14 +202,23 @@ function Message({
             <Reply size={16} />
           </button> */}
 
-          {canDelete && (
-            <button
-              className="message__action message__delete-btn"
-              title="Delete message"
-              onClick={handleDeleteMessage}
-            >
-              <Trash2 size={16} />
-            </button>
+          {auth && (
+            <>
+              <button
+                className="message__action message__delete-btn"
+                title="Delete message"
+                onClick={handleDeleteMessage}
+              >
+                <Trash2 size={16} />
+              </button>
+              <button
+                className="message__action message__delete-btn"
+                title="Edit message"
+                onClick={handleUpdateMessage}
+              >
+                <MoreHorizontal size={16} />
+              </button>
+            </>
           )}
 
           {/* <button className="message__action" title="More" aria-label="More options">

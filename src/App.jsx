@@ -1,5 +1,5 @@
 // src/App.jsx
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Provider, useSelector, useDispatch } from "react-redux";
 import { store } from "./features/store";
@@ -39,7 +39,7 @@ function AppContent() {
     };
 
     validateUser();
-  }, [dispatch]);
+  }, [dispatch, token]);
 
   // Fetch servers when user is authenticated
   useEffect(() => {
@@ -63,11 +63,13 @@ function AppContent() {
 
   // Connect to socket when user mounts
   useEffect(() => {
-    if (token) {
+    if (token && (!socketService.socket || !socketService.socket.connected)) {
+      console.log("Connecting....");
       socketService.connect(token);
     }
 
     return () => {
+      console.log("disconnect?");
       socketService.disconnect();
     };
   }, [token]);

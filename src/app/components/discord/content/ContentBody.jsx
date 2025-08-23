@@ -15,7 +15,7 @@ const ContentBody = ({ channel, socketService }) => {
   const messagesEndRef = useRef(null);
   const messagesContainerRef = useRef(null);
   const [typingUsers, setTypingUsers] = useState([]);
-  
+
   const currentServer = useSelector(selectCurrentServer);
   const currentUser = useSelector(selectUser);
   const channelId = channel?._id || channel?.id;
@@ -23,51 +23,52 @@ const ContentBody = ({ channel, socketService }) => {
   // Load messages when channel changes
   useEffect(() => {
     if (currentUser) {
-    const loadChannelMessages = async () => {
-      if (!channelId) {
-        setMessages([]); // Clear messages when no channel is selected
-        return;
-      }
-      
-      // Clear messages immediately when channel changes
-      setMessages([]);
-      
-      // Join new channel
-      socketService.joinChannel(channelId);
-
-      // Load previous messages
-      setLoading(true);
-
-      try {
-        const response = await socketService.fetchChannelMessages(channelId);
-
-        if (response && response.data) {
-          setMessages(response.data);
-        } else {
-          setMessages([]);
+      const loadChannelMessages = async () => {
+        if (!channelId) {
+          setMessages([]); // Clear messages when no channel is selected
+          return;
         }
-      } catch (error) {
-        console.error("Error loading messages:", error);
-        setMessages([]);
-      } finally {
-        setLoading(false);
-      }
-    };
 
-    loadChannelMessages();
-  }}, [channelId, socketService,currentUser]);
+        // Clear messages immediately when channel changes
+        setMessages([]);
+
+        // Join new channel
+        socketService.joinChannel(channelId);
+
+        // Load previous messages
+        setLoading(true);
+
+        try {
+          const response = await socketService.fetchChannelMessages(channelId);
+
+          if (response && response.data) {
+            setMessages(response.data);
+          } else {
+            setMessages([]);
+          }
+        } catch (error) {
+          console.error("Error loading messages:", error);
+          setMessages([]);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      loadChannelMessages();
+    }
+  }, [channelId, socketService, currentUser]);
 
   // Clear messages when server changes (before new channel is selected)
   useEffect(() => {
     setMessages([]);
     setTypingUsers([]);
     setServerLoading(true);
-    
+
     // Add a small delay to show loading state
     const timer = setTimeout(() => {
       setServerLoading(false);
     }, 150);
-    
+
     return () => clearTimeout(timer);
   }, [currentServer?._id]);
 
@@ -75,10 +76,12 @@ const ContentBody = ({ channel, socketService }) => {
   const scrollToBottom = (force = false) => {
     if (messagesContainerRef.current) {
       const container = messagesContainerRef.current;
-      
+
       // Only auto-scroll if user is near the bottom or force scroll
-      const isNearBottom = container.scrollTop + container.clientHeight >= container.scrollHeight - 100;
-      
+      const isNearBottom =
+        container.scrollTop + container.clientHeight >=
+        container.scrollHeight - 100;
+
       if (force || isNearBottom) {
         container.scrollTop = container.scrollHeight;
       }
@@ -89,7 +92,8 @@ const ContentBody = ({ channel, socketService }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       // Only force scroll for initial load, otherwise respect user scroll position
-      const isInitialLoad = messages.length > 0 && !messagesContainerRef.current?.scrollTop;
+      const isInitialLoad =
+        messages.length > 0 && !messagesContainerRef.current?.scrollTop;
       scrollToBottom(isInitialLoad);
     }, 100);
 
@@ -97,8 +101,12 @@ const ContentBody = ({ channel, socketService }) => {
   }, [messages]);
 
   // Handle delete message
-  const handleDeleteMessage = (messageId, userId, channelId) => {
-    socketService.deleteMessage(messageId, userId, channelId);
+  const handleDeleteMessage = (messageId, channelId) => {
+    socketService.deleteMessage(messageId, channelId);
+  };
+
+  const handleUpdateMessage = (messageId, newMessage, channelId) => {
+    socketService.updateMessage(messageId, newMessage, channelId);
   };
 
   // Listen for socket events
@@ -140,10 +148,30 @@ const ContentBody = ({ channel, socketService }) => {
       );
     };
 
+    const handleMessageUpdate = (data) => {
+      setMessages((prev) =>
+        prev.map((msg) =>
+          (msg.id || msg._id) === data.messageId
+            ? {
+                ...msg,
+                message: data.newMessage,
+                isEdited: true,
+                editedAt: new Date(),
+              }
+            : msg
+        )
+      );
+    };
+
     const handleDeleteError = (data) => {
       console.error("Failed to delete message:", data.error);
-      alert(data.error); // You can replace this with a toast notification
+      alert(data.error);
     };
+
+    const handleUpdateError = (data) => {
+      console.error("Failed to edit message:", data.error);
+      alert(data.error);
+    }
 
     // Add event listeners
     socketService.onNewMessage(handleNewMessage);
@@ -153,37 +181,41 @@ const ContentBody = ({ channel, socketService }) => {
     socketService.onMessageError(handleMessageError);
     socketService.onMessageDeleted(handleMessageDeleted);
     socketService.onDeleteError(handleDeleteError);
+    socketService.onMessageUpdate(handleMessageUpdate);
+    socketService.onUpdateError(handleUpdateError);
 
     return () => {
       socketService.offNewMessage();
       socketService.offMessageDeleted();
       socketService.offDeleteError();
+      socketService.offMessageUpdate();
+      socketService.offUpdateError();
     };
   }, [socketService]);
 
   // Helper function to determine if message should start a new group
   const shouldStartNewGroup = (currentMessage, previousMessage) => {
     if (!previousMessage) return true;
-    
+
     // Different user
     if (currentMessage.user?.id !== previousMessage.user?.id) return true;
-    
+
     // More than 5 minutes apart
     const currentTime = new Date(currentMessage.timestamp);
     const previousTime = new Date(previousMessage.timestamp);
     const timeDiff = currentTime - previousTime;
     if (timeDiff > 5 * 60 * 1000) return true; // 5 minutes in milliseconds
-    
+
     return false;
   };
 
   // Helper function to determine if should show date divider
   const shouldShowDateDivider = (currentMessage, previousMessage) => {
     if (!previousMessage) return false;
-    
+
     const currentDate = new Date(currentMessage.timestamp);
     const previousDate = new Date(previousMessage.timestamp);
-    
+
     return currentDate.toDateString() !== previousDate.toDateString();
   };
 
@@ -201,7 +233,11 @@ const ContentBody = ({ channel, socketService }) => {
             </div>
             <div className="skeleton-messages">
               {[...Array(3)].map((_, i) => (
-                <div key={i} className="skeleton-message" style={{ animationDelay: `${i * 0.1}s` }}>
+                <div
+                  key={i}
+                  className="skeleton-message"
+                  style={{ animationDelay: `${i * 0.1}s` }}
+                >
                   <div className="skeleton-message-avatar"></div>
                   <div className="skeleton-message-content">
                     <div className="skeleton-line skeleton-line--name"></div>
@@ -255,8 +291,11 @@ const ContentBody = ({ channel, socketService }) => {
         messages.map((message, index) => {
           const previousMessage = index > 0 ? messages[index - 1] : null;
           const isGroupStart = shouldStartNewGroup(message, previousMessage);
-          const showDateDivider = shouldShowDateDivider(message, previousMessage);
-          
+          const showDateDivider = shouldShowDateDivider(
+            message,
+            previousMessage
+          );
+
           return (
             <Message
               key={message.id || message._id}
@@ -266,6 +305,7 @@ const ContentBody = ({ channel, socketService }) => {
               timestamp={message.timestamp}
               channelId={channelId}
               onDeleteMessage={handleDeleteMessage}
+              onUpdateMessage={handleUpdateMessage}
               isGroupStart={isGroupStart}
               showDateDivider={showDateDivider}
               previousMessage={previousMessage}
