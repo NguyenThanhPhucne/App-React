@@ -76,18 +76,18 @@ const UserPanel = ({ state, handlers }) => {
       </div>
 
       <div className="user-actions">
-        {/* Mic button with tooltip */}
-        <Tooltip content={state.isMuted ? "Unmute" : "Mute"}>
+        Mic button with tooltip
+        {/* <Tooltip content={state.isMuted ? "Unmute" : "Mute"}>
           <button
             className={`action-btn ${state.isMuted ? "action-btn--muted" : ""}`}
             onClick={handlers.toggleMute}
           >
             {state.isMuted ? <MicOff size={16} /> : <Mic size={16} />}
           </button>
-        </Tooltip>
+        </Tooltip> */}
 
         {/* Headphone button with tooltip */}
-        <Tooltip content={state.isDeafened ? "Undeafen" : "Deafen"}>
+        {/* <Tooltip content={state.isDeafened ? "Undeafen" : "Deafen"}>
           <button
             className={`action-btn ${
               state.isDeafened ? "action-btn--deafened" : ""
@@ -97,7 +97,7 @@ const UserPanel = ({ state, handlers }) => {
             <Headphones size={16} />
             {state.isDeafened && <div className="deafen-indicator" />}
           </button>
-        </Tooltip>
+        </Tooltip> */}
 
         {/* Settings button */}
         <Tooltip content="User Settings">

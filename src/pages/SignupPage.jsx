@@ -179,11 +179,11 @@ const SignupPage = () => {
   return (
     <div className="auth-container">
       <div className="form-section">
-        <button className="back-button" type="button">
+        {/* <button className="back-button" type="button">
           {" "}
-          {/* Back function needed */}
+          Back function needed
           <MdArrowBack size={20} />
-        </button>
+        </button> */}
 
         <div className="form-wrapper">
           {" "}

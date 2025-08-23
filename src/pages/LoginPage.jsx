@@ -84,11 +84,11 @@ const LoginPage = () => {
   return (
     <div className="auth-container">
       <div className="form-section">
-        <button className="back-button" type="button">
+        {/* <button className="back-button" type="button">
           {" "}
-          {/* This button should navigate back to the previous page */}
+          This button should navigate back to the previous page
           <MdArrowBack size={20} />
-        </button>
+        </button> */}
 
         <div className="form-wrapper">
           <h1 className="form-title">Sign In</h1>
