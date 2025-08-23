@@ -160,43 +160,6 @@ Project/
 - **Modern browser** with ES6+ support
 - **Git** for version control
 
-### Step-by-Step Installation
-
-#### 1. Clone Repository
-
-```bash
-git clone <repository-url>
-cd Project
-```
-
-#### 2. Install Dependencies
-
-```bash
-npm install
-# Alternative: yarn install
-```
-
-#### 3. Environment Configuration
-
-Create a `.env` file in the root directory:
-
-```env
-VITE_BACKEND_BASE_URL=http://localhost:3000
-```
-
-#### 4. Start Development Server
-
-```bash
-npm run dev
-```
-
-### Available Scripts
-
-- `npm run dev` - Start development server with hot reload
-- `npm run build` - Build optimized production bundle
-- `npm run preview` - Preview production build locally
-- `npm run lint` - Run ESLint for code quality checks
-
 ## Key Components & Architecture
 
 ### Discord Interface Components
