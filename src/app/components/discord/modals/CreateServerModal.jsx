@@ -95,11 +95,6 @@ const CreateServerModal = ({ isOpen, onClose, onServerCreated }) => {
     try {
       // Extract invite code from different formats
       let inviteCode = inviteLink.trim();
-      if (inviteCode.includes('discord.gg/')) {
-        inviteCode = inviteCode.split('discord.gg/')[1];
-      } else if (inviteCode.includes('discord.com/invite/')) {
-        inviteCode = inviteCode.split('discord.com/invite/')[1];
-      }
 
       // Basic validation for invite code format
       if (inviteCode.length < 3) {
@@ -107,19 +102,13 @@ const CreateServerModal = ({ isOpen, onClose, onServerCreated }) => {
         return;
       }
 
-      console.log("Joining server with invite code:", inviteCode);
-      
-      // Use the existing API service if available
-      if (apiService.joinServerByInvite) {
         const result = await apiService.joinServerByInvite(inviteCode);
+        const serverData = result.server;
+        
         if (result && onServerCreated) {
-          await onServerCreated(result);
+          await onServerCreated(serverData);
         }
         handleClose();
-      } else {
-        alert("Join server functionality will be implemented soon!");
-        handleClose();
-      }
     } catch (error) {
       console.error("Error joining server:", error);
       alert(error.message || "Failed to join server. Please check the invite link.");

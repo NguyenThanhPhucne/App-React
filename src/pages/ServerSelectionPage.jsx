@@ -76,32 +76,14 @@ const ServerSelectionPage = () => {
 
   const handleServerCreated = async (newServerData) => {
     try {
-      // Refresh server list to include the new server
-      await fetchUserServers();
       
       // Select the new server and navigate to app
-      dispatch(setSelectedServer(newServerData._id));
+      
       navigate("/app");
     } catch (error) {
       console.error("Error after server creation:", error);
       // Even if refresh fails, still navigate to the new server
       dispatch(setSelectedServer(newServerData._id));
-      navigate("/app");
-    }
-  };
-
-  const handleServerJoined = async (joinedServerData) => {
-    try {
-      // Refresh server list to include the joined server
-      await fetchUserServers();
-      
-      // Select the joined server and navigate to app
-      dispatch(setSelectedServer(joinedServerData._id));
-      navigate("/app");
-    } catch (error) {
-      console.error("Error after joining server:", error);
-      // Even if refresh fails, still navigate to the joined server
-      dispatch(setSelectedServer(joinedServerData._id));
       navigate("/app");
     }
   };
@@ -172,8 +154,8 @@ const ServerSelectionPage = () => {
               >
                 <div className="server-content">
                   <div className="server-icon">
-                    {server.icon ? (
-                      <img src={server.icon} alt={server.name} />
+                    {server.serverAvatar ? (
+                      <img src={`${server.serverAvatar}`} alt={server.name} />
                     ) : (
                       <div className="server-initial">
                         {server.name.charAt(0).toUpperCase()}
@@ -270,7 +252,7 @@ const ServerSelectionPage = () => {
       <JoinServerModal
         isOpen={isJoinModalOpen}
         onClose={handleCloseJoinModal}
-        onServerJoined={handleServerJoined}
+        onServerJoined={handlers.handleServerCreated}
       />
     </div>
   );

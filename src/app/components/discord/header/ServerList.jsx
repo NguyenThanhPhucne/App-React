@@ -28,13 +28,11 @@ const ServerList = ({ servers, state, updateState, handlers }) => {
     }
   };
 
-  const API_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL;
-
   const renderServerIcon = (server) => {
       return (
         <>
           <img
-            src={`${API_BASE_URL}${server.serverAvatar}`}
+            src={`${server.serverAvatar}`}
             alt={server.name}
             className="server-avatar"
             onError={(e) => {

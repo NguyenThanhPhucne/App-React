@@ -149,6 +149,7 @@ export const useDiscordHandlers = (state, updateState) => {
     handleServerCreated: async (newServer) => {
       dispatch(addServer(newServer));
       console.log("New server created:");
+      navigate("/app");
     },
 
     toggleCreateChannelModal: () => {
