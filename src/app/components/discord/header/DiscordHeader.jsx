@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { clearTextChannel } from "../../../../features/channelSlice";
@@ -24,7 +23,7 @@ const DiscordHeader = ({ state, updateState, handlers }) => {
   const servers = useSelector(selectServers);
   const currentServer = useSelector(selectCurrentServer);
   const selectedServerId = useSelector(selectSelectedServerId);
-  
+
   // Function to fetch a specific server by ID
   const fetchServerById = useCallback(
     async (serverId) => {
