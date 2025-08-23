@@ -598,6 +598,38 @@ class ApiService {
       throw error;
     }
   }
+
+  async leaveServer(serverId){
+    const accessToken = localStorage.getItem("accessToken");
+
+    if (!accessToken) {
+      throw new Error("No access token found");
+    }
+    try{
+      const response = await fetch(`${API_BASE_URL}/server/${serverId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        credentials: "include",
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to update user");
+      }
+      
+      return data.message || "You have left the server successfully";
+
+    } catch (error){
+      console.error("Error updating user:", error);
+      throw error;
+    }
+  }
+
 }
 
 const apiService = new ApiService();

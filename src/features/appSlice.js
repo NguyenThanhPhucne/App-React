@@ -33,7 +33,10 @@ export const appSlice = createSlice({
       }
     },
     addServer: (state, action) => {
-      state.servers.push(action.payload);
+      const { _id, name, serverAvatar } = action.payload;
+      state.currentServer = action.payload;
+      state.selectedServerId = _id;
+      state.servers.push({ _id, name, serverAvatar });
     },
     clearServers: (state) => {
       state.servers = [];
@@ -48,6 +51,7 @@ export const appSlice = createSlice({
       // If the deleted server was the current server, clear it
       if (state.currentServer && state.currentServer._id === serverId) {
         state.currentServer = null;
+        state.selectedServerId = null;
       }
     },
 

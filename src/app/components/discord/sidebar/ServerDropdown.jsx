@@ -33,7 +33,6 @@ const ServerDropdown = ({ server, state, handlers, dropdownRef }) => {
           </div>
 
           <div className="server-dropdown__content">
-            {/* fix ui of description */}
             <div className="dropdown-description">
               <p>{server?.description || "No description"}</p>
             </div>

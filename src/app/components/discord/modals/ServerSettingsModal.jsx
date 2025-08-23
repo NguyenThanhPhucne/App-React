@@ -23,8 +23,9 @@ import {
   updateServerInList,
   removeServer,
 } from "../../../../features/appSlice";
+import { selectUser } from "../../../../features/userSlice";
 import apiService from "../../../services/apiServices";
-import "../../../../styles/discord/modals.css"; // Import base modal styles
+import "../../../../styles/discord/modals.css";
 import "./ServerSettingsModal.css";
 
 const ServerSettingsModal = ({ isOpen, onClose }) => {
@@ -40,10 +41,9 @@ const ServerSettingsModal = ({ isOpen, onClose }) => {
   const [copied, setCopied] = useState(false);
 
   const currentServer = useSelector(selectCurrentServer);
+  const user = useSelector(selectUser);
   const dispatch = useDispatch();
-
-  // Get the base URL for serving uploaded images
-  const API_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL;
+  const userOwner = user && currentServer && currentServer.ownerId._id === user.id;
 
   useEffect(() => {
     if (currentServer) {
@@ -53,11 +53,11 @@ const ServerSettingsModal = ({ isOpen, onClose }) => {
         currentServer.ownerId?._id || currentServer.ownerId || ""
       );
       // Set current server avatar
-      setServerIcon(`${API_BASE_URL}${currentServer.serverAvatar}`
+      setServerIcon(`${currentServer.serverAvatar}`
       );
       setServerIconFile(null);
     }
-  }, [currentServer, API_BASE_URL]);
+  }, [currentServer]);
 
   const handleClose = () => {
     setServerName("");
@@ -178,17 +178,36 @@ const ServerSettingsModal = ({ isOpen, onClose }) => {
     }
   };
 
+  const handleLeaveServer = async () => {
+    if (!currentServer) return;
+
+    setIsDeleting(true);
+    try {
+      await apiService.leaveServer(currentServer._id);
+
+      // Remove server from Redux store
+      dispatch(removeServer(currentServer._id));
+
+      // Close modal
+      handleClose();
+
+      // Show success message
+      alert("Server left successfully");
+    } catch (error) {
+      console.error("Error leaving server:", error);
+      alert(error.message || "Failed to leaving server");
+    } finally {
+      setIsDeleting(false);
+      setShowDeleteConfirm(false);
+    }
+  };
+
   const handleCopyInviteCode = async () => {
     if (currentServer?.inviteCode) {
       await navigator.clipboard.writeText(currentServer.inviteCode);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     }
-  };
-
-  const isCurrentUserOwner = () => {
-    // You might need to get current user ID from another selector
-    return true; // For now, assume user can edit
   };
 
   if (!isOpen || !currentServer) return null;
@@ -429,47 +448,79 @@ const ServerSettingsModal = ({ isOpen, onClose }) => {
             </label>
             <div className="server-settings-danger-container">
               <div className="server-settings-danger-header">
-                <h4 className="server-settings-danger-title">
-                  <AlertTriangle size={18} />
-                  Delete Server
-                </h4>
                 <p className="server-settings-danger-description">
-                  This action cannot be undone. This will permanently delete the
-                  server and all of its channels.
+                  {userOwner
+                  ? "This action cannot be undone. This will permanently delete theserver and all of its channels."
+                  : "You can leave this server. You will no longer be a member."}
+                  
                 </p>
               </div>
-
-              {!showDeleteConfirm ? (
-                <button
-                  type="button"
-                  onClick={() => setShowDeleteConfirm(true)}
-                  className="server-settings-delete-btn"
-                >
-                  <Trash2 size={16} />
-                  Delete Server
-                </button>
+              {userOwner?(
+                !showDeleteConfirm ? (
+                  <button
+                    type="button"
+                    onClick={() => setShowDeleteConfirm(true)}
+                    className="server-settings-delete-btn"
+                  >
+                    <Trash2 size={16} />
+                    Delete Server
+                  </button>
+                ) : (
+                  <div className="server-settings-danger-actions">
+                    <span className="server-settings-confirm-text">
+                      Are you sure?
+                    </span>
+                    <button
+                      type="button"
+                      onClick={handleDeleteServer}
+                      disabled={isDeleting}
+                      className="server-settings-confirm-btn"
+                    >
+                      {isDeleting ? "Deleting..." : "Yes, Delete"}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setShowDeleteConfirm(false)}
+                      disabled={isDeleting}
+                      className="server-settings-cancel-btn"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                )
               ) : (
-                <div className="server-settings-danger-actions">
-                  <span className="server-settings-confirm-text">
-                    Are you sure?
-                  </span>
+                !showDeleteConfirm ? (
                   <button
                     type="button"
-                    onClick={handleDeleteServer}
-                    disabled={isDeleting}
-                    className="server-settings-confirm-btn"
+                    onClick={() => setShowDeleteConfirm(true)}
+                    className="server-settings-delete-btn"
                   >
-                    {isDeleting ? "Deleting..." : "Yes, Delete"}
+                    <AlertTriangle size={16} />
+                    Leave Server
                   </button>
-                  <button
-                    type="button"
-                    onClick={() => setShowDeleteConfirm(false)}
-                    disabled={isDeleting}
-                    className="server-settings-cancel-btn"
-                  >
-                    Cancel
-                  </button>
-                </div>
+                ) : (
+                  <div className="server-settings-danger-actions">
+                    <span className="server-settings-confirm-text">
+                      Are you sure?
+                    </span>
+                    <button
+                      type="button"
+                      onClick={handleLeaveServer}
+                      disabled={isDeleting}
+                      className="server-settings-confirm-btn"
+                    >
+                      {isDeleting ? "Leaving..." : "Yes, leave"}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setShowDeleteConfirm(false)}
+                      disabled={isDeleting}
+                      className="server-settings-cancel-btn"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                )
               )}
             </div>
           </div>
