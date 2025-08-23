@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../../features/userSlice";
-import { Trash2, MoreHorizontal } from "lucide-react";
+import { Trash2, Pencil } from "lucide-react";
 import "./Message.css";
 import {
   getUserAvatarSrc,
@@ -106,7 +106,6 @@ function Message({
   };
 
   const getUsernameColor = () => {
-    // Color based on user role or random color
     const colors = [
       "#7289da",
       "#747f8d",
@@ -141,7 +140,6 @@ function Message({
     }
   };
 
-  // Check if current user can delete this message
   const auth = currentUser && user && currentUser.id === user.id;
 
   return (
@@ -192,39 +190,25 @@ function Message({
           <div className="message__text">{message}</div>
         </div>
 
-        {/* Message actions (reactions, reply, delete) */}
-        <div className="message__actions">
-          {/* <button className="message__action" title="Add Reaction" aria-label="Add Reaction">
-            <Smile size={16} />
-          </button>
+        {isHovered && auth && (
+          <div className="message__actions">
+            <button
+              className="message__action message__delete-btn"
+              title="Edit message"
+              onClick={handleUpdateMessage}
+            >
+              <Pencil size={16} />
+            </button>
 
-          <button className="message__action" title="Reply" aria-label="Reply to message">
-            <Reply size={16} />
-          </button> */}
-
-          {auth && (
-            <>
-              <button
-                className="message__action message__delete-btn"
-                title="Delete message"
-                onClick={handleDeleteMessage}
-              >
-                <Trash2 size={16} />
-              </button>
-              <button
-                className="message__action message__delete-btn"
-                title="Edit message"
-                onClick={handleUpdateMessage}
-              >
-                <MoreHorizontal size={16} />
-              </button>
-            </>
-          )}
-
-          {/* <button className="message__action" title="More" aria-label="More options">
-            <MoreHorizontal size={16} />
-          </button> */}
-        </div>
+            <button
+              className="message__action message__delete-btn"
+              title="Delete message"
+              onClick={handleDeleteMessage}
+            >
+              <Trash2 size={16} />
+            </button>
+          </div>
+        )}
       </div>
     </>
   );
