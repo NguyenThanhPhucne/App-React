@@ -1,3 +1,44 @@
+/* Social login button style đồng bộ submit button */
+.social-buttons {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1.2rem 0 0.5rem 0;
+}
+
+.social-buttons .google, .social-button.google {
+  width: 100% !important;
+  min-width: 0;
+  max-width: 100%;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 0.75rem 1.5rem;
+  background: #fff;
+  color: #22223b;
+  font-weight: 600;
+  font-size: 1rem;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(60,60,100,0.07);
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.4,0,0.2,1);
+  outline: none;
+  margin-bottom: 0.5rem;
+}
+.social-buttons .google:hover, .social-button.google:hover {
+  background: #f3f4f6;
+  color: #111827;
+  box-shadow: 0 4px 16px rgba(60,60,100,0.13);
+  transform: translateY(-2px) scale(1.01);
+}
+.social-buttons .google svg, .social-button.google svg {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}
 /* Authentication Pages Styles */
 
 .auth-container {
@@ -278,22 +319,28 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* ZIM Google Button - Exact Match */
+/* Social Button Styles */
 .social-button.google {
+  padding: 0.75rem 1.25rem;
   background: #e8f0fe;
   color: #1a73e8;
-  border-color: #e8f0fe;
+  border: 1.5px solid #e8f0fe;
   font-weight: 500;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 .social-button.google:hover {
   background: #d2e3fc;
   border-color: #aecbfa;
+  color: #174ea6;
+  box-shadow: 0 4px 16px rgba(60,60,100,0.13);
+  transform: translateY(-2px) scale(1.01);
 }
 
 .social-button.google svg {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
 }
 
 /* ZIM Facebook Button */

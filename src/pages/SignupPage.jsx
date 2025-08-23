@@ -232,7 +232,12 @@ const SignupPage = () => {
           <div className="divider">Or</div>
           <div className="social-buttons">
             <GoogleLogin
-            className="social-button google"
+              text="signup_with"
+              type="standard"
+              theme="outline"
+              size="large"
+              logo_alignment="center"
+              className="social-button google"
               onSuccess={(credentialResponse) => {
                 handleSocialLogin(credentialResponse);
               }}
