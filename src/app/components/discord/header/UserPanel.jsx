@@ -1,5 +1,6 @@
 "use client";
 
+import "../../../../styles/discord/UserPanel.css";
 import {
   Mic,
   MicOff,
@@ -10,11 +11,15 @@ import {
   Sun,
   Moon,
   Search,
+  ShoppingCart,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../../features/userSlice";
-import { getUserAvatarSrc, handleAvatarError } from "../../../utils/avatarUtils";
+import {
+  getUserAvatarSrc,
+  handleAvatarError,
+} from "../../../utils/avatarUtils";
 import useTheme from "../../../../hooks/useTheme";
 import Tooltip from "../../ui/Tooltip";
 
@@ -42,6 +47,14 @@ const UserPanel = ({ state, handlers }) => {
 
       {/* Controls sát bên user */}
       <div className="user-panel__controls">
+        {/* Store Button */}
+        <Tooltip content="Discord Store">
+          <button className="store-btn" onClick={handlers.navigateToStore}>
+            <ShoppingCart size={20} />
+            <div className="store-badge">NEW</div>
+          </button>
+        </Tooltip>
+
         {/* Add Server Button */}
         <Tooltip content="Add a Server">
           <button
@@ -54,9 +67,7 @@ const UserPanel = ({ state, handlers }) => {
 
         {/* Theme Toggle */}
         <Tooltip
-          content={
-            isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"
-          }
+          content={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
         >
           <button className="theme-toggle" onClick={toggleTheme}>
             {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
@@ -70,7 +81,9 @@ const UserPanel = ({ state, handlers }) => {
           <div className="status-dot" />
         </div>
         <div className="user-details">
-          <span className="username">{user?.displayName || user?.username}</span>
+          <span className="username">
+            {user?.displayName || user?.username}
+          </span>
           <span className="status">Online</span>
         </div>
       </div>

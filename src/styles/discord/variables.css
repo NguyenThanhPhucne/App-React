@@ -48,6 +48,8 @@
   --success: #23a559;
   --warning: #faa61a;
   --muted: #ed2575;
+  --home-btn-primary: #5865f2;
+  --home-btn-secondary: #7289da;
   --deafened: #ed2575;
   --dropdown-bg: #ffffff;
   --dropdown-shadow: rgba(0, 0, 0, 0.15);
@@ -86,18 +88,89 @@
   --scroll-track: #f2f3f5;
   --scroll-thumb: #c4c9ce;
   --scroll-thumb-hover: #a8adb3;
+
+  /* Store Specific Colors - Light */
+  --store-bg: #ffffff;
+  --store-header-bg: #f2f3f5;
+  --store-card-bg: #ffffff;
+  --store-card-hover: #f6f6f7;
+  --store-search-bg: #ebedef;
+  --store-search-text: #2e3338;
+  --store-price-text: #5865f2;
+  --store-btn-primary: #5865f2;
+  --store-btn-secondary: #e3e5e8;
+  --store-divider: #e3e5e8;
+  --store-tab-active: #4752c4;
+  --store-tab-hover: rgba(88, 101, 242, 0.1);
+  --store-card-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  --store-card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.1);
+  --store-category-bg: #f2f3f5;
+  --store-category-hover: #e3e5e8;
+  --store-badge-bg: #5865f2;
+  --store-badge-text: #ffffff;
+  --store-skeleton-bg: #f6f6f7;
+  --store-skeleton-shine: #eeeff1;
 }
 
 .theme-dark {
+  /* Base Colors */
   --bg-primary: #313338;
   --bg-secondary: #2b2d31;
   --bg-tertiary: #1e1f22;
   --text-primary: #f2f3f5;
   --text-secondary: #b5bac1;
   --text-muted: #80848e;
+  --header-primary: #f2f3f5;
+  --header-secondary: #b5bac1;
+
+  /* Store Specific Colors - Dark */
+  --store-bg: #313338;
+  --store-header-bg: #2b2d31;
+  --store-card-bg: #2b2d31;
+  --store-card-hover: #292b2f;
+  --store-search-bg: #1e1f22;
+  --store-search-text: #dcddde;
+  --store-price-text: #5865f2;
+  --store-btn-primary: #5865f2;
+  --store-btn-secondary: #4f545c;
+  --store-divider: #3f4147;
+  --store-tab-active: #5865f2;
+  --store-tab-hover: rgba(88, 101, 242, 0.1);
+  --store-card-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  --store-card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.2);
+  --store-category-bg: #2b2d31;
+  --store-category-hover: #35373c;
+  --store-badge-bg: #5865f2;
+  --store-badge-text: #ffffff;
+  --store-skeleton-bg: #2b2d31;
+  --store-skeleton-shine: #35373c;
+  
+  /* Interactive Elements */
+  --interactive-normal: #b5bac1;
+  --interactive-hover: #dcddde;
+  --interactive-active: #ffffff;
+  
+  /* Accent Colors */
+  --text-link: #5865f2;
+  --text-link-hover: #4752c4;
   --accent: #5865f2;
   --accent-hover: #4752c4;
   --accent-light: #6a7cf8;
+  
+  /* Background Modifiers */
+  --background-modifier-hover: rgba(79, 84, 92, 0.16);
+  --background-modifier-active: rgba(79, 84, 92, 0.24);
+  --background-modifier-selected: rgba(79, 84, 92, 0.32);
+  --background-modifier-accent: rgba(79, 84, 92, 0.48);
+  
+  /* Channel Textarea */
+  --channeltextarea-background: #383a40;
+  --channeltextarea-background-focus: #3f4147;
+  
+  /* Elevations */
+  --elevation-low: 0 1px 0 rgba(4, 4, 5, 0.2), 0 1.5px 0 rgba(6, 6, 7, 0.05), 0 2px 0 rgba(4, 4, 5, 0.05);
+  --elevation-medium: 0 4px 4px rgba(0, 0, 0, 0.16);
+  --elevation-high: 0 8px 16px rgba(0, 0, 0, 0.24);
   --accent-gradient: linear-gradient(135deg, #5865f2, #6a7cf8);
   --loading-gradient: linear-gradient(135deg, #5865f2, #7289da, #6a7cf8);
   --shimmer-color: rgba(255, 255, 255, 0.2);

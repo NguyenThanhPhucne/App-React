@@ -43,6 +43,10 @@ export const useDiscordHandlers = (state, updateState) => {
       updateState({ serverScrollIndex: newIndex })
     },
 
+    navigateToStore: () => {
+      navigate("/store");
+    },
+
     toggleCategory: (categoryId) =>
       updateState({
         collapsedCategories: {

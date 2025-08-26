@@ -1,0 +1,119 @@
+.product-detail-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.product-images {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.product-image {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.product-info {
+    padding: 1rem;
+}
+
+.product-info h1 {
+    margin: 0 0 1rem;
+    color: #2f3136;
+}
+
+.category {
+    color: #72767d;
+    margin-bottom: 1rem;
+}
+
+.price {
+    font-size: 1.5rem;
+    color: #7289da;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.description {
+    color: #2f3136;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.variants {
+    margin-bottom: 2rem;
+}
+
+.variant-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 0.5rem;
+}
+
+.variant-button {
+    padding: 0.5rem;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    background: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.variant-button:hover:not(:disabled) {
+    border-color: #7289da;
+}
+
+.variant-button.selected {
+    border-color: #7289da;
+    background-color: #7289da;
+    color: white;
+}
+
+.variant-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.quantity-selector {
+    margin-bottom: 2rem;
+}
+
+.quantity-selector select {
+    margin-left: 1rem;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.add-to-cart-button {
+    width: 100%;
+    padding: 1rem;
+    background-color: #7289da;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.add-to-cart-button:hover:not(:disabled) {
+    background-color: #5b6eae;
+}
+
+.add-to-cart-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.error-message {
+    color: #ed4245;
+    margin-top: 1rem;
+}

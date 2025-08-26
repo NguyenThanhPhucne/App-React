@@ -20,36 +20,38 @@ const DiscordSidebar = ({ state, handlers, dropdownRef }) => {
     <>
       {/* Mobile Overlay */}
       <div
-        className={`mobile-overlay ${state.showMobileSidebar ? "mobile-overlay--visible" : ""}`}
+        className={`mobile-overlay ${
+          state.showMobileSidebar ? "mobile-overlay--visible" : ""
+        }`}
         onClick={() => handlers.updateState({ showMobileSidebar: false })}
       />
-    <aside
-      className={`sidebar ${state.showMobileSidebar ? "sidebar--open" : ""}`}
-    >
-      <ServerDropdown
-        server={server}
-        state={state}
-        handlers={handlers}
-        dropdownRef={dropdownRef}
-      />
-
-      <div className="sidebar__content">
-        <ChannelCategory
-          type="text"
-          title="Text Channels"
-          channels={textChannels}
+      <aside
+        className={`sidebar ${state.showMobileSidebar ? "sidebar--open" : ""}`}
+      >
+        <ServerDropdown
+          server={server}
           state={state}
           handlers={handlers}
+          dropdownRef={dropdownRef}
         />
-        {/*<ChannelCategory
+
+        <div className="sidebar__content">
+          <ChannelCategory
+            type="text"
+            title="Text Channels"
+            channels={textChannels}
+            state={state}
+            handlers={handlers}
+          />
+          {/*<ChannelCategory
           type="voice"
           title="Kênh Thoại"
           channels={voiceChannels}
           state={state}
           handlers={handlers}
         />*/}
-      </div>
-    </aside>
+        </div>
+      </aside>
     </>
   );
 };

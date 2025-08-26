@@ -1,0 +1,124 @@
+.cart-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.cart-container h1 {
+    margin-bottom: 2rem;
+    color: #2f3136;
+}
+
+.cart-items {
+    margin-bottom: 2rem;
+}
+
+.cart-item {
+    display: grid;
+    grid-template-columns: 100px 1fr auto auto auto;
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #ddd;
+}
+
+.item-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.item-details h3 {
+    margin: 0;
+    color: #2f3136;
+}
+
+.item-details p {
+    margin: 0.5rem 0;
+    color: #72767d;
+}
+
+.item-price {
+    color: #7289da;
+    font-weight: bold;
+}
+
+.item-quantity select {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.item-total {
+    font-weight: bold;
+    color: #7289da;
+}
+
+.remove-item {
+    padding: 0.5rem 1rem;
+    background-color: #ed4245;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.remove-item:hover {
+    background-color: #c03537;
+}
+
+.cart-summary {
+    background-color: #f9f9f9;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-top: 2rem;
+}
+
+.total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.checkout-button {
+    width: 100%;
+    padding: 1rem;
+    background-color: #7289da;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.checkout-button:hover {
+    background-color: #5b6eae;
+}
+
+.empty-cart {
+    text-align: center;
+    padding: 4rem 2rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+.empty-cart h2 {
+    margin-bottom: 1rem;
+    color: #2f3136;
+}
+
+.empty-cart button {
+    padding: 1rem 2rem;
+    background-color: #7289da;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.empty-cart button:hover {
+    background-color: #5b6eae;
+}

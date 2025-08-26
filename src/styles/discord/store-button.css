@@ -1,0 +1,46 @@
+.sidebar-actions {
+    padding: 8px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    gap: 8px;
+}
+
+.sidebar-action-button {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    color: #b9bbbe;
+    background-color: #36393f;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.sidebar-action-button:hover {
+    background-color: #5865f2;
+    color: white;
+    transform: translateY(-1px);
+}
+
+.sidebar-action-button:active {
+    transform: translateY(0);
+}
+
+.store-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #ed4245;
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 8px;
+    border: 2px solid #2f3136;
+    transform: translate(25%, -25%);
+}

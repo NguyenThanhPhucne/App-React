@@ -23,22 +23,26 @@
 .home-btn {
   width: 32px;
   height: 32px;
-  background: var(--accent);
-  border: none;
   border-radius: 50%;
-  color: white;
+  color: var(--interactive-normal);
+  background: transparent;
+  border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
-  font-weight: 600;
-  font-size: 16px;
+  position: relative;
 }
 
 .home-btn:hover {
-  border-radius: 10px;
-  transform: scale(1.05);
+  color: var(--interactive-hover);
+  background-color: var(--background-modifier-hover);
+}
+
+.home-btn:active {
+  color: var(--interactive-active);
+  background-color: var(--background-modifier-active);
 }
 
 /* Header Center - Server List */
